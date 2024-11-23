@@ -1,0 +1,103 @@
+/* html,
+body,
+#root {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+
+} */
+
+body{
+    font-family: "Poppins", sans-serif !important;
+    font-weight: 500;
+    font-style: normal;
+}
+
+
+/* .form-label h6,
+.form-label {
+    color: #ffc60a;
+    font-weight: 600;
+}
+
+.form-control,
+.form-select {
+    border: 1px solid #8c908c !important
+}
+
+.dashboard-nav {
+    background: linear-gradient(to top, rgba(204, 153, 0, 1), rgba(255, 236, 88, 1));
+}
+
+.content-area {
+    margin-left: 20%;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.full-page-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    transition: all 1s;
+}
+
+.list-nav {
+    border-radius: 10px;
+    background: #f5ffff !important;
+    text-align: start;
+    color: #898989 !important;
+}
+
+.list-nav:hover {
+    background:
+        #327ad7 !important;
+    font-weight: bolder;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin-bottom: 20px;
+    color: white !important
+}
+
+.btn-custom {
+    width: 250px;
+    max-width: 100%;
+    transition: hover 2s;
+}
+
+.toggleHeading {
+    text-wrap-style: balance;
+}
+
+
+
+
+.btn-custom:hover {
+    color: white !important;
+    transition: all 1ms;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+} */
+
+/* 
+::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+} */
+
+
+
+/* 
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 0px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+} */

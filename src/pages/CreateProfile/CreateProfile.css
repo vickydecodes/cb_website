@@ -1,0 +1,19 @@
+.full-page-container_createprofile {
+    height: 100vh;
+    width: 100vw;
+    padding: 40px 60px;
+    border-radius: 30px;
+}
+
+.content_createprofile {
+    height: 100%;
+    width: 100%;
+    border: 2px solid gold;
+    border-radius: 30px;
+}
+
+
+.headerForLogoAndGreet_createprofile {
+    text-align: start;
+    margin: 30px;
+}

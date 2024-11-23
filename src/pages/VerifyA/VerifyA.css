@@ -1,0 +1,42 @@
+.full-page-container {
+    height: 100vh;
+    width: 100vw;
+    padding: 40px 60px;
+    border-radius: 30px;
+}
+
+.content {
+    height: 100%;
+    width: auto;
+    border: 2px solid gold;
+    border-radius: 30px;
+}
+
+.headerLogo {
+    height: 120px;
+}
+
+.headerForLogoAndGreet {
+    text-align: center;
+    margin-top: 30px;
+}
+
+
+.contextForActivation {
+    font-size: 20px;
+}
+
+.buttonForVerifyEmail {
+    padding: 15px 100px;
+    background-color: gold;
+    border: 0px;
+    border-radius: 12px;
+    color: white;
+    font-size: 20px;
+}
+
+.button2ForVerifyEmail {
+    border: 0px;
+    color: grey !important;
+    background-color: transparent;
+}
