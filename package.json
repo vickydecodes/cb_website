@@ -17,6 +17,7 @@
     "react-bootstrap": "^2.10.5",
     "react-count-up": "^1.0.0",
     "react-country-state-city": "^1.1.7",
+    "react-countup": "^6.5.3",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.0.1",
     "tinycolor2": "^1.6.0"

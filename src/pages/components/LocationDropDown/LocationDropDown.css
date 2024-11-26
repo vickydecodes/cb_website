@@ -1,13 +1,31 @@
 .input_label_c {
-    color: gold
+    font-weight: bold;
+    color: gold;
+    margin-bottom: 8px;
+    align-self: flex-start;
+}
+
+.input_dropdowns {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 16px;
+    width: 100%;
 }
 
 .input_select_c {
-    margin-top: 5px;
-    padding: 8px;
-    border-radius: 6px;
-    border: 1px solid #808080;
-    width: 130px !important;
-    height: 50px !important;
-    margin-bottom: 5px;
+    width: 100%;
+    margin-bottom: 10px ;
+    padding: 16px; /* Adds space inside the dropdown */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    appearance: none; /* Hides the default dropdown arrow */
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='%23000000' d='M0 0l5 5 5-5z'/%3E%3C/svg%3E") no-repeat right 12px center;
+    background-color: white; /* Ensure the dropdown background matches */
+    background-size: 12px; /* Resize the arrow icon */
+  }
+
+.input_select_c:focus {
+    outline: none;
+    border-color: #f7b600;
 }

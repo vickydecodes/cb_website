@@ -33,8 +33,8 @@ export default function LocationDropDown({ inputValue }) {
   }, []);
 
   return (
-    <div className="input_c d-flex  mb-4 row g-0 p-0 " >
-      <div className="col d-md-flex flex-column p-0">
+    <div className="input_dropdowns row p-0 mb-4" >
+      <div className="col-md-4 d-md-flex flex-column ">
         <label className="input_label_c" htmlFor="country">
           <h5>Country</h5>
         </label>
@@ -60,7 +60,7 @@ export default function LocationDropDown({ inputValue }) {
           ))}
         </select>
       </div>
-      <div className="col d-flex flex-column ms-2 p-0">
+      <div className="col-md-4 d-flex flex-column ">
         <label className="input_label_c" htmlFor="state">
           <h5>State</h5>
         </label>
@@ -89,7 +89,7 @@ export default function LocationDropDown({ inputValue }) {
           ))}
         </select>
       </div>
-      <div className="col d-flex flex-column ms-2 p-0">
+      <div className="col-md-4 d-flex flex-column ">
         <label className="input_label_c" htmlFor="city">
           <h5>City</h5>
         </label>

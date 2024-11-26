@@ -15,31 +15,36 @@ export default function Register() {
   ];
 
   return (
-    <div className="full-page-container">
-      <div className="content">
-        <div className="headerForLogoAndGreet">
-          <img
-            src="/img/logo with name.png"
-            className="headerLogo img-fluid"
-            alt=""
-          />
-          <div>
-            <h1>Register Your Details</h1>
-            <span className="text-muted">
-              Register your details given below to create your admin profile for
-              college
-            </span>
-          </div>
-        </div>
-        <div className="inputTabs" style={{ height: "73%" }}>
-          <form action="#" style={{ height: "100%" }}>
-            <div className="row g-0" style={{ height: "100%" }}>
-              <div className="col-md-6 columnForInputs p-0">
+    <div className="d-flex">
+      <div className="full-page-container">
+        <div className="content shadow-lg">
+          <div className="row g-0 p-0" style={{ height: "100%" }}>
+            <div className="headerForLogoAndGreet">
+              <img
+                src="/img/logo with name.png"
+                className="headerLogo img-fluid"
+                alt=""
+              />
+              <div>
+                <h1>Register Your Details</h1>
+                <span className="text-muted">
+                  Register your details given below to create your admin profile
+                  for college
+                </span>
+              </div>
+            </div>
+            <div className="col-md-6 d-flex flex-column">
+              <div
+                className="d-flex flex-column justify-content-center mx-5"
+                style={{ height: "100%" }}
+              >
                 {detailsInputTabs1.map((tab, idx) => {
                   return <Input inputValue={tab} key={idx} />;
                 })}
               </div>
-              <div className="col-md-6 columnForInputs p-0">
+            </div>
+            <div className="col-md-6">
+              <div className="d-flex flex-column justify-content-center mx-5 mt-4">
                 <Input inputValue={"Mobile Number"} />
                 <FileInput inputValue={"ID Proof"} />
                 <LocationDropDown inputValue={"Location dropdown"} />
@@ -49,9 +54,10 @@ export default function Register() {
                 </button>
               </div>
             </div>
-          </form>
+          </div>
         </div>
       </div>
+      <div className="colorpart_createprofile"></div>
     </div>
   );
 }

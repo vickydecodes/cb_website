@@ -1,0 +1,66 @@
+.navitem.active{
+    background-color: gold;
+    color: white;
+    font-weight: 800;
+    padding: 10px 20px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    text-align: start;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+
+.navitem{
+    padding: 10px 20px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    text-align: start;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+
+.logoutbutton{
+    color: red;
+    padding: 10px 20px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    text-align: start;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+
+.logoutbutton.active {
+    background-color: red;
+    color: white;
+    font-weight: 800;
+    padding: 10px 20px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    text-align: start;
+    cursor: pointer;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.createbutton:hover{
+    color: gold;
+    border: 2px solid gold;
+    background-color: white;
+}
+
+.createbutton{
+    text-align: center;
+    background-color: gold;
+    color: white;
+    font-weight: 800;
+    padding: 20px 30px;
+    margin-bottom: 30px;
+    border-radius: 10px;
+    text-align: start;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+

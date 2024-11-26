@@ -1,0 +1,12 @@
+.adminpage{
+    height: 100vh;
+    padding: 40px;
+}
+
+h3{
+    font-weight: 600;
+}
+
+.alleventstabs{
+    width: 80%
+}

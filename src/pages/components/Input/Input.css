@@ -1,15 +1,28 @@
-.input_label_c {
-    color: gold
-}
-
-
-.input_input_c {
-    margin-top: 5px;
-    padding: 8px;
-    border-radius: 6px;
-    border: 1px solid #808080;
-    width: 400px !important;
-    height: 50px !important;
-}
-
+.input_c {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px; 
+    width: 100%; 
+  }
+  
+  .input_label_c {
+    font-weight: bold;
+    color: #f7b600; 
+    margin-bottom: 8px; 
+    align-self: flex-start; 
+  }
+  
+  .input_input_c {
+    width: 100%;
+    padding: 16px; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+    font-size: 16px;
+  }
+  
+  .input_input_c:focus {
+    outline: none;
+    border-color: #f7b600; 
+  }
+  
 

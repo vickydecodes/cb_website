@@ -16,7 +16,7 @@ export default function VerifyA() {
   );
   return (
     <div className="full-page-container">
-      <div className="content">
+      <div className="content shadow-lg">
         <div className="headerForLogoAndGreet">
           <img
             src="/img/logo with name.png"

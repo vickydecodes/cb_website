@@ -1,0 +1,19 @@
+.input_label_dropdown {
+    color: gold
+}
+
+
+.input_input_dropdown {
+    margin-top: 3px;
+    padding: 20px; 
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    width: 100% !important;
+    color: #808080;
+}
+
+
+.input_input_dropdown:focus{
+    outline: none;
+    border-color: #f7b600;
+}

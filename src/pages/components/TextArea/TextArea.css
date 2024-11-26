@@ -1,0 +1,18 @@
+.input_label_textarea {
+    color: gold
+}
+
+
+.input_input_textarea {
+    margin-top: 5px;
+    padding: 20px;
+    border-radius: 6px;
+    border: 1px solid #ccc; 
+    width: 100% !important;
+    height: 100px !important;
+}
+
+.input_input_textarea:focus{
+    outline: none;
+    border-color: #f7b600;
+}

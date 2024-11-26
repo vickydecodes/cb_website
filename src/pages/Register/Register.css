@@ -1,13 +1,13 @@
 .full-page-container {
     height: 100vh;
     width: 100vw;
-    padding: 40px 60px;
+    padding: 30px;
     border-radius: 30px;
 }
 
 .content {
     height: 100%;
-    width: 100%;
+    width: 100% !important;
     border: 2px solid gold;
     border-radius: 30px;
 }
@@ -35,5 +35,11 @@
     height: 50px;
     color: white;
     border: 0px;
-    font-size: 20px;
+    font-size:20px;
+}
+
+.colorpart_register{
+    height: 100vh;
+    background-color: gold;
+    width: 25%;
 }

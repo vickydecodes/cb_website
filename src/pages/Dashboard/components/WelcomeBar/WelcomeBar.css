@@ -1,0 +1,29 @@
+.welcomebar {
+    height: 150px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    font-size: 24px;
+    width: 100%;
+    border-radius: 20px;
+}
+
+.headerbar {
+    height: 120px
+}
+
+.collegebannerimg {
+    margin-left: 10px;
+    width: 100%;
+    object-fit: contain;
+}
+
+
+.imgbannerforcollege{
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}

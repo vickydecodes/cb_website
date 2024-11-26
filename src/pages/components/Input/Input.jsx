@@ -7,7 +7,7 @@ export default function Input({ inputValue }) {
   };
 
   return (
-    <div className="input_c d-flex flex-column mb-4">
+    <div className="input_c d-flex flex-column mb-4 justify-content-center align-items-center" style={{width: '100%'}}>
       <label className="input_label_c" htmlFor={inputValue}>
         <h5>{capitalize(inputValue)}</h5>
       </label>

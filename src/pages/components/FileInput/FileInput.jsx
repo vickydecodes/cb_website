@@ -21,25 +21,25 @@ export default function FileInput({ inputValue }) {
     return s[0].toUpperCase() + s.slice(1);
   };
   return (
-    <div className="input_c d-flex flex-column mb-4">
-      <div className="d-flex flex-column text-start">
-      <label className="input_label_c" htmlFor={inputValue}>
-        <h5>{capitalize(inputValue)}</h5>
-      </label>
-      <input
-        type="file"
-        onChange={handleFileInputChange}
-        accept="image/*"
-        className="input_input_file_c "
-        placeholder={"Enter " + capitalize(inputValue)}
-        id={inputValue}
-      />
+    <div className="file-input-container d-flex align-items-start mb-4">
+      <div className="input-wrapper d-flex flex-column">
+        <label className="input_label_c" htmlFor={inputValue}>
+          <h5>{capitalize(inputValue)}</h5>
+        </label>
+        <input
+          type="file"
+          onChange={handleFileInputChange}
+          accept="image/*"
+          className="input_input_file_c"
+          placeholder={"Enter " + capitalize(inputValue)}
+          id={inputValue}
+        />
       </div>
-      <div className="preview-container d-flex justify-content-center align-items-center" style={{width: imagePreview ? '150px' : '100px'}}>
+      <div className="preview-container ms-3">
         {imagePreview ? (
-          <img src={imagePreview} alt="Preview" className="image-preview mx-3 mt-3" />
+          <img src={imagePreview} alt="Preview" className="image-preview" />
         ) : (
-      ""
+          <p className="preview-placeholder">No image selected</p>
         )}
       </div>
     </div>

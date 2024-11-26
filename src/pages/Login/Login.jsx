@@ -6,7 +6,7 @@ import "./Login.css";
 export default function Login() {
   return (
     <div className="full-page-container_login">
-      <div className="content_login">
+      <div className="content_login shadow-lg">
         <div className="headerForLogoAndGreet">
           <img
             src="/img/logo with border.png"
@@ -31,7 +31,6 @@ export default function Login() {
           <Input inputValue={"email"} />
           <Input inputValue={"password"} />
           <button className="LoginButton">Login</button>
-          
         </div>
         <div className="d-flex justify-content-end text-end mb-3">
            <span className="me-4"><button className="ForgetPasswordBtn">Forget Password ?</button></span>

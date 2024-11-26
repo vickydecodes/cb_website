@@ -1,0 +1,54 @@
+.postcard {
+    border-radius: 14px;
+    height: 100%;
+}
+
+.postcard-img {
+    border-radius: 12px;
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.postcardmodal-img {
+    border-radius: 12px;
+    height: 400px;
+    width: auto;
+    object-fit: contain;
+}
+
+.postdates {
+    font-size: 14px;
+}
+
+.departmenttab {
+    background-color: gold;
+    padding: 10px 10px;
+    border-radius: 10px;
+    color: white;
+}
+
+.card-title {
+    color: goldenrod;
+    font-weight: 600;
+}
+
+.togglebutton {
+    cursor: pointer;
+    border: 0;
+    background-color: transparent;
+    appearance: none;
+}
+
+.editbtn, .deletebtn{
+    margin: 15px 20px;
+    color: black;
+    font-weight: 400;
+}
+
+th{
+    width: 100%;
+}
+
+
+

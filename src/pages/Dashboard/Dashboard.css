@@ -1,0 +1,25 @@
+.full-page-container_dashboard{
+    height: 100vh;
+    width: 100vw;
+}
+
+.sidebar_dashboard{
+    padding: 30px;
+    overflow-y: hidden;
+}
+
+
+.dashboard_pages{
+    height: 100vh;
+    overflow-y: auto;
+}
+
+
+.logospace_img{
+    width: 100%;
+
+}
+
+.navlinks{
+    height: 90%;
+}
