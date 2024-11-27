@@ -4,10 +4,15 @@
   gap: 16px; /* Space between input and preview */
 }
 
+.file-input-container_createpost{
+  width: 100%;
+}
+
+
 .input-wrapper {
   display: flex;
   flex-direction: column;
-  width: 60%; /* Adjust as needed */
+  width: 100%; /* Adjust as needed */
 }
 
 .input_label_c {
@@ -17,6 +22,15 @@
 }
 
 .input_input_file_c {
+  padding: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.input_input_file_createpost{
+  width: 100% !important;
   padding: 16px;
   border: 1px solid #ccc;
   border-radius: 4px;

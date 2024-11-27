@@ -1,7 +1,7 @@
 import React from "react";
 import "./Input.css";
 
-export default function Input({ inputValue }) {
+export default function Input({ inputValue, isDateType=false }) {
   const capitalize = (s) => {
     return s[0].toUpperCase() + s.slice(1);
   };
@@ -12,7 +12,7 @@ export default function Input({ inputValue }) {
         <h5>{capitalize(inputValue)}</h5>
       </label>
       <input
-        type="text"
+        type={isDateType? 'date':"text"}
         className="input_input_c "
         placeholder={"Enter " + capitalize(inputValue)}
         id={inputValue}
