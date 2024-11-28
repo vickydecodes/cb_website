@@ -36,7 +36,7 @@ export default function CreateProfile() {
               </div>
             </div>
             <div className="col-md-6">
-              <div className="d-flex flex-column columns justify-content-center mt-4">
+              <div className="d-flex flex-column columns justify-content-around mt-4">
               <Input inputValue={"Linkedin"} />
 
                 <ThreeInputs />
@@ -45,7 +45,7 @@ export default function CreateProfile() {
                 <Input inputValue={"college Phone Number"} />
                 <TextArea />
                 <DropDown />
-                <button type="submit" className="submitBtnForCreateProfile my-3">
+                <button type="submit" className="submitBtnForCreateProfile my-3 mb-5">
                   Submit
                 </button>
               </div>

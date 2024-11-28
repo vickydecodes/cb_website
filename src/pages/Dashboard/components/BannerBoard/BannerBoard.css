@@ -1,0 +1,61 @@
+.welcomebar_bannerboard {
+    height: 200px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    font-size: 24px;
+    width: 100%;
+    border-radius: 20px;
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    overflow: hidden; 
+}
+
+.welcomebar_bannerboard::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: inherit; 
+    filter: blur(2px);
+    filter: brightness(50%);
+    z-index: 0;
+    transform: scale(1.1); 
+}
+
+.bannerboard_cardbody {
+    z-index: 1;
+    position: relative;
+    padding: 16px;
+    border-radius: 10px;
+    color: white;
+}
+
+.headerbar {
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.collegebannerimg {
+    margin-left: 10px;
+    width: 100%;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.imgbannerforcollege {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    z-index: 1;
+    position: relative;
+}

@@ -35,13 +35,15 @@ export default function Register() {
             </div>
             <div className="col-lg-6 d-flex flex-column">
               <div
-                className="d-flex flex-column columns justify-content-center"
+                className="d-flex flex-column columns justify-content-around"
                 style={{ height: "100%" }}
               >
                 {detailsInputTabs1.map((tab, idx) => {
                   return <Input inputValue={tab} key={idx} />;
                 })}
                 <PasswordInput inputValue={'Password'}/>
+                <PasswordInput inputValue={'Confirm Password'}/>
+
               </div>
             </div>
             <div className="col-lg-6 mb-3">

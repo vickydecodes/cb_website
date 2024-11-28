@@ -4,12 +4,13 @@ import "./Dashboard.css";
 import Admin from "./pages/Admin/Admin";
 import Events from "./pages/Events/Events";
 import UpdateProfile from "./pages/UpdateProfile/UpdateProfile";
+import CollegeProfile from './pages/CollegeProfile/CollegeProfile.jsx'
 import Support from "./pages/Support/Support";
 import { render } from "react-dom";
 import { Nav } from "react-bootstrap";
 
 export default function Dashboard() {
-  const navItems = ["Dashboard", "Events", "Update Profile", "Support"];
+  const navItems = ["Dashboard", "Events","College Profile", "Support"];
 
   const [page, setPage] = useState("dashboard");
 
@@ -25,8 +26,8 @@ export default function Dashboard() {
         return <Admin />;
       case "events":
         return <Events />;
-      case "update profile":
-        return <UpdateProfile />;
+      case "college profile":
+        return <CollegeProfile />;
       case "support":
         return <Support />;
       default:

@@ -1,0 +1,18 @@
+h5{
+    margin-bottom: 10px;
+    margin-right: 10px;
+    color: #696969;
+}
+
+
+.detailstab{
+    margin-bottom: 36px;
+    color: black
+}
+
+.instagram, .facebook,.linkedin {
+    margin-bottom: 18px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
