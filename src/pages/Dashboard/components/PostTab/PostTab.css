@@ -1,6 +1,7 @@
 .postcard {
     border-radius: 14px;
     height: 100%;
+    cursor: pointer;
 }
 
 .postcard-img {
@@ -44,6 +45,10 @@
     margin: 15px 20px;
     color: black;
     font-weight: 400;
+}
+
+th{
+    width: 20%;
 }
 
 

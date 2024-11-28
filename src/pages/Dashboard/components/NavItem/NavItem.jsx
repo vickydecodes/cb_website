@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./NavItem.css";
 
 export default function NavItem({
@@ -18,6 +19,13 @@ export default function NavItem({
     setIsHovered(false);
   };
 
+
+  const navigate = useNavigate();
+
+  const handleCreateButton = () => {
+    navigate('/create-post')
+  }
+
   const isCurrentPage = nav.toLowerCase() === currentPage;
 
   if (isLogoutButton) {
@@ -36,6 +44,7 @@ export default function NavItem({
         className={isHovered ? "createbutton active mt-auto" : "createbutton mt-auto"}
         onMouseOver={handleMouseOver}
         onMouseOut={handleMouseOut}
+        onClick={handleCreateButton}
       >
         {nav.toUpperCase()}
       </div>

@@ -17,10 +17,7 @@ export default function PostTab() {
   return (
     <div className="col-md-4 p-1">
       <div
-        className="card postcard shadow p-3"
-        data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
-      >
+        className="card postcard shadow p-3">
         <div className="card-body p-0">
           <h5 className="card-title d-flex align-items-center">
             Event title '23
@@ -64,7 +61,8 @@ export default function PostTab() {
             <span className="ms-auto">Event Start : 30-12-2024</span>
           </small>
         </p>
-        <img src={imgs[randNum]} className=" postcard-img mt-1" alt="..." />
+        <img src={imgs[randNum]}  data-bs-toggle="modal"
+        data-bs-target="#exampleModal" className=" postcard-img mt-1" alt="..." />
       </div>
 
       <div

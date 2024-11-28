@@ -17,6 +17,8 @@ export default function Dashboard() {
     setPage(page);
   };
 
+
+
   const renderPage = () => {
     switch (page) {
       case "dashboard":
