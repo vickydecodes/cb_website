@@ -5,11 +5,14 @@
     align-self: flex-start;
 }
 
+
+
 .input_dropdowns {
     display: flex;
     justify-content: space-around;
     margin-bottom: 16px;
     width: 100%;
+    max-width: 100%;
 }
 
 .input_select_c {

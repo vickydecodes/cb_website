@@ -13,7 +13,7 @@ export default function CreateProfile() {
         <div className="content_createprofile shadow-lg">
           <div className="row g-0 p-0" style={{ height: "100%" }}>
             <div className="col-md-6 d-flex flex-column">
-              <div className="headerForLogoAndGreet_createprofile text-start">
+              <div className="headerForLogoAndGreet_createprofile">
                 <img
                   src="/img/logo with name.png"
                   className="headerLogo img-fluid"
@@ -28,29 +28,28 @@ export default function CreateProfile() {
                 </div>
               </div>
               <div
-                className="d-flex flex-column justify-content-center mx-5"
-                style={{ height: "100%" }}
+                className="d-flex flex-column columns justify-content-center"
               >
                 <FileInput inputValue={"College Logo"} />
                 <FileInput inputValue={"College Banner"} />
                 <Input inputValue={"college Name"} />
-                <Input inputValue={"Linkedin"} />
               </div>
             </div>
             <div className="col-md-6">
-              <div className="d-flex flex-column justify-content-center mx-5 mt-4">
+              <div className="d-flex flex-column columns justify-content-center mt-4">
+              <Input inputValue={"Linkedin"} />
+
                 <ThreeInputs />
                 <Input inputValue={"college Website"} />
                 <Input inputValue={"college Location"} />
                 <Input inputValue={"college Phone Number"} />
                 <TextArea />
                 <DropDown />
-              </div>
-              <div className="d-flex justify-content-center mt-4">
-                <button type="submit" className="submitBtnForCreateProfile">
+                <button type="submit" className="submitBtnForCreateProfile my-3">
                   Submit
                 </button>
               </div>
+                
             </div>
           </div>
         </div>

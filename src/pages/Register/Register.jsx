@@ -4,20 +4,20 @@ import "./Register.css";
 import FileInput from "../components/FileInput/FileInput";
 import LocationDropDown from "../components/LocationDropDown/LocationDropDown";
 import CheckBox from "../components/CheckBox/CheckBox";
+import PasswordInput from "../components/PasswordInput/PasswordInput";
 
 export default function Register() {
   const detailsInputTabs1 = [
     "college Name",
     "name",
-    "email",
-    "password",
     "designation",
+    "email",
   ];
 
   return (
     <div className="d-flex">
-      <div className="full-page-container">
-        <div className="content shadow-lg">
+      <div className="full-page-container_register">
+        <div className="content_register shadow-lg mb-3">
           <div className="row g-0 p-0" style={{ height: "100%" }}>
             <div className="headerForLogoAndGreet">
               <img
@@ -33,18 +33,19 @@ export default function Register() {
                 </span>
               </div>
             </div>
-            <div className="col-md-6 d-flex flex-column">
+            <div className="col-lg-6 d-flex flex-column">
               <div
-                className="d-flex flex-column justify-content-center mx-5"
+                className="d-flex flex-column columns justify-content-center"
                 style={{ height: "100%" }}
               >
                 {detailsInputTabs1.map((tab, idx) => {
                   return <Input inputValue={tab} key={idx} />;
                 })}
+                <PasswordInput inputValue={'Password'}/>
               </div>
             </div>
-            <div className="col-md-6">
-              <div className="d-flex flex-column justify-content-center mx-5 mt-4">
+            <div className="col-lg-6 mb-3">
+              <div className="d-flex flex-column columns justify-content-center mt-4">
                 <Input inputValue={"Mobile Number"} />
                 <FileInput inputValue={"ID Proof"} />
                 <LocationDropDown inputValue={"Location dropdown"} />
@@ -57,7 +58,7 @@ export default function Register() {
           </div>
         </div>
       </div>
-      <div className="colorpart_createprofile"></div>
+      <div className="colorpart_register"></div>
     </div>
   );
 }

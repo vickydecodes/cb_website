@@ -1,12 +1,16 @@
-.full-page-container {
-    height: 100vh;
+.full-page-container_register {
+    height: auto !important;
     width: 100vw;
     padding: 30px;
     border-radius: 30px;
 }
 
-.content {
-    height: 100%;
+.columns {
+    padding: 0px 40px 0px 40px;
+}
+
+.content_register {
+    height: auto !important;
     width: 100% !important;
     border: 2px solid gold;
     border-radius: 30px;
@@ -14,7 +18,7 @@
 
 .headerForLogoAndGreet {
     text-align: center;
-    margin-top: 30px;
+    padding: 15px;
 }
 
 .headerLogo {
@@ -29,17 +33,51 @@
 }
 
 .submit_button {
-    width: 400px !important;
+    width: 100% !important;
     border-radius: 10px;
     background-color: gold;
     height: 50px;
     color: white;
     border: 0px;
-    font-size:20px;
+    font-size: 20px;
+    margin-bottom: 20px;
 }
 
-.colorpart_register{
-    height: 100vh;
+.colorpart_register {
+    height: auto !important;
     background-color: gold;
     width: 25%;
+}
+
+
+@media (max-width: 978px) {
+    .full-page-container {
+        padding: 15px
+    }
+
+    .colorpart_register {
+        display: none;
+    }
+
+    .columns{
+        padding: 20px
+    }
+
+    .headerForLogoAndGreet {
+        text-align: center;
+        padding: 15px;
+        font-size: 13px;
+    }
+
+    .headerLogo{
+        height: 60px !important;
+    }
+
+    h5{
+        font-size: 18px;
+    }
+
+    h1{
+        font-size: 26px;
+    }
 }

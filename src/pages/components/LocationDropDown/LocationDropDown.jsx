@@ -33,7 +33,7 @@ export default function LocationDropDown({ inputValue }) {
   }, []);
 
   return (
-    <div className="input_dropdowns row p-0 mb-4" >
+    <div className="input_dropdowns row d-flex flex-row g-2 p-0 mb-4" >
       <div className="col-md-4 d-md-flex flex-column ">
         <label className="input_label_c" htmlFor="country">
           <h5>Country</h5>

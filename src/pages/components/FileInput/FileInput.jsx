@@ -7,6 +7,7 @@ export default function FileInput({
   setImagePreviewForCreatePost,
 }) {
   const [imagePreview, setImagePreview] = useState(null);
+  
 
   const handleFileInputChange = (e) => {
     const file = e.target.files[0];
@@ -50,12 +51,14 @@ export default function FileInput({
       </div>
 
       {!isCreatePostPage && (
-        <div className="preview-container ms-3">
+        <div className="d-flex justify-content-center align-items-center w-100">
+          <div className="preview-container m-3">
           {imagePreview ? (
             <img src={imagePreview} alt="Preview" className="image-preview" />
           ) : (
             <p className="preview-placeholder">No image selected</p>
           )}
+        </div>
         </div>
       )}
     </div>
