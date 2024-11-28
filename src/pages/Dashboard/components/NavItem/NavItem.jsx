@@ -26,6 +26,10 @@ export default function NavItem({
     navigate('/create-post')
   }
 
+  if(currentPage === 'update profile'){
+    currentPage = 'college profile'
+  }
+
   const isCurrentPage = nav.toLowerCase() === currentPage;
 
   if (isLogoutButton) {

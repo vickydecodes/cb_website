@@ -4,7 +4,7 @@ import { FaPencil } from "react-icons/fa6";
 import DetailsTab from "../../components/DetailsTab/DetailsTab";
 import BannerBoard from "../../components/BannerBoard/BannerBoard";
 
-export default function CollegeProfile() {
+export default function CollegeProfile({handleEditButtonForCollegeProfile}) {
   return (
     <div className="collegeprofilepage">
       <BannerBoard />
@@ -59,7 +59,7 @@ export default function CollegeProfile() {
               <DetailsTab heading={"Admin Mobile"} content={"+91 9638521478"} />
             </div>
           </div>
-          <button className="editbutton_collegeprofile">Edit Profile <FaPencil/></button>
+          <button className="editbutton_collegeprofile" onClick={handleEditButtonForCollegeProfile}>Edit Profile <FaPencil/></button>
         </div>
       </div>
     </div>

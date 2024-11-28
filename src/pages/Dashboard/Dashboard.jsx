@@ -18,6 +18,20 @@ export default function Dashboard() {
     setPage(page);
   };
 
+  const handleEditButtonForCollegeProfile = () => {
+    setPage('update profile')
+  }
+
+  const handleBackButton = () => {
+    let backbutton; 
+    if(page === 'update profile'){
+      backbutton = 'college profile';
+    }else{
+      backbutton = 'dashboard'
+    }
+    setPage(backbutton)
+  }
+
 
 
   const renderPage = () => {
@@ -27,7 +41,9 @@ export default function Dashboard() {
       case "events":
         return <Events />;
       case "college profile":
-        return <CollegeProfile />;
+        return <CollegeProfile handleEditButtonForCollegeProfile={handleEditButtonForCollegeProfile}/>;
+      case "update profile":
+        return <UpdateProfile handleBackButton={handleBackButton}/>
       case "support":
         return <Support />;
       default:
