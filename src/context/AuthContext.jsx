@@ -1,5 +1,6 @@
 import { useContext, createContext, useState, useEffect } from "react";
 import { auth } from "../firebase/Firebase";
+import { useNavigate } from "react-router-dom";
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
@@ -17,18 +18,19 @@ export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
 
-  console.log(currentUser);
+  const navigate = useNavigate();
+
 
   const signup = async (email, password) => {
     return await createUserWithEmailAndPassword(auth, email, password);
   };
 
-  const login = async (email, password) => {
+  const loginFirebase = async (email, password) => {
     return await signInWithEmailAndPassword(auth, email, password);
   };
 
-  const verifyEmail = async (user) => {
-    return await sendEmailVerification(user);
+  const verifyEmailFirebase = async () => {
+    return await sendEmailVerification(currentUser);
   };
 
   const logout = async () => {
@@ -43,7 +45,7 @@ export function AuthProvider({ children }) {
     return unsubscribe;
   }, []);
 
-  const value = { currentUser, signup, login, verifyEmail, logout };
+  const value = { currentUser, signup, loginFirebase , verifyEmailFirebase, logout };
 
   return (
     <AuthContext.Provider value={value}>

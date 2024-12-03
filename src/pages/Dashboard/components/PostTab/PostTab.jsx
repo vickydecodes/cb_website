@@ -1,7 +1,11 @@
 import React from "react";
+import { useApi } from "../../../../context/ApiContext";
 import "./PostTab.css";
 
-export default function PostTab() {
+export default function PostTab({ handleDashboardPage }) {
+  const { deletePost } = useApi();
+
+
   const randNum = Math.floor(Math.random() * 2);
 
   const imgs = [
@@ -14,10 +18,15 @@ export default function PostTab() {
     "Bachelors of computer applications",
   ];
 
+  const handleSubmitForDeletePost = (e) => {
+    e.preventDefault();
+    deletePost();
+    handleDashboardPage("dashboard");
+  };
+
   return (
     <div className="col-md-4 p-1">
-      <div
-        className="card postcard shadow p-3">
+      <div className="card postcard shadow p-3">
         <div className="card-body p-0">
           <h5 className="card-title d-flex align-items-center">
             Event title '23
@@ -45,10 +54,56 @@ export default function PostTab() {
                     Edit
                   </a>
                   <hr />
-                  <a className="deletebtn" href="#">
+                  <a
+                    className="deletebtn"
+                    href="#"
+                    data-bs-toggle="modal"
+                    data-bs-target="#deleteToast"
+                  >
                     Delete{" "}
                   </a>
                 </ul>
+                <div
+                  className="modal fade"
+                  id="deleteToast"
+                  tabIndex="-1"
+                  aria-labelledby="deleteToast"
+                >
+                  <div className="modal-dialog">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <h5 className="modal-title">Confirm Delete</h5>
+                        <button
+                          type="button"
+                          className="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        ></button>
+                      </div>
+                      <div className="modal-body">
+                        <p>Are you sure to delete the post?</p>
+                      </div>
+                      <form onSubmit={handleSubmitForDeletePost}>
+                        <div className="modal-footer">
+                          <button
+                            type="reset"
+                            className="btn btn-secondary"
+                            data-bs-dismiss="modal"
+                          >
+                            Cancel
+                          </button>
+                          <button
+                            type="submit"
+                            className="btn btn-primary"
+                            data-bs-dismiss="modal"
+                          >
+                            Delete
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
               </div>
             </span>
           </h5>
@@ -61,8 +116,13 @@ export default function PostTab() {
             <span className="ms-auto">Event Start : 30-12-2024</span>
           </small>
         </p>
-        <img src={imgs[randNum]}  data-bs-toggle="modal"
-        data-bs-target="#exampleModal" className=" postcard-img mt-1" alt="..." />
+        <img
+          src={imgs[randNum]}
+          data-bs-toggle="modal"
+          data-bs-target="#exampleModal"
+          className=" postcard-img mt-1"
+          alt="..."
+        />
       </div>
 
       <div
@@ -91,16 +151,16 @@ export default function PostTab() {
             <div className="modal-body p-3">
               {" "}
               <div className="d-flex justify-content-center">
-              <img
-                src={imgs[randNum]}
-                className=" postcardmodal-img mt-1"
-                alt="..."
-              />
+                <img
+                  src={imgs[randNum]}
+                  className=" postcardmodal-img mt-1"
+                  alt="..."
+                />
               </div>
               <div className="modal-texts mt-2">
                 <table className="table table-borderless">
-                  <tbody> 
-                  <tr>
+                  <tbody>
+                    <tr>
                       <th scope="row">Event Name</th>
                       <td>Event '23</td>
                     </tr>

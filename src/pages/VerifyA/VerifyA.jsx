@@ -1,5 +1,6 @@
 import React from "react";
 import "./VerifyA.css";
+import { Link } from "react-router-dom";
 
 export default function VerifyA() {
   const messageSvg = (
@@ -16,7 +17,7 @@ export default function VerifyA() {
   );
   return (
     <div className="full-page-container">
-      <div className="content shadow-lg">
+      <div className="content shadow-lg d-flex justify-content-center align-items-center flex-column">
         <div className="headerForLogoAndGreet">
           <img
             src="/img/logo with name.png"
@@ -36,6 +37,7 @@ export default function VerifyA() {
         <div className="text-center" style={{color: 'gold', fontWeight: '200', marginTop: '15px'}}>
           <h2>You will receive a mail if the account is <br /><span className="mt-2">verified</span></h2>
         </div>
+        <Link to='/create-user'>Create User</Link>
       </div>
     </div>
   );

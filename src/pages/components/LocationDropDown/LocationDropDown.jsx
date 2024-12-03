@@ -3,83 +3,119 @@ import { GetCountries, GetState, GetCity } from "react-country-state-city";
 
 import "./LocationDropDown.css";
 
-export default function LocationDropDown({ inputValue }) {
+export default function LocationDropDown({ handleDropdownChange }) {
   const [countryid, setCountryid] = useState(0);
   const [stateid, setStateid] = useState(0);
   const [cityid, setCityid] = useState(0);
+  const [location, setLocation] = useState({ country: "", state: "", city: "" });
 
   const [countriesList, setCountriesList] = useState([]);
   const [stateList, setStateList] = useState([]);
   const [cityList, setCityList] = useState([]);
 
+  // Fetch countries on mount
   useEffect(() => {
-    GetCountries().then((result) => {
-      setCountriesList(result);
+    GetCountries()
+      .then((countries) => {
+        setCountriesList(countries);
+        const defaultCountry = countries.find((c) => c.name === "India");
 
-      const defaultCountry = result.find((country) => country.name === "India");
-
-      setCountryid(defaultCountry.id);
-      GetState(defaultCountry.id).then((states) => {
-        setStateList(states);
-        const defaultState = states.find(
-          (state) => state.name === "Tamil Nadu"
-        );
-        setStateid(defaultState.id);
-        GetCity(defaultCountry.id, defaultState.id).then((res) => {
-          setCityList(res);
-        });
-      });
-    });
+        if (defaultCountry) {
+          setCountryid(defaultCountry.id);
+          setLocation((prev) => ({ ...prev, country: defaultCountry.name }));
+          fetchStates(defaultCountry.id);
+        }
+      })
+      .catch((error) => console.error("Error fetching countries:", error));
   }, []);
 
+  // Fetch states based on selected country
+  const fetchStates = (countryId) => {
+    GetState(countryId)
+      .then((states) => {
+        setStateList(states);
+        if (states.length > 0) {
+          const defaultState = states[0];
+          setStateid(defaultState.id);
+          setLocation((prev) => ({ ...prev, state: defaultState.name }));
+          fetchCities(countryId, defaultState.id);
+        }
+      })
+      .catch((error) => console.error("Error fetching states:", error));
+  };
+
+  // Fetch cities based on selected state
+  const fetchCities = (countryId, stateId) => {
+    GetCity(countryId, stateId)
+      .then((cities) => {
+        setCityList(cities);
+        if (cities.length > 0) {
+          const defaultCity = cities[0];
+          setCityid(defaultCity.id);
+          setLocation((prev) => ({ ...prev, city: defaultCity.name }));
+        }
+      })
+      .catch((error) => console.error("Error fetching cities:", error));
+  };
+
+  const handleCountryChange = (e) => {
+    const selectedCountry = countriesList[e.target.value];
+    setCountryid(selectedCountry.id);
+    setStateList([]); // Reset state list
+    setCityList([]); // Reset city list
+    setLocation((prev) => ({ ...prev, country: selectedCountry.name, state: "", city: "" }));
+    fetchStates(selectedCountry.id);
+  };
+  
+  const handleStateChange = (e) => {
+    const selectedState = stateList.find((state) => state.id === parseInt(e.target.value));
+    setStateid(selectedState.id);
+    setCityList([]); // Reset city list
+    setLocation((prev) => ({ ...prev, state: selectedState.name, city: "" }));
+    fetchCities(countryid, selectedState.id);
+  };
+  
+  const handleCityChange = (e) => {
+    const selectedCity = cityList.find((city) => city.id === parseInt(e.target.value));
+    setCityid(selectedCity.id);
+    setLocation((prev) => ({ ...prev, city: selectedCity.name }));
+  };
+  
+  useEffect(() => {
+    handleDropdownChange(location);
+  }, [location]);
+  
   return (
-    <div className="input_dropdowns row d-flex flex-row g-2 p-0 mb-4" >
-      <div className="col-md-4 d-md-flex flex-column ">
+    <div className="input_dropdowns row d-flex flex-row g-2 p-0 mb-4">
+      {/* Country Dropdown */}
+      <div className="col-md-4 d-md-flex flex-column">
         <label className="input_label_c" htmlFor="country">
           <h5>Country</h5>
         </label>
         <select
-          name="country"
           id="country"
           className="input_select_c"
-          onChange={(e) => {
-            console.log(e.target.value);
-            const country = countriesList[e.target.value];
-            console.log(stateList);
-            setCountryid(country.id);
-            GetState(country.id).then((result) => {
-              setStateList(result);
-            });
-          }}
-          value={countryid}
+          onChange={handleCountryChange}
+          value={countriesList.findIndex((c) => c.id === countryid)}
         >
           {countriesList.map((item, index) => (
-            <option key={index} value={index}>
+            <option key={item.id} value={index}>
               {item.name}
             </option>
           ))}
         </select>
       </div>
-      <div className="col-md-4 d-flex flex-column ">
+
+      {/* State Dropdown */}
+      <div className="col-md-4 d-flex flex-column">
         <label className="input_label_c" htmlFor="state">
           <h5>State</h5>
         </label>
         <select
-          name="state"
           id="state"
+          disabled={stateList.length === 0}
           className="input_select_c"
-          onChange={(e) => {
-            const stateId = e.target.value;
-            console.log(stateId);
-            console.log(stateList);
-            const state = stateList.find((s) => s.id === parseInt(stateId));
-            console.log(state);
-            setStateid(state.id);
-            GetCity(countryid, state.id).then((result) => {
-              console.log("Fetched Cities: ", result);
-              setCityList(result);
-            });
-          }}
+          onChange={handleStateChange}
           value={stateid}
         >
           {stateList.map((item) => (
@@ -89,19 +125,17 @@ export default function LocationDropDown({ inputValue }) {
           ))}
         </select>
       </div>
-      <div className="col-md-4 d-flex flex-column ">
+
+      {/* City Dropdown */}
+      <div className="col-md-4 d-flex flex-column">
         <label className="input_label_c" htmlFor="city">
           <h5>City</h5>
         </label>
         <select
-          name="city"
           id="city"
+          disabled={cityList.length === 0}
           className="input_select_c"
-          onChange={(e) => {
-            const cityId = e.target.value;
-            const city = cityList.find((s) => s.id === parseInt(cityId));
-            setCityid(city.id);
-          }}
+          onChange={handleCityChange}
           value={cityid}
         >
           {cityList.map((item) => (

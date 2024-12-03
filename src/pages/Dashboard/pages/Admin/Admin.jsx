@@ -4,7 +4,7 @@ import "./Admin.css";
 import InsightsTab from "../../components/InsightsTab/InsightsTab";
 import PostTab from "../../components/PostTab/PostTab";
 
-export default function Admin() {
+export default function Admin({handleDashboardPage}) {
   return (
     <div className="adminpage">
       <WelcomeBar />
@@ -19,14 +19,14 @@ export default function Admin() {
       <div className="alleventstabs p-2 mt-5">
         <h3>Your Active Events</h3>
         <div className="d-flex row">
-          <PostTab />
-          <PostTab />
-          <PostTab />
-          <PostTab />
-          <PostTab />
-          <PostTab />
-          <PostTab />
-          <PostTab />
+          <PostTab handleDashboardPage={handleDashboardPage}/>
+          <PostTab handleDashboardPage={handleDashboardPage}/>
+          <PostTab handleDashboardPage={handleDashboardPage}/>
+          <PostTab handleDashboardPage={handleDashboardPage}/>
+          <PostTab handleDashboardPage={handleDashboardPage}/>
+          <PostTab handleDashboardPage={handleDashboardPage}/>
+          <PostTab handleDashboardPage={handleDashboardPage}/>
+          <PostTab handleDashboardPage={handleDashboardPage}/>
         </div>
       </div>
     </div>

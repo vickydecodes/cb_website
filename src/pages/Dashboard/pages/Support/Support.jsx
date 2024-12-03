@@ -1,9 +1,74 @@
-import React from "react";
+import React, { useState } from "react";
 import Input from "../../../components/Input/Input.jsx";
 import TextArea from "../../../components/TextArea/TextArea";
+import { toast } from "react-toastify";
+import { useApi } from "../../../../context/ApiContext.jsx";
 import "./Support.css";
 
-export default function Support() {
+export default function Support({handleDashboardPage}) {
+
+  const {sendSupport} = useApi();
+
+
+  const [formData, setFormData] = useState({
+    name: "",
+    collegeName: "",
+    collegeEmail: "",
+    message: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { id, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [id]: value,
+    }));
+  };
+
+  const checkTheForm = (formData) => {
+    let checked = true;
+    let errors = {};
+
+    for (let key in formData) {
+      if (
+        formData[key] === "" ||
+        formData[key] === null ||
+        formData[key] === false
+      ) {
+        errors[key] = `${key} cannot be empty`;
+        checked = false;
+      }
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      errors.confirmPassword = "Passwords do not match";
+      checked = false;
+    }
+
+    return { checked, errors };
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const { checked, errors } = checkTheForm(formData);
+
+    if (checked) {
+      console.log("Registration Data Submitted", formData);
+      handleDashboardPage('dashboard')
+      sendSupport();
+    } else {
+      let errs = [];
+      for (let key in errors) {
+        errs.push(key.toUpperCase());
+      }
+      console.log({ errs: errs, errors: errors });
+      toast.error(
+        `${errs.join(", ")} ${errs.length > 1 ? "are" : "is"} missing.`
+      );
+      console.log(formData);
+    }
+  };
+
   const icons = {
     phone: (
       <svg
@@ -90,11 +155,27 @@ export default function Support() {
               </div>
             </div>
           </div>
-          <Input inputValue={"College Name"} />
-          <Input inputValue={"Name"} />
-          <Input inputValue={"College Email"} />
-          <TextArea inputValue={"Message"} />
-          <button className="submitbutton_supportpage">Submit</button>
+          <form onSubmit={handleSubmit}>
+            <div>
+              <Input
+                inputValue={"college Name"}
+                handleInputChange={handleInputChange}
+              />
+              <Input
+                inputValue={"name"}
+                handleInputChange={handleInputChange}
+              />
+              <Input
+                inputValue={"college Email"}
+                handleInputChange={handleInputChange}
+              />
+              <TextArea
+                inputValue={"message"}
+                handleInputChange={handleInputChange}
+              />
+              <button className="submitbutton_supportpage">Submit</button>
+            </div>
+          </form>
         </div>
       </div>
       <div className="emptyspace_supportpage"></div>

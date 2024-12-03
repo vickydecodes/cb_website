@@ -37,17 +37,17 @@ export default function Dashboard() {
   const renderPage = () => {
     switch (page) {
       case "dashboard":
-        return <Admin />;
+        return <Admin handleDashboardPage={handleDashboardPage}/>;
       case "events":
         return <Events />;
       case "college profile":
         return <CollegeProfile handleEditButtonForCollegeProfile={handleEditButtonForCollegeProfile}/>;
       case "update profile":
-        return <UpdateProfile handleBackButton={handleBackButton}/>
+        return <UpdateProfile handleBackButton={handleBackButton} handleDashboardPage={handleDashboardPage}/>
       case "support":
-        return <Support />;
+        return <Support handleDashboardPage={handleDashboardPage} />;
       default:
-        return <Admin />;
+        return <Admin handleDashboardPage={handleDashboardPage}/>;
     }
   };
 
