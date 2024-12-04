@@ -36,15 +36,30 @@
 
 .togglebutton {
     cursor: pointer;
+    padding-right: 0px;
     border: 0;
     background-color: transparent;
     appearance: none;
 }
 
 .editbtn, .deletebtn{
-    margin: 15px 20px;
+    padding: 10px 20px;
+    border: 0px;
+    width: 100%;
+    height: 100% !important;
+    background-color: transparent;
     color: black;
     font-weight: 400;
+}
+
+.eventNameToDelete{
+    background-color: #ccc;
+    padding: 5px 8px;
+    border-radius: 4px;
+}
+
+.editbtn{
+    border-bottom: 1px solid #ccc;
 }
 
 th{
@@ -53,6 +68,32 @@ th{
 
 .modal-body{
     color: black;
+    font-weight: 400;
 }
+
+.modal-title:hover{
+color: red;
+font-weight: 600;
+}
+
+.eventInput{
+    width: 100%;
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+
+.eventInput {
+    width: 100%;
+    padding: 16px; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+    font-size: 16px;
+  }
+  
+  .eventInput:focus {
+    outline: none;
+    border-color: #f7b600; 
+  }
+  
 
 

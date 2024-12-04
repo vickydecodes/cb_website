@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { useApi } from "../../../../context/ApiContext";
+import { toast } from "react-toastify";
 import "./PostTab.css";
 
-export default function PostTab({ handleDashboardPage }) {
+export default function PostTab({
+  handleDashboardPage,
+  data = { eventName: "Event Title '23" },
+}) {
   const { deletePost } = useApi();
 
+  const [formData, setFormData] = useState({
+    eventName: "",
+  });
 
   const randNum = Math.floor(Math.random() * 2);
 
@@ -18,10 +25,30 @@ export default function PostTab({ handleDashboardPage }) {
     "Bachelors of computer applications",
   ];
 
+  const handleInputChange = (e) => {
+    setFormData({
+      eventName: e.target.value,
+    });
+  };
+
+  const checkTheForm = (formData) => {
+    let checked = true;
+    if (data.eventName != formData.eventName) {
+      checked = false;
+    }
+    return { checked };
+  };
+
   const handleSubmitForDeletePost = (e) => {
+    const { checked } = checkTheForm(formData);
     e.preventDefault();
-    deletePost();
-    handleDashboardPage("dashboard");
+    if (checked) {
+      deletePost();
+      handleDashboardPage("dashboard");
+      setFormData({ eventName: "" });
+    } else {
+      toast.error("You mistyped the event name. Please try again!");
+    }
   };
 
   return (
@@ -49,19 +76,17 @@ export default function PostTab({ handleDashboardPage }) {
                     <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
                   </svg>
                 </button>
-                <ul className="dropdown-menu text-start">
-                  <a className="editbtn" href="#">
+                <ul className="dropdown-menu text-start p-0">
+                  <button className="editbtn" href="#">
                     Edit
-                  </a>
-                  <hr />
-                  <a
+                  </button>
+                  <button
                     className="deletebtn"
-                    href="#"
                     data-bs-toggle="modal"
                     data-bs-target="#deleteToast"
                   >
                     Delete{" "}
-                  </a>
+                  </button>
                 </ul>
                 <div
                   className="modal fade"
@@ -72,35 +97,44 @@ export default function PostTab({ handleDashboardPage }) {
                   <div className="modal-dialog">
                     <div className="modal-content">
                       <div className="modal-header">
-                        <h5 className="modal-title">Confirm Delete</h5>
+                        <h5 className="modal-title ">Confirm Delete</h5>
                         <button
                           type="button"
-                          className="btn-close"
+                          className="btn-close border-none shadow-none"
                           data-bs-dismiss="modal"
                           aria-label="Close"
                         ></button>
                       </div>
-                      <div className="modal-body">
-                        <p>Are you sure to delete the post?</p>
+                      <div className="modal-body text-center">
+                        <form onSubmit={handleSubmitForDeletePost}>
+                          <p>Are you sure to delete the post?</p>
+                          <p>Type <span className="eventNameToDelete">
+                          {"Event title '23"}</span> to delete the post</p>
+                          <p>
+                            <input
+                              type="text"
+                              onChange={handleInputChange}
+                              className="eventInput"
+                            />
+                          </p>
+                          <div className="d-flex justify-content-center">
+                            <button
+                              type="reset"
+                              className="btn btn-secondary m-2"
+                              data-bs-dismiss="modal"
+                            >
+                              Cancel
+                            </button>
+                            <button
+                              type="submit"
+                              className="btn btn-primary m-2"
+                              data-bs-dismiss="modal"
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        </form>
                       </div>
-                      <form onSubmit={handleSubmitForDeletePost}>
-                        <div className="modal-footer">
-                          <button
-                            type="reset"
-                            className="btn btn-secondary"
-                            data-bs-dismiss="modal"
-                          >
-                            Cancel
-                          </button>
-                          <button
-                            type="submit"
-                            className="btn btn-primary"
-                            data-bs-dismiss="modal"
-                          >
-                            Delete
-                          </button>
-                        </div>
-                      </form>
                     </div>
                   </div>
                 </div>
@@ -143,7 +177,7 @@ export default function PostTab({ handleDashboardPage }) {
               </h1>
               <button
                 type="button"
-                className="btn-close"
+                className="btn-close  border-none shadow-none"
                 data-bs-dismiss="modal"
                 aria-label="Close"
               ></button>
