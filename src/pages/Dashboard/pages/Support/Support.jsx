@@ -4,11 +4,10 @@ import TextArea from "../../../components/TextArea/TextArea";
 import { toast } from "react-toastify";
 import { useApi } from "../../../../context/ApiContext.jsx";
 import "./Support.css";
+import { use } from "react";
 
-export default function Support({handleDashboardPage}) {
-
-  const {sendSupport} = useApi();
-
+export default function Support({ handleDashboardPage, user }) {
+  const { sendSupport } = useApi();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -54,7 +53,7 @@ export default function Support({handleDashboardPage}) {
 
     if (checked) {
       console.log("Registration Data Submitted", formData);
-      handleDashboardPage('dashboard')
+      handleDashboardPage("dashboard");
       sendSupport();
     } else {
       let errs = [];
@@ -159,14 +158,20 @@ export default function Support({handleDashboardPage}) {
             <div>
               <Input
                 inputValue={"college Name"}
+                disabled={true}
+                value={user.college_name}
                 handleInputChange={handleInputChange}
               />
               <Input
+                disabled={true}
                 inputValue={"name"}
+                value={user.admin_name}
                 handleInputChange={handleInputChange}
               />
               <Input
+                disabled={true}
                 inputValue={"college Email"}
+                value={user.admin_mail}
                 handleInputChange={handleInputChange}
               />
               <TextArea

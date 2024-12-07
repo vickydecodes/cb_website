@@ -7,23 +7,45 @@ import Login from "../pages/Login/Login.jsx";
 import CreateProfile from "../pages/CreateProfile/CreateProfile.jsx";
 import Dashboard from "../pages/Dashboard/Dashboard.jsx";
 import CreatePost from "../pages/CreatePost/CreatePost.jsx";
+import PrivateRoute from "./PrivateRoute.jsx";
 import { ApiProvider } from "../context/ApiContext.jsx";
-import {AuthProvider} from '../context/AuthContext.jsx'
+import { AuthProvider } from "../context/AuthContext.jsx";
 
 export default function AppRoutes() {
   return (
     <AuthProvider>
       <ApiProvider>
-      <Routes>
-        <Route path="/register" element={<Register />} />
-        <Route path="/verify-email" element={<VerifyE />} />
-        <Route path="/verify-admin" element={<VerifyA />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/create-user" element={<CreateProfile />} />
-        <Route path="/create-post" element={<CreatePost />} />
-      </Routes>
-    </ApiProvider>
+        <Routes>
+          <Route path="/register" element={<Register />} />
+          <Route path="/verify-email" element={<VerifyE />} />
+          <Route path="/verify-admin" element={<VerifyA />} />
+          <Route path="/login" element={<Login />} />
+          <Route 
+            path="/dashboard" 
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>
+            } 
+          />
+          <Route 
+            path="/create-user" 
+            element={
+              <PrivateRoute>
+                <CreateProfile />
+              </PrivateRoute>
+            } 
+          />
+          <Route 
+            path="/create-post" 
+            element={
+              <PrivateRoute>
+                <CreatePost />
+              </PrivateRoute>
+            } 
+          />
+        </Routes>
+      </ApiProvider>
     </AuthProvider>
   );
 }

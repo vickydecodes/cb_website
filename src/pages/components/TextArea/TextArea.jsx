@@ -1,10 +1,10 @@
 import React from "react";
 import "./TextArea.css";
 
-export default function TextArea({ inputValue='college Description', handleInputChange }) {
+export default function TextArea({ inputValue, handleInputChange, value }) {
   
   const capitalize = (s) => {
-    return s[0].toUpperCase() + s.slice(1);
+    return s[0].toUpperCase() + s.slice(1).split('_').join(' ');
   };
 
 
@@ -20,9 +20,10 @@ export default function TextArea({ inputValue='college Description', handleInput
       <textarea
         onChange={handleInputChange}
         name="description"
+        value={value}
         id={id(inputValue)}
         className="input_input_textarea"
-        placeholder={'Enter ' + inputValue}
+        placeholder={'Enter ' + capitalize(inputValue)}
       ></textarea>
     </div>
   );

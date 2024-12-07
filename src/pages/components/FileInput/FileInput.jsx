@@ -8,10 +8,13 @@ export default function FileInput({
   handleFileInput,
 }) {
   const [imagePreview, setImagePreview] = useState(null);
+  const [file, setFile] = useState(null)
 
   const handleFileInputChange = (e) => {
     const file = e.target.files[0];
     if (file) {
+      console.log('File is red', file)
+      setFile(file)
       const reader = new FileReader();
       reader.onload = () => {
         if (isCreatePostPage) {
@@ -35,12 +38,12 @@ export default function FileInput({
   };
 
   const capitalize = (s) => {
-    return s[0].toUpperCase() + s.slice(1);
+    return s[0].toUpperCase() + s.slice(1).split('_').join(' ');
   };
 
   useEffect(() => {
-    handleFileInput(inputValue.replaceAll(" ", ""), imagePreview);
-  }, [imagePreview]);
+    handleFileInput(inputValue.replaceAll(" ", ""), file);
+  }, [file]);
 
   return (
     <div

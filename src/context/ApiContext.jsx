@@ -48,6 +48,9 @@ export function ApiProvider({ children }) {
   const pushNotificationUrl = `${notificationUrl}${
     import.meta.env.VITE_PUSH_NOTIFICATION_ENDPOINT
   }`;
+  const getEventsUrl = `${baseUrl}${
+    import.meta.env.VITE_COLLEGE_GET_EVENTS_ENDPOINT
+  }`;
 
   const logUrls = () => {
     console.log("User Registration URL:", userRegistrationUrl);
@@ -59,42 +62,85 @@ export function ApiProvider({ children }) {
     console.log("Delete Event URL:", deleteEventUrl);
     console.log("College Profile URL:", collegeProfileUrl);
     console.log("Push Notification URL:", pushNotificationUrl);
+    console.log("Get Events URL:", getEventsUrl);
   };
 
-  logUrls();
-
-  const [user, setUser] = useState({});
   const [loading, setLoading] = useState(false);
+
+  const [apiUser, setApiUser] = useState(null);
+  const [posters, setPosters] = useState([]);
+  const [userCredentials, setUserCredentials] = useState(() => {
+    const savedCredentials = localStorage.getItem("userCredentials");
+    console.log(
+      "Received item from local storage",
+      JSON.parse(savedCredentials)
+    );
+    return savedCredentials ? JSON.parse(savedCredentials) : null;
+  });
+
+
 
   const navigate = useNavigate();
 
+  console.log("User credentials", userCredentials);
+
   const register = async (data) => {
-    const user = await signup(data.email, data.password);
+    const user = await signup(data.admin_mail, data.password);
     try {
       if (user) {
-        const user2 = await getRequest(collegeProfileUrl + "1");
-        console.log(user2);
+        const formData = createFormData(data, { uid: user.user.uid }, [
+          "password",
+          "confirm_password",
+        ]);
+        const res = await postRequest(userRegistrationUrl, formData);
+        console.log(res);
         toast.success("Registered Successfully.");
         navigate("/verify-email");
       }
+    } catch (e) {
+      console.log("error on registration", e);
+      toast.error("Something Went Wrong.");
+    }
+  };
+
+  const createUser = async (data) => {
+    try {
+      const formData = createFormData(data);
+      const res = await postRequest(collegeProfileCreationUrl + "6", formData);
+      console.log(res);
+      toast.success("Created Successfully.");
+      navigate("/dashboard");
     } catch (e) {
       toast.error("Something Went Wrong.");
     }
   };
 
-  const createUser = () => {
-    toast.success("Created Successfully.");
-    navigate("/dashboard");
+  const login = async (data) => {
+    try {
+      const user = await loginFirebase(data.email, data.password);
+      const res = await getRequest(userLoginUrl + user.user.uid);
+      console.log(res);
+      setUserCredentials(res.result[0]);
+      localStorage.setItem("userCredentials", JSON.stringify(res.result[0]));
+      toast.success("Login Successfully.");
+      navigate("/dashboard");
+    } catch (e) {
+      console.log(e);
+      toast.error("Something Went Wrong.");
+    }
   };
 
-  const login = () => {
-    toast.success("Login Successfully.");
-    navigate("/dashboard");
-  };
-
-  const createPost = () => {
-    toast.success("Posted Successfully.");
-    navigate("/dashboard");
+  const createPost = async (data) => {
+    try {
+      const formData = createFormData(data, { college_id: apiUser.id }, []);
+      const response = await postRequest(addEventUrl, formData);
+      console.log("Response from createpost: ", response);
+      toast.success("Posted Successfully.");
+      navigate("/dashboard");
+    } catch (e) {
+      toast.error("Something Went Wrong.");
+      console.log(e);
+    }
   };
 
   const getUserData = () => {};
@@ -117,6 +163,7 @@ export function ApiProvider({ children }) {
   const verifyEmail = async () => {
     try {
       await verifyEmailFirebase();
+      await verifyAdmin();
       toast.success("Sent Mail Successfully.");
       navigate("/verify-admin");
     } catch (e) {
@@ -125,14 +172,67 @@ export function ApiProvider({ children }) {
     }
   };
 
-  const verifyAdmin = () => {
+  const verifyAdmin = async () => {
     try {
+      const res = await postRequest(emailStatusUpdateUrl + currentUser.uid);
+      console.log(res);
+      toast.success("Admin verified successfully");
     } catch (e) {
       toast.error("Admin Verification Failed.");
     }
   };
 
+////USE EFFECT HOOKS
+
+  useEffect(() => {
+    const fetchData = async () => {
+      console.log("use effect is running...");
+      if (userCredentials) {
+        try {
+          const userDetails = await getRequest(
+            collegeProfileUrl + userCredentials.college_id
+          );
+          console.log("user details from use effect", userDetails.result);
+          setApiUser(userDetails.result);
+
+          const userPosters = await getRequest(
+            getEventsUrl + userCredentials.college_id
+          );
+          
+          console.log('Posters use effect: ', userPosters)
+          setPosters(userPosters);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+          toast.error("Failed to restore session. Please log in again.");
+        }
+      }
+    };
+
+    fetchData();
+  }, [userCredentials]);
+
+  ////UTILITY FUNCTIONS////
+
+  ///FORM DATA BINDING////
+
+  function createFormData(data, extraFields = {}, excludeKeys = []) {
+    const formData = new FormData();
+
+    Object.entries(data).forEach(([key, value]) => {
+      if (!excludeKeys.includes(key)) {
+        formData.append(key, value);
+      }
+    });
+
+    Object.entries(extraFields).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+
+    return formData;
+  }
+
   const value = {
+    apiUser,
     register,
     createUser,
     login,
@@ -141,7 +241,10 @@ export function ApiProvider({ children }) {
     deletePost,
     updateProfile,
     sendSupport,
+    posters,
     verifyEmail,
+    userCredentials,
+    loading
   };
 
   return (

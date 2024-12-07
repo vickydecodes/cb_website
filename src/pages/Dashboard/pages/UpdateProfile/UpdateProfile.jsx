@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import { useApi } from "../../../../context/ApiContext.jsx";
 import "./UpdateProfile.css";
 
-export default function UpdateProfile({ handleBackButton, handleDashboardPage }) {
+export default function UpdateProfile({ handleBackButton, handleDashboardPage, user }) {
   
   const {updateProfile} = useApi();
   
@@ -93,30 +93,36 @@ export default function UpdateProfile({ handleBackButton, handleDashboardPage })
           <form onSubmit={handleSubmit}>
           <div>
             <Input
-              inputValue={"college Name"}
+              inputValue={"college_name"}
+              value={user.college_name}
               handleInputChange={handleInputChange}
             />
             <Input
-              inputValue={"college Website"}
+              inputValue={"college_website"}
+              value={user.college_website}
               handleInputChange={handleInputChange}
             />
             <Input
-              inputValue={"college Address"}
+              inputValue={"college_address"}
+              value={user.college_address}
               handleInputChange={handleInputChange}
             />
             <Input
-              inputValue={"college Contact Number"}
+              inputValue={"college_contact_number"}
+              value={user.contact_number}
               handleInputChange={handleInputChange}
             />
             <TextArea
-              inputValue={"college Description"}
+              inputValue={"college_description"}
+              value={user.college_about}
               handleInputChange={handleInputChange}
             />
             <Input
               inputValue={"linkedin"}
+              value={user.linkedin}
               handleInputChange={handleInputChange}
             />
-            <ThreeInputs handleInputChange={handleInputChange} />
+            <ThreeInputs handleInputChange={handleInputChange} values={{instagram: user.instagram, facebook: user.facebook}}/>
             <div className="submitButtons m-4">
               <button className="cancelBtnForUpdateProfile" type="reset">
                 Cancel

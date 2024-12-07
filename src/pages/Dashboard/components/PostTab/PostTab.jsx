@@ -5,12 +5,15 @@ import "./PostTab.css";
 
 export default function PostTab({
   handleDashboardPage,
-  data = { eventName: "Event Title '23" },
+  data ,
 }) {
+
+  console.log(data)
+
   const { deletePost } = useApi();
 
   const [formData, setFormData] = useState({
-    eventName: "",
+    event_name: "",
   });
 
   const randNum = Math.floor(Math.random() * 2);
@@ -27,13 +30,13 @@ export default function PostTab({
 
   const handleInputChange = (e) => {
     setFormData({
-      eventName: e.target.value,
+      event_name: e.target.value,
     });
   };
 
   const checkTheForm = (formData) => {
     let checked = true;
-    if (data.eventName != formData.eventName) {
+    if (data.event_name != formData.event_name) {
       checked = false;
     }
     return { checked };
@@ -45,7 +48,7 @@ export default function PostTab({
     if (checked) {
       deletePost();
       handleDashboardPage("dashboard");
-      setFormData({ eventName: "" });
+      setFormData({ event_name: "" });
     } else {
       toast.error("You mistyped the event name. Please try again!");
     }
@@ -56,7 +59,7 @@ export default function PostTab({
       <div className="card postcard shadow p-3">
         <div className="card-body p-0">
           <h5 className="card-title d-flex align-items-center">
-            Event title '23
+            {data.event_name}
             <span className="ms-auto ">
               <div className="dropdown">
                 <button
@@ -108,8 +111,13 @@ export default function PostTab({
                       <div className="modal-body text-center">
                         <form onSubmit={handleSubmitForDeletePost}>
                           <p>Are you sure to delete the post?</p>
-                          <p>Type <span className="eventNameToDelete">
-                          {"Event title '23"}</span> to delete the post</p>
+                          <p>
+                            Type{" "}
+                            <span className="event_nameToDelete">
+                              {"Event title '23"}
+                            </span>{" "}
+                            to delete the post
+                          </p>
                           <p>
                             <input
                               type="text"
@@ -142,18 +150,18 @@ export default function PostTab({
             </span>
           </h5>
           <h6 className="eventcode">Event code: #9991</h6>
-          <p className="card-text departmenttab">{names[randNum]}</p>
+          <p className="card-text departmenttab">{data.department}</p>
         </div>
-        <p className="card-text postdates d-flex flex-column m-0 mt-3">
+        <p className="card-text postdates m-0 mt-3">
           <small className="text-body-secondary d-flex">
-            <span>Posted on : 12-12-2024</span>
-            <span className="ms-auto">Event Start : 30-12-2024</span>
+            <span>Posted on : {data.created_at .split(' ')[0]}</span> <br />
+            <span className="ms-auto">Event Start : {data.ended_at.split(' ')[0]}</span>
           </small>
         </p>
         <img
-          src={imgs[randNum]}
+          src={'https://ghcbapi.connectbeez.com/profile/assets/college_poster/'+data.poster}
           data-bs-toggle="modal"
-          data-bs-target="#exampleModal"
+          data-bs-target={"#exampleModal"+data.poster_id}
           className=" postcard-img mt-1"
           alt="..."
         />
@@ -161,7 +169,7 @@ export default function PostTab({
 
       <div
         className="modal fade"
-        id="exampleModal"
+        id={"exampleModal"+data.poster_id}
         tabIndex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
@@ -173,7 +181,7 @@ export default function PostTab({
                 className="modal-title card-title fs-5"
                 id="exampleModalLabel"
               >
-                {"Event '23"}{" "}
+                {data.event_name}
               </h1>
               <button
                 type="button"
@@ -186,7 +194,7 @@ export default function PostTab({
               {" "}
               <div className="d-flex justify-content-center">
                 <img
-                  src={imgs[randNum]}
+                  src={'https://ghcbapi.connectbeez.com/profile/assets/college_poster/' + data.poster }
                   className=" postcardmodal-img mt-1"
                   alt="..."
                 />
@@ -196,7 +204,7 @@ export default function PostTab({
                   <tbody>
                     <tr>
                       <th scope="row">Event Name</th>
-                      <td>Event '23</td>
+                      <td>{data.event_name}</td>
                     </tr>
                     <tr>
                       <th scope="row">Event Code</th>
@@ -208,11 +216,11 @@ export default function PostTab({
                     </tr>
                     <tr>
                       <th scope="row">Department</th>
-                      <td>{names[randNum]}</td>
+                      <td>{data.department}</td>
                     </tr>
                     <tr>
                       <th scope="row">Event Category</th>
-                      <td>Seminar</td>
+                      <td>{data.category}</td>
                     </tr>
                     <tr>
                       <th scope="row">Posted on</th>
@@ -225,24 +233,20 @@ export default function PostTab({
                     <tr>
                       <th scope="row">Event Description</th>
                       <td>
-                        Lorem ipsum dolor, sit amet consectetur adipisicing
-                        elit. Doloribus dolor pariatur accusantium quaerat
-                        impedit adipisci itaque explicabo. Perspiciatis itaque
-                        debitis distinctio laboriosam provident deleniti,
-                        exercitationem ut incidunt ratione quia quam!
+                        {data.description}
                       </td>
                     </tr>
                     <tr>
                       <th scope="row">Coordinator</th>
-                      <td>Gokul K</td>
+                      <td>{data.coordinator_name}</td>
                     </tr>
                     <tr>
                       <th scope="row">Coordinator Number</th>
-                      <td>6385138282</td>
+                      <td>{data.coordinator_number}</td>
                     </tr>
                     <tr>
                       <th scope="row">Registration Link</th>
-                      <td>https://google.com</td>
+                      <td>{data.registration_link}</td>
                     </tr>
                   </tbody>
                 </table>

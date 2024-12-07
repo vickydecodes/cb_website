@@ -14,7 +14,7 @@ export default function PasswordInput({ inputValue, handleInputChange }) {
   };
 
   const capitalize = (s) => {
-    return s[0].toUpperCase() + s.slice(1);
+    return s[0].toUpperCase() + s.slice(1).split('_').join(' ');
   };
 
   return (

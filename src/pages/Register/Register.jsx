@@ -9,19 +9,19 @@ import { toast } from "react-toastify";
 import { useApi } from "../../context/ApiContext";
 
 export default function Register() {
-  const detailsInputTabs1 = ["college Name", "name", "designation"];
+  const detailsInputTabs1 = ["college_name", "admin_name", "designation"];
 
   const { register } = useApi();
 
   const [formData, setFormData] = useState({
-    collegeName: "",
-    name: "",
+    college_name: "",
+    admin_name: "",
     designation: "",
-    email: "",
+    admin_mail: "",
     password: "",
-    confirmPassword: "",
-    mobileNumber: "",
-    idProof: null,
+    confirm_password: "",
+    admin_mobile: "",
+    id_proof: null,
     country: "",
     state: "",
     city: "",
@@ -53,6 +53,7 @@ export default function Register() {
   };
 
   const handleFileInput = (value, data) => {
+    console.log(data, value)
     setFormData((prevData) => ({
       ...prevData,
       [value]: data,
@@ -78,12 +79,12 @@ export default function Register() {
         checked = false;
       }
 
-      if (formData.mobileNumber.length != 10) {
+      if (formData.admin_mobile.length != 10) {
         toast.error("Mobile Number should contain 10 numbers.");
         checked = false;
       }
 
-      if (formData.password !== formData.confirmPassword) {
+      if (formData.password !== formData.confirm_password) {
         toast.error("Passwords should not matched.");
         checked = false;
       }
@@ -108,7 +109,7 @@ export default function Register() {
       toast.error(
         `${errs.join(", ")} ${errs.length > 1 ? "are" : "is"} missing.`
       );
-      console.log(formData);
+      console.log('Register form data: ',formData);
     }
   };
 
@@ -147,7 +148,7 @@ export default function Register() {
                     );
                   })}
                   <Input
-                    inputValue={"email"}
+                    inputValue={"admin_mail"}
                     type={"email"}
                     handleInputChange={handleInputChange}
                   />
@@ -156,7 +157,7 @@ export default function Register() {
                     handleInputChange={handleInputChange}
                   />
                   <PasswordInput
-                    inputValue={"confirm Password"}
+                    inputValue={"confirm_password"}
                     handleInputChange={handleInputChange}
                   />
                 </div>
@@ -164,11 +165,11 @@ export default function Register() {
               <div className="col-lg-6 mb-3">
                 <div className="d-flex flex-column columns justify-content-around">
                   <Input
-                    inputValue={"mobile Number"}
+                    inputValue={"admin_mobile"}
                     handleInputChange={handleInputChange}
                   />
                   <FileInput
-                    inputValue={"id Proof"}
+                    inputValue={"id_proof"}
                     handleFileInput={handleFileInput}
                   />
                   <LocationDropDown

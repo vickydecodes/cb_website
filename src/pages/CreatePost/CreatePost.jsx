@@ -13,15 +13,15 @@ export default function CreatePost() {
   const { createPost } = useApi();
 
   const [formData, setFormData] = useState({
-    eventName: "",
+    event_name: "",
     department: "",
-    eventCategory: "",
-    registrationLink: "",
-    eventPoster: null,
-    coordinatorName: "",
-    coordinatorNumber: "",
-    eventDescription: "",
-    eventDate: "",
+    category: "",
+    registration_link: "",
+    poster: null,
+    coordinator_name: "",
+    coordinator_number: "",
+    description: "",
+    ended_at: "",
   });
 
   const handleInputChange = (e) => {
@@ -68,7 +68,7 @@ export default function CreatePost() {
 
     if (checked) {
       console.log("Registration Data Submitted", formData);
-      createPost();
+      createPost(formData);
     } else {
       let errs = [];
       for (let key in errors) {
@@ -102,7 +102,7 @@ export default function CreatePost() {
             <div className="row g-0 p-0 row_createpost">
               <div className="col-md-4 columns order-1 d-flex flex-column justify-content-between">
                 <Input
-                  inputValue={"event Name"}
+                  inputValue={"event_name"}
                   handleInputChange={handleInputChange}
                 />
                 <Input
@@ -110,16 +110,16 @@ export default function CreatePost() {
                   handleInputChange={handleInputChange}
                 />
                 <Input
-                  inputValue={"event Category"}
+                  inputValue={"category"}
                   handleInputChange={handleInputChange}
                 />
                 <Input
-                  inputValue={"registration Link"}
+                  inputValue={"registration_link"}
                   handleInputChange={handleInputChange}
                 />
 
                 <FileInput
-                  inputValue={"event Poster"}
+                  inputValue={"poster"}
                   isCreatePostPage={true}
                   handleFileInput={handleFileInput}
                   setImagePreviewForCreatePost={setImagePreviewForCreatePost}
@@ -127,19 +127,19 @@ export default function CreatePost() {
               </div>
               <div className="col-md-4 columns  order-sm-3 order-md-2 d-flex flex-column justify-content-between">
                 <Input
-                  inputValue={"coordinator Name"}
+                  inputValue={"coordinator_name"}
                   handleInputChange={handleInputChange}
                 />
                 <Input
-                  inputValue={"coordinator Number"}
+                  inputValue={"coordinator_number"}
                   handleInputChange={handleInputChange}
                 />
                 <TextArea
-                  inputValue={"event Description"}
+                  inputValue={"description"}
                   handleInputChange={handleInputChange}
                 />
                 <Input
-                  inputValue={"event Date"}
+                  inputValue={"ended_at"}
                   isDateType={true}
                   handleInputChange={handleInputChange}
                 />

@@ -45,7 +45,7 @@ export default function Login() {
 
     if (checked) {
       console.log("Registration Data Submitted", formData);
-      login();
+      login(formData);
     } else {
       let errs = [];
       for (let key in errors) {

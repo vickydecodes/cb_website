@@ -5,6 +5,8 @@ export default function Input({
   inputValue,
   isDateType = false,
   type='text',
+  value,
+  disabled=false,
   handleInputChange,
 }) {
   const id = (value) => {
@@ -12,7 +14,7 @@ export default function Input({
   };
 
   const capitalize = (s) => {
-    return s[0].toUpperCase() + s.slice(1);
+    return s[0].toUpperCase() + s.slice(1).split('_').join(' ');
   };
 
   return (
@@ -25,6 +27,8 @@ export default function Input({
       </label>
       <input
         onChange={handleInputChange}
+        value={value}
+        disabled={disabled}
         type={isDateType ? "date" : type}
         className="input_input_c "
         placeholder={"Enter " + capitalize(inputValue)}
