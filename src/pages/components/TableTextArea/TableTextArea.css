@@ -1,0 +1,14 @@
+
+
+.input_input_textarea {
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc; 
+    width: 100% !important;
+    height: 100px !important;
+}
+
+.input_input_textarea:focus{
+    outline: none;
+    border-color: #f7b600;
+}

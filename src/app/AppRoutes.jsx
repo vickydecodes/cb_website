@@ -7,7 +7,9 @@ import Login from "../pages/Login/Login.jsx";
 import CreateProfile from "../pages/CreateProfile/CreateProfile.jsx";
 import Dashboard from "../pages/Dashboard/Dashboard.jsx";
 import CreatePost from "../pages/CreatePost/CreatePost.jsx";
+import EditPost from "../pages/EditPost/EditPost.jsx";
 import PrivateRoute from "./PrivateRoute.jsx";
+import ForgetPassword from '../pages/ForgetPassword/ForgetPassword.jsx'
 import { ApiProvider } from "../context/ApiContext.jsx";
 import { AuthProvider } from "../context/AuthContext.jsx";
 
@@ -20,6 +22,7 @@ export default function AppRoutes() {
           <Route path="/verify-email" element={<VerifyE />} />
           <Route path="/verify-admin" element={<VerifyA />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/forget-password" element={<ForgetPassword />} />
           <Route 
             path="/dashboard" 
             element={
@@ -41,6 +44,14 @@ export default function AppRoutes() {
             element={
               <PrivateRoute>
                 <CreatePost />
+              </PrivateRoute>
+            } 
+          />
+          <Route 
+            path="/edit-post/:id" 
+            element={
+              <PrivateRoute>
+                <EditPost />
               </PrivateRoute>
             } 
           />

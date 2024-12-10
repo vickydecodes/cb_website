@@ -4,16 +4,15 @@ import TextArea from "../../../components/TextArea/TextArea";
 import { toast } from "react-toastify";
 import { useApi } from "../../../../context/ApiContext.jsx";
 import "./Support.css";
-import { use } from "react";
 
 export default function Support({ handleDashboardPage, user }) {
-  const { sendSupport } = useApi();
+  const { sendSupport, loading } = useApi();
 
   const [formData, setFormData] = useState({
-    name: "",
-    collegeName: "",
-    collegeEmail: "",
-    message: "",
+    admin_name: user.admin_name,
+    college_name: user.college_name,
+    admin_mail: user.admin_mail,
+    content: "",
   });
 
   const handleInputChange = (e) => {
@@ -54,7 +53,8 @@ export default function Support({ handleDashboardPage, user }) {
     if (checked) {
       console.log("Registration Data Submitted", formData);
       handleDashboardPage("dashboard");
-      sendSupport();
+      console.log(formData)
+      sendSupport(formData);
     } else {
       let errs = [];
       for (let key in errors) {
@@ -157,28 +157,28 @@ export default function Support({ handleDashboardPage, user }) {
           <form onSubmit={handleSubmit}>
             <div>
               <Input
-                inputValue={"college Name"}
+                inputValue={"college_name"}
                 disabled={true}
                 value={user.college_name}
                 handleInputChange={handleInputChange}
               />
               <Input
                 disabled={true}
-                inputValue={"name"}
+                inputValue={"admin_name"}
                 value={user.admin_name}
                 handleInputChange={handleInputChange}
               />
               <Input
                 disabled={true}
-                inputValue={"college Email"}
+                inputValue={"admin_mail"}
                 value={user.admin_mail}
                 handleInputChange={handleInputChange}
               />
               <TextArea
-                inputValue={"message"}
+                inputValue={"content"}
                 handleInputChange={handleInputChange}
               />
-              <button className="submitbutton_supportpage">Submit</button>
+              <button disabled={loading} className="submitbutton_supportpage">Submit</button>
             </div>
           </form>
         </div>

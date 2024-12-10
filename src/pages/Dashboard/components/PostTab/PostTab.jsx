@@ -2,31 +2,21 @@ import React, { useState } from "react";
 import { useApi } from "../../../../context/ApiContext";
 import { toast } from "react-toastify";
 import "./PostTab.css";
+import EditEvent from "../../../EditPost/EditPost";
+import { Modal } from "react-bootstrap";
 
-export default function PostTab({
-  handleDashboardPage,
-  data ,
-}) {
+export default function PostTab({ handleDashboardPage, data }) {
 
-  console.log(data)
+  const [show, setShow] = useState(false);
 
-  const { deletePost } = useApi();
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const { deletePost, loading } = useApi();
 
   const [formData, setFormData] = useState({
     event_name: "",
   });
-
-  const randNum = Math.floor(Math.random() * 2);
-
-  const imgs = [
-    "https://marketplace.canva.com/EAFwnokZJcw/1/0/1600w/canva-pink-black-photocentric-neon-tech-talk-podcast-instagram-post--eJUHJY0eIw.jpg",
-    "https://pbs.twimg.com/profile_images/842804567180017666/Q4D7ZzUp_400x400.jpg",
-  ];
-
-  const names = [
-    "Bachelors of technology Artificial Intelligence & Data Science",
-    "Bachelors of computer applications",
-  ];
 
   const handleInputChange = (e) => {
     setFormData({
@@ -46,7 +36,7 @@ export default function PostTab({
     const { checked } = checkTheForm(formData);
     e.preventDefault();
     if (checked) {
-      deletePost();
+      deletePost(data.poster_id);
       handleDashboardPage("dashboard");
       setFormData({ event_name: "" });
     } else {
@@ -80,7 +70,10 @@ export default function PostTab({
                   </svg>
                 </button>
                 <ul className="dropdown-menu text-start p-0">
-                  <button className="editbtn" href="#">
+                  <button
+                    className="editbtn"
+                    onClick={handleShow}
+>
                     Edit
                   </button>
                   <button
@@ -114,7 +107,7 @@ export default function PostTab({
                           <p>
                             Type{" "}
                             <span className="event_nameToDelete">
-                              {"Event title '23"}
+                              {data.event_name}
                             </span>{" "}
                             to delete the post
                           </p>
@@ -130,6 +123,8 @@ export default function PostTab({
                               type="reset"
                               className="btn btn-secondary m-2"
                               data-bs-dismiss="modal"
+                              disabled={loading}
+
                             >
                               Cancel
                             </button>
@@ -137,6 +132,7 @@ export default function PostTab({
                               type="submit"
                               className="btn btn-primary m-2"
                               data-bs-dismiss="modal"
+                              disabled={loading}
                             >
                               Delete
                             </button>
@@ -154,14 +150,19 @@ export default function PostTab({
         </div>
         <p className="card-text postdates m-0 mt-3">
           <small className="text-body-secondary d-flex">
-            <span>Posted on : {data.created_at .split(' ')[0]}</span> <br />
-            <span className="ms-auto">Event Start : {data.ended_at.split(' ')[0]}</span>
+            <span>Posted on : {data.created_at.split(" ")[0]}</span> <br />
+            <span className="ms-auto">
+              Event Start : {data.ended_at.split(" ")[0]}
+            </span>
           </small>
         </p>
         <img
-          src={'https://ghcbapi.connectbeez.com/profile/assets/college_poster/'+data.poster}
+          src={
+            "https://ghcbapi.connectbeez.com/profile/assets/college_poster/" +
+            data.poster
+          }
           data-bs-toggle="modal"
-          data-bs-target={"#exampleModal"+data.poster_id}
+          data-bs-target={"#exampleModal" + data.poster_id}
           className=" postcard-img mt-1"
           alt="..."
         />
@@ -169,12 +170,12 @@ export default function PostTab({
 
       <div
         className="modal fade"
-        id={"exampleModal"+data.poster_id}
+        id={"exampleModal" + data.poster_id}
         tabIndex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
-        <div className="modal-dialog modal-xl">
+        <div className="modal-dialog modal-lg">
           <div className="modal-content">
             <div className="modal-header">
               <h1
@@ -194,12 +195,15 @@ export default function PostTab({
               {" "}
               <div className="d-flex justify-content-center">
                 <img
-                  src={'https://ghcbapi.connectbeez.com/profile/assets/college_poster/' + data.poster }
+                  src={
+                    "https://ghcbapi.connectbeez.com/profile/assets/college_poster/" +
+                    data.poster
+                  }
                   className=" postcardmodal-img mt-1"
                   alt="..."
                 />
               </div>
-              <div className="modal-texts mt-2">
+              <div className="modal-texts mt-3">
                 <table className="table table-borderless">
                   <tbody>
                     <tr>
@@ -232,9 +236,7 @@ export default function PostTab({
                     </tr>
                     <tr>
                       <th scope="row">Event Description</th>
-                      <td>
-                        {data.description}
-                      </td>
+                      <td>{data.description}</td>
                     </tr>
                     <tr>
                       <th scope="row">Coordinator</th>
@@ -255,6 +257,25 @@ export default function PostTab({
           </div>
         </div>
       </div>
+      <Modal size="lg" show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title> <h1
+                className="modal-title card-title fs-5"
+              >
+                {data.event_name}
+              </h1></Modal.Title>
+              <button
+                type="button"
+                onClick={handleClose}
+              ></button>
+        </Modal.Header>
+        <Modal.Body>
+        <div className="p-3">
+              <EditEvent data={data} handleShow={handleShow}/>
+            </div>
+        </Modal.Body>
+        </Modal>
+      
     </div>
   );
 }

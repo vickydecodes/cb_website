@@ -11,7 +11,7 @@ import { useApi } from "../../context/ApiContext";
 export default function Register() {
   const detailsInputTabs1 = ["college_name", "admin_name", "designation"];
 
-  const { register } = useApi();
+  const { register, loading } = useApi();
 
   const [formData, setFormData] = useState({
     college_name: "",
@@ -89,8 +89,9 @@ export default function Register() {
         checked = false;
       }
 
-      return { checked, errors };
     }
+    return { checked, errors };
+
   };
 
   const handleSubmit = (e) => {
@@ -178,6 +179,7 @@ export default function Register() {
                   <CheckBox handleCheckboxChange={handleCheckboxChange} />
                   <button
                     type="submit"
+                    disabled={loading}
                     className="mt-4 mb-2 w-50 submit_button"
                   >
                     Register

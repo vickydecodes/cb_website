@@ -8,6 +8,7 @@ export default function NavItem({
   currentPage,
   isLogoutButton = false,
   isCreateButton = false,
+  handleLogout
 }) {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -38,6 +39,7 @@ export default function NavItem({
         className={isHovered ? "logoutbutton active" : "logoutbutton"}
         onMouseOver={handleMouseOver}
         onMouseOut={handleMouseOut}
+        onClick={handleLogout}
       >
         {nav.toUpperCase()}
       </div>

@@ -37,7 +37,6 @@ export default function VerifyA() {
         <div className="text-center" style={{color: 'gold', fontWeight: '200', marginTop: '15px'}}>
           <h2>You will receive a mail if the account is <br /><span className="mt-2">verified</span></h2>
         </div>
-        <Link to='/create-user'>Create User</Link>
       </div>
     </div>
   );

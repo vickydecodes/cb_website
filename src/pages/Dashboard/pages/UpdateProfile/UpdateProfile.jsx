@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Input from "../../../components/Input/Input.jsx";
 import TextArea from "../../../components/TextArea/TextArea.jsx";
 import ThreeInputs from "../../../components/ThreeInputs/ThreeInputs.jsx";
@@ -7,20 +7,22 @@ import { toast } from "react-toastify";
 import { useApi } from "../../../../context/ApiContext.jsx";
 import "./UpdateProfile.css";
 
-export default function UpdateProfile({ handleBackButton, handleDashboardPage, user }) {
-  
-  const {updateProfile} = useApi();
-  
-  
+export default function UpdateProfile({
+  handleBackButton,
+  handleDashboardPage,
+  user,
+}) {
+  const { updateProfile, loading } = useApi();
+
   const [formData, setFormData] = useState({
-    collegeName: '',
-    collegeWebsite: '',
-    collegeAddress:'',
-    collegeContactNumber: '',
-    collegeDescription: '',
-    linkedin: '',
-    facebook: '',
-    instagram: ''
+    college_name: user.college_name || "",
+    college_website: user.college_website || "",
+    college_address: user.college_address || "",
+    contact_number: user.contact_number || "",
+    college_about: user.college_about || "",
+    linkedin: user.linkedin || "",
+    facebook: user.facebook || "",
+    instagram: user.instagram || "",
   });
 
   const handleInputChange = (e) => {
@@ -51,6 +53,14 @@ export default function UpdateProfile({ handleBackButton, handleDashboardPage, u
       checked = false;
     }
 
+    if (
+      formData.instagram === "" ||
+      formData.facebook === "" ||
+      formData.linkedin === ""
+    ) {
+      checked = true;
+    }
+
     return { checked, errors };
   };
 
@@ -59,9 +69,9 @@ export default function UpdateProfile({ handleBackButton, handleDashboardPage, u
     const { checked, errors } = checkTheForm(formData);
 
     if (checked) {
-      console.log("Registration Data Submitted", formData);
-      handleDashboardPage('dashboard')
-      updateProfile();
+      console.log("update Data Submitted", formData);
+      handleDashboardPage("dashboard");
+      updateProfile(formData);
     } else {
       let errs = [];
       for (let key in errors) {
@@ -91,47 +101,56 @@ export default function UpdateProfile({ handleBackButton, handleDashboardPage, u
           </h3>
 
           <form onSubmit={handleSubmit}>
-          <div>
-            <Input
-              inputValue={"college_name"}
-              value={user.college_name}
-              handleInputChange={handleInputChange}
-            />
-            <Input
-              inputValue={"college_website"}
-              value={user.college_website}
-              handleInputChange={handleInputChange}
-            />
-            <Input
-              inputValue={"college_address"}
-              value={user.college_address}
-              handleInputChange={handleInputChange}
-            />
-            <Input
-              inputValue={"college_contact_number"}
-              value={user.contact_number}
-              handleInputChange={handleInputChange}
-            />
-            <TextArea
-              inputValue={"college_description"}
-              value={user.college_about}
-              handleInputChange={handleInputChange}
-            />
-            <Input
-              inputValue={"linkedin"}
-              value={user.linkedin}
-              handleInputChange={handleInputChange}
-            />
-            <ThreeInputs handleInputChange={handleInputChange} values={{instagram: user.instagram, facebook: user.facebook}}/>
-            <div className="submitButtons m-4">
-              <button className="cancelBtnForUpdateProfile" type="reset">
-                Cancel
-              </button>
-              <button className="submitBtnForUpdateProfile" type="submit">
-                Update
-              </button>
+            <div>
+              <Input
+                inputValue={"college_name"}
+                value={formData.college_name}
+                handleInputChange={handleInputChange}
+              />
+              <Input
+                inputValue={"college_website"}
+                value={formData.college_website}
+                handleInputChange={handleInputChange}
+              />
+              <Input
+                inputValue={"college_address"}
+                value={formData.college_address}
+                handleInputChange={handleInputChange}
+              />
+              <Input
+                inputValue={"contact_number"}
+                value={formData.contact_number}
+                handleInputChange={handleInputChange}
+              />
+              <TextArea
+                inputValue={"college_about"}
+                value={formData.college_about}
+                handleInputChange={handleInputChange}
+              />
+              <Input
+                inputValue={"linkedin"}
+                value={formData.linkedin}
+                handleInputChange={handleInputChange}
+              />
+              <ThreeInputs
+                handleInputChange={handleInputChange}
+                values={{
+                  instagram: formData.instagram,
+                  facebook: formData.facebook,
+                }}
+              />
+              <div className="submitButtons m-4">
+                
+                  <button className="cancelBtnForUpdateProfile" disabled={loading} type="reset">
+                    Cancel
+                  </button>
+                
+                  <button className="submitBtnForUpdateProfile" disabled={loading} type="submit">
+                    Update
+                  </button>
+              
+              </div>
             </div>
-          </div>
           </form>
         </div>
         <div className="emptyspace_updateprofile"></div>

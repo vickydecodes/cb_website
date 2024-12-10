@@ -68,12 +68,13 @@ export default function InsightsTab({active, inActive}) {
   ];
 
   return (
-    <div className="col-10 d-flex">
+    <div className="col-10 d-md-flex">
     {insightDatas.map((data, index) => (
-      <div className="col-md-3 m-3" style={{ height: "auto" }} key={index}>
+      <div className="col-md-3 m-3" key={index}>
         <div
           className="card m-1"
           style={{
+            height: '100%',
             borderRadius: "20px",
             border: "0px",
           }}

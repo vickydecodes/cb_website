@@ -17,6 +17,7 @@ export default function Input({
     return s[0].toUpperCase() + s.slice(1).split('_').join(' ');
   };
 
+if(value){
   return (
     <div
       className="input_c d-flex flex-column mb-4 justify-content-center align-items-center"
@@ -27,7 +28,7 @@ export default function Input({
       </label>
       <input
         onChange={handleInputChange}
-        value={value}
+        value={value || ''}
         disabled={disabled}
         type={isDateType ? "date" : type}
         className="input_input_c "
@@ -36,4 +37,24 @@ export default function Input({
       />
     </div>
   );
+}else{
+  return (
+    <div
+      className="input_c d-flex flex-column mb-4 justify-content-center align-items-center"
+      style={{ width: "100%" }}
+    >     
+      <label className="input_label_c" htmlFor={inputValue}>
+        <h5>{capitalize(inputValue)}</h5>
+      </label>
+      <input
+        onChange={handleInputChange}
+        disabled={disabled}
+        type={isDateType ? "date" : type}
+        className="input_input_c "
+        placeholder={"Enter " + capitalize(inputValue)}
+        id={id(inputValue)}
+      />
+    </div>
+  );
+}
 }

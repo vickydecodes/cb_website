@@ -11,7 +11,7 @@ export default function CollegeProfile({
   console.log("user for collegeprofile", user);
   return (
     <div className="collegeprofilepage">
-      <BannerBoard college_banner={'https://ghcbapi.connectbeez.com/profile/assets/college_logo_banner/'+user.college_banner} college_logo={'https://ghcbapi.connectbeez.com/profile/assets/college_logo_banner/'+ user.college_logo} college_name={user.college_name}/>
+      <BannerBoard college_logo={user.college_logo} college_banner={user.college_banner} college_name={user.college_name}/>
       <div className="details_collegeprofile row d-flex g-0 p-0 mt-5">
         <div className="col-md-8 p-3">
           <DetailsTab

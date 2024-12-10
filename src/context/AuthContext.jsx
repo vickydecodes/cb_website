@@ -1,11 +1,11 @@
 import { useContext, createContext, useState, useEffect } from "react";
 import { auth } from "../firebase/Firebase";
-import { useNavigate } from "react-router-dom";
+import Loading from "../pages/components/Loading/Loading";
 import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
   signInWithEmailAndPassword,
-  signOut,
+  sendPasswordResetEmail
 } from "firebase/auth";
 
 const AuthContext = createContext();
@@ -18,24 +18,63 @@ export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
 
-  const navigate = useNavigate();
 
 
   const signup = async (email, password) => {
-    return await createUserWithEmailAndPassword(auth, email, password);
+    setLoading(true); 
+    try {
+      return await createUserWithEmailAndPassword(auth, email, password);
+    } catch (error) {
+      throw error; 
+    } finally {
+      setLoading(false);
+    }
   };
-
+  
   const loginFirebase = async (email, password) => {
-    return await signInWithEmailAndPassword(auth, email, password);
+    setLoading(true); 
+    try {
+      return await signInWithEmailAndPassword(auth, email, password);
+    } catch (error) {
+      throw error;
+    } finally {
+      setLoading(false); 
+    }
   };
-
+  
   const verifyEmailFirebase = async () => {
-    return await sendEmailVerification(currentUser);
+    setLoading(true); 
+    try {
+      return await sendEmailVerification(currentUser);
+    } catch (error) {
+      throw error; 
+    } finally {
+      setLoading(false)
+    }
+  };
+  
+  const logout = async () => {
+    setLoading(true); 
+    try {
+      return await auth.signOut();
+    } catch (error) {
+      throw error;
+    } finally {
+      setLoading(false); 
+    }
   };
 
-  const logout = async () => {
-    return await auth.signOut();
+  const forgetPasswordFirebase = async (email) => {
+    setLoading(true)
+    try {
+      return await sendPasswordResetEmail(auth, email);
+    } catch (err) {
+      throw err;
+    }finally{
+      setLoading(false)
+    }
   };
+  
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -45,11 +84,11 @@ export function AuthProvider({ children }) {
     return unsubscribe;
   }, []);
 
-  const value = { currentUser, signup, loginFirebase , verifyEmailFirebase, logout };
+  const value = { currentUser, signup, loginFirebase , verifyEmailFirebase, logout, loading, forgetPasswordFirebase };
 
   return (
     <AuthContext.Provider value={value}>
-      {!loading && children}
-    </AuthContext.Provider>
+      {loading ? <Loading /> : children}
+      </AuthContext.Provider>
   );
 }

@@ -1,0 +1,40 @@
+table th {
+    text-align: start; 
+    vertical-align: middle; 
+  }
+
+  tr{
+    height: 50px;
+  }
+
+  .submitButtons{
+    width: 100%;
+  }
+
+  .cancelBtnForUpdateProfile {
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    padding: 10px 60px;
+    margin-left: 30px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cancelBtnForUpdateProfile:hover {
+    background-color: #c9302c;
+}
+
+.submitBtnForUpdateProfile {
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    padding: 10px 60px;
+    margin-left: 30px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submitBtnForUpdateProfile:hover {
+    background-color: #4cae4c;
+}

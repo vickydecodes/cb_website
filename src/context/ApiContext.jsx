@@ -8,6 +8,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "./AuthContext";
+import Loading from "../pages/components/Loading/Loading";
 import axios from "axios";
 
 const ApiContext = createContext();
@@ -17,8 +18,14 @@ export function useApi() {
 }
 
 export function ApiProvider({ children }) {
-  const { signup, loginFirebase, verifyEmailFirebase, logout, currentUser } =
-    useAuth();
+  const {
+    signup,
+    loginFirebase,
+    verifyEmailFirebase,
+    logout,
+    currentUser,
+    forgetPasswordFirebase,
+  } = useAuth();
 
   // Base URLs
   const baseUrl = import.meta.env.VITE_BASE_URL;
@@ -45,8 +52,15 @@ export function ApiProvider({ children }) {
   const collegeProfileUrl = `${baseUrl}${
     import.meta.env.VITE_COLLEGE_PROFILE_ENDPOINT
   }`;
+  const collegeUpdateUrl = `${baseUrl}${
+    import.meta.env.VITE_COLLEGE_PROFILE_UPDATE_ENDPOINT
+  }`;
   const pushNotificationUrl = `${notificationUrl}${
     import.meta.env.VITE_PUSH_NOTIFICATION_ENDPOINT
+  }`;
+  const editPostUrl = `${baseUrl}${import.meta.env.VITE_EDIT_POSTER}`;
+  const sendSupportUrl = `${baseUrl}${
+    import.meta.env.VITE_COLLEGE_SUPPORT_ENDPOINT
   }`;
   const getEventsUrl = `${baseUrl}${
     import.meta.env.VITE_COLLEGE_GET_EVENTS_ENDPOINT
@@ -66,9 +80,11 @@ export function ApiProvider({ children }) {
   };
 
   const [loading, setLoading] = useState(false);
-
+  const [profileUpdated, setProfileUpdated] = useState(false);
   const [apiUser, setApiUser] = useState(null);
   const [posters, setPosters] = useState([]);
+  const [activePosters, setActivePosters] = useState([]);
+  const [inActivePosters, setInActivePosters] = useState([]);
   const [userCredentials, setUserCredentials] = useState(() => {
     const savedCredentials = localStorage.getItem("userCredentials");
     console.log(
@@ -78,15 +94,14 @@ export function ApiProvider({ children }) {
     return savedCredentials ? JSON.parse(savedCredentials) : null;
   });
 
-
-
   const navigate = useNavigate();
 
   console.log("User credentials", userCredentials);
 
   const register = async (data) => {
-    const user = await signup(data.admin_mail, data.password);
+    setLoading(true);
     try {
+      const user = await signup(data.admin_mail, data.password);
       if (user) {
         const formData = createFormData(data, { uid: user.user.uid }, [
           "password",
@@ -100,22 +115,32 @@ export function ApiProvider({ children }) {
     } catch (e) {
       console.log("error on registration", e);
       toast.error("Something Went Wrong.");
+    } finally {
+      setLoading(false);
     }
   };
 
   const createUser = async (data) => {
+    setLoading(true);
+
     try {
       const formData = createFormData(data);
-      const res = await postRequest(collegeProfileCreationUrl + "6", formData);
+      const res = await postRequest(
+        collegeProfileCreationUrl + userCredentials.id,
+        formData
+      );
       console.log(res);
       toast.success("Created Successfully.");
       navigate("/dashboard");
     } catch (e) {
       toast.error("Something Went Wrong.");
+    } finally {
+      setLoading(false);
     }
   };
 
   const login = async (data) => {
+    setLoading(true);
     try {
       const user = await loginFirebase(data.email, data.password);
       const res = await getRequest(userLoginUrl + user.user.uid);
@@ -127,40 +152,111 @@ export function ApiProvider({ children }) {
     } catch (e) {
       console.log(e);
       toast.error("Something Went Wrong.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const forgetPassword = async (data) => {
+    setLoading(true);
+    try {
+      const res = await forgetPasswordFirebase(data.email);
+      navigate("/login");
+      toast.success("Your password reset link is sent to your mail.");
+    } catch (e) {
+      console.log(e);
+      toast.error("Something Went Wrong.");
+    } finally {
+      setLoading(false);
     }
   };
 
   const createPost = async (data) => {
+    setLoading(true);
+
     try {
       const formData = createFormData(data, { college_id: apiUser.id }, []);
       const response = await postRequest(addEventUrl, formData);
+      const user = await getRequest(userLoginUrl + userCredentials.uid);
+      setUserCredentials(user.result[0]);
+      localStorage.setItem("userCredentials", JSON.stringify(user.result[0]));
       console.log("Response from createpost: ", response);
       toast.success("Posted Successfully.");
       navigate("/dashboard");
     } catch (e) {
       toast.error("Something Went Wrong.");
       console.log(e);
+    } finally {
+      setLoading(false);
     }
   };
 
   const getUserData = () => {};
 
-  const deletePost = () => {
-    toast.success("The post has been deleted.");
-    navigate("/dashboard");
+  const deletePost = async (data) => {
+    setLoading(true);
+    try {
+      const res = await deleteRequest(deleteEventUrl + data);
+      toast.success(res.message);
+      const user = await getRequest(userLoginUrl + userCredentials.uid);
+      setUserCredentials(user.result[0]);
+      localStorage.setItem("userCredentials", JSON.stringify(user.result[0]));
+      navigate("/dashboard");
+    } catch (e) {
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const updateProfile = () => {
-    toast.success("Your profile has been updated successfully.");
-    navigate("/dashboard");
+  const updateProfile = async (data) => {
+    setLoading(true);
+
+    try {
+      console.log("data in the update proffile", data);
+      const res = await putRequest(collegeUpdateUrl, {
+        ...data,
+        college_id: userCredentials.id,
+      });
+      console.log("response from updateprofile", res);
+      const user = await getRequest(userLoginUrl + userCredentials.uid);
+      setUserCredentials(user.result[0]);
+      localStorage.setItem("userCredentials", JSON.stringify(user.result[0]));
+      setProfileUpdated(true);
+      toast.success("Your profile has been updated successfully.");
+      navigate("/dashboard");
+    } catch (e) {
+      console.log("Error from updateprofile:", e);
+      toast.error("Something Went Wrong.");
+      navigate("/dashboard");
+    } finally {
+      setProfileUpdated(false);
+      setLoading(false);
+    }
   };
 
-  const sendSupport = () => {
-    toast.success("Details have been sent successfully.");
-    navigate("/dashboard");
+  const sendSupport = async (data) => {
+    setLoading(true);
+
+    try {
+      const res = await postRequest(sendSupportUrl, {
+        ...data,
+        college_id: userCredentials.college_id,
+      });
+      console.log("Response from send support", res);
+      toast.success("Details have been sent successfully.");
+      navigate("/dashboard");
+    } catch (e) {
+      console.log(e);
+      toast.error("Something Went Wrong.");
+      navigate("/dashboard");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const verifyEmail = async () => {
+    setLoading(true);
+
     try {
       await verifyEmailFirebase();
       await verifyAdmin();
@@ -169,20 +265,75 @@ export function ApiProvider({ children }) {
     } catch (e) {
       console.log(e);
       toast.error("Something went wrong.");
+    } finally {
+      setLoading(false);
     }
   };
 
   const verifyAdmin = async () => {
+    setLoading(true);
+
     try {
-      const res = await postRequest(emailStatusUpdateUrl + currentUser.uid);
-      console.log(res);
-      toast.success("Admin verified successfully");
+      if (currentUser && currentUser.emailVerified) {
+        const res = await postRequest(emailStatusUpdateUrl + currentUser.uid);
+        console.log(res);
+        toast.success("Admin verified successfully");
+      } else {
+        setTimeout(async () => {
+          console.log("Rechecking email verification status...");
+          await verifyAdmin();
+        }, 5000);
+      }
     } catch (e) {
       toast.error("Admin Verification Failed.");
+    } finally {
+      setLoading(false);
     }
   };
 
-////USE EFFECT HOOKS
+  const editPost = async (data) => {
+    setLoading(true);
+    try {
+      const res = await putRequest(editPostUrl + data.poster_id, data);
+      const user = await getRequest(userLoginUrl + userCredentials.uid);
+      setUserCredentials(user.result[0]);
+      localStorage.setItem("userCredentials", JSON.stringify(user.result[0]));
+      toast.success(res.message);
+    } catch (e) {
+      toast.error("Something Went Wrong.");
+      navigate("/dashboard");
+      console.log(e);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleLogout = async () => {
+    setLoading(true);
+    try {
+      console.log("logout function called.");
+      await logout();
+      setUserCredentials(null);
+      setApiUser(null);
+      setPosters([]);
+      localStorage.removeItem("userCredentials");
+      toast.success("Logged out successfully.");
+      navigate("/login");
+    } catch (e) {
+      toast.error("Failed to logout.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  ////USE EFFECT HOOKS
+
+  useEffect(() => {
+    const activeEvents = posters.filter((event) => event.isactive === 1); // Assuming isactive indicates if the event is active
+    const inActiveEvents = posters.filter((e) => e.isactive === 0);
+    setInActivePosters(inActiveEvents);
+    setActivePosters(activeEvents);
+  }, [posters]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -198,8 +349,8 @@ export function ApiProvider({ children }) {
           const userPosters = await getRequest(
             getEventsUrl + userCredentials.college_id
           );
-          
-          console.log('Posters use effect: ', userPosters)
+
+          console.log("Posters use effect: ", userPosters);
           setPosters(userPosters);
         } catch (error) {
           console.error("Error fetching data:", error);
@@ -209,7 +360,7 @@ export function ApiProvider({ children }) {
     };
 
     fetchData();
-  }, [userCredentials]);
+  }, [userCredentials, profileUpdated]);
 
   ////UTILITY FUNCTIONS////
 
@@ -244,12 +395,17 @@ export function ApiProvider({ children }) {
     posters,
     verifyEmail,
     userCredentials,
-    loading
+    loading,
+    handleLogout,
+    editPost,
+    activePosters,
+    inActivePosters,
+    forgetPassword,
   };
 
   return (
     <ApiContext.Provider value={value}>
-      {!loading && children}
+      {loading ? <Loading /> : children}
     </ApiContext.Provider>
   );
 }

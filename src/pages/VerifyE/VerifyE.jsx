@@ -3,7 +3,7 @@ import "./VerifyE.css";
 import { useApi } from "../../context/ApiContext";
 
 export default function VerifyE() {
-  const { verifyEmail } = useApi();
+  const { verifyEmail, loading } = useApi();
   const messageSvg = (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -41,7 +41,7 @@ export default function VerifyE() {
           activate your account, if not in mail kindly check in spam.
         </div>
         <div className="d-flex flex-column align-items-center justify-content-center">
-          <button className="buttonForVerifyEmail shadow-md" onClick={handleClick}>
+          <button className="buttonForVerifyEmail shadow-md" disabled={loading} onClick={handleClick}>
             Click to Confirm
           </button>
           <button className="button2ForVerifyEmail mt-2">

@@ -1,24 +1,17 @@
 import React, { useState } from "react";
 import Input from "../components/Input/Input";
-import "./Login.css";
-import PasswordInput from "../components/PasswordInput/PasswordInput";
+import "./ForgetPassword.css";
 import { useApi } from "../../context/ApiContext";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 
-export default function Login() {
-  const { login, loading } = useApi();
+export default function ForgetPassword() {
+  const { forgetPassword, loading } = useApi();
 
   const [formData, setFormData] = useState({
     email: "",
-    password: "",
   });
 
-  const navigate = useNavigate();
 
-  const handleClick = () => {
-    navigate('/forget-password')
-  }
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -52,7 +45,7 @@ export default function Login() {
 
     if (checked) {
       console.log("Registration Data Submitted", formData);
-      login(formData);
+      forgetPassword(formData);
     } else {
       let errs = [];
       for (let key in errors) {
@@ -82,32 +75,23 @@ export default function Login() {
             alt=""
           />
           <div className="mt-5">
-            <h1>Welcome Back!</h1>
+            <h1>Forgot password?</h1>
             <span className="text-muted">
-              Glad to see you again! <br />
-              Login to your account
+              Please enter your mail to receive the reset link  <br />
             </span>
           </div>
         </div>
         <form onSubmit={handleSubmit}>
-          <div className="d-flex flex-column justify-content-center align-items-center mt-2 mx-3">
+          <div className="d-flex flex-column justify-content-center align-items-center mt-5 mx-3">
             <Input
               inputValue={"email"}
               type="email"
               handleInputChange={handleInputChange}
             />
-            <PasswordInput
-              inputValue={"password"}
-              handleInputChange={handleInputChange}
-            />
-            <button className="LoginButton" disabled={loading}>Login</button>
+            
+            <button disabled={loading} className="ForgetPasswordButton">Send</button>
           </div>
         </form>
-        <div className="d-flex justify-content-end text-end mb-3">
-          <span className="me-4">
-            <button className="ForgetPasswordBtn" onClick={handleClick}>Forget Password ?</button>
-          </span>
-        </div>
       </div>
     </div>
   );
