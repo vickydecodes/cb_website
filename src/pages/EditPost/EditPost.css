@@ -3,6 +3,10 @@ table th {
     vertical-align: middle; 
   }
 
+  td{
+    padding: 0
+  }
+
   tr{
     height: 50px;
   }

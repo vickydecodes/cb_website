@@ -45,7 +45,7 @@ export default function PostTab({ handleDashboardPage, data }) {
   };
 
   return (
-    <div className="col-md-4 p-1">
+    <div className="col-md-4 p-1 mb-2">
       <div className="card postcard shadow p-3">
         <div className="card-body p-0">
           <h5 className="card-title d-flex align-items-center">
@@ -175,7 +175,7 @@ export default function PostTab({ handleDashboardPage, data }) {
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
-        <div className="modal-dialog modal-lg">
+        <div className="modal-dialog modal-xl">
           <div className="modal-content">
             <div className="modal-header">
               <h1
@@ -257,7 +257,7 @@ export default function PostTab({ handleDashboardPage, data }) {
           </div>
         </div>
       </div>
-      <Modal size="lg" show={show} onHide={handleClose}>
+      <Modal size="xl" show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title> <h1
                 className="modal-title card-title fs-5"
