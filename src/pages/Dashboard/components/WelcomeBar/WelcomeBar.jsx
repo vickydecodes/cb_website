@@ -13,7 +13,7 @@ export default function WelcomeBar({college_name, college_logo, college_banner})
             </div>
         <div className="card-body d-flex flex-column">
            
-           <div> Welcome, <span className="ms-2" style={{color: 'gold'}}>{college_name}</span></div>
+           <div> Welcome, <span className="ms-2" style={{color: '#fecd00'}}>{college_name}</span></div>
         <div className="card-text">Have a nice day 😊</div>
 
         </div>

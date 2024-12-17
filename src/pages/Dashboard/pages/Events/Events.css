@@ -1,6 +1,6 @@
 .eventspage{
     height: 100vh;
-    padding: 40px;
+    padding: 30px 40px;
 }
 
 h3{
@@ -8,5 +8,5 @@ h3{
 }
 
 .alleventsdiv{
-    width: 80%
+    width: 100%
 }

@@ -4,6 +4,7 @@ import TextArea from "../components/TextArea/TextArea.jsx";
 import FileInput from "../components/FileInput/FileInput";
 import { toast } from "react-toastify";
 import "./CreatePost.css";
+import { Helmet } from "react-helmet-async";
 import { useApi } from "../../context/ApiContext.jsx";
 
 export default function CreatePost() {
@@ -67,20 +68,21 @@ export default function CreatePost() {
     const { checked, errors } = checkTheForm(formData);
 
     if (checked) {
-      console.log("Registration Data Submitted", formData);
       createPost(formData);
     } else {
       let errs = [];
       for (let key in errors) {
         errs.push(key.toUpperCase());
       }
-      console.log({errs: errs, errors: errors})
       toast.error(`${errs.join(', ')} ${errs.length > 1 ? "are": "is"  } missing.`);
-      console.log(formData);
     }
   };
 
   return (
+    <>
+    <Helmet>
+        <title>ConnectBeez | Create Post</title>
+      </Helmet>
     <div className="d-flex">
       <div className="full-page-container_createpost">
         <div className="content_createpost shadow-lg mb-3">
@@ -100,7 +102,7 @@ export default function CreatePost() {
           </div>
           <form onSubmit={handleSubmit}>
             <div className="row g-0 p-0 row_createpost">
-              <div className="col-md-4 columns order-1 d-flex flex-column justify-content-between">
+              <div className="col-md-4 columns order-1 d-flex flex-column justify-content-around">
                 <Input
                   inputValue={"event_name"}
                   handleInputChange={handleInputChange}
@@ -125,7 +127,7 @@ export default function CreatePost() {
                   setImagePreviewForCreatePost={setImagePreviewForCreatePost}
                 />
               </div>
-              <div className="col-md-4 columns  order-sm-3 order-md-2 d-flex flex-column justify-content-between">
+              <div className="col-md-4 columns  order-sm-3 order-md-2 d-flex flex-column justify-content-around">
                 <Input
                   inputValue={"coordinator_name"}
                   handleInputChange={handleInputChange}
@@ -147,7 +149,7 @@ export default function CreatePost() {
                   Post Event
                 </button>
               </div>
-              <div className="col-md-4 columns order-md-3 order-sm-2 d-flex justify-content-center align-items-center my-4">
+              <div className="col-md-4 columns order-md-3 order-sm-2 d-flex justify-content-center align-items-center">
                 <div className="preview-container_createpost">
                   {imagePreviewForCreatePost ? (
                     <img
@@ -167,5 +169,6 @@ export default function CreatePost() {
         </div>
       </div>
     </div>
+    </>
   );
 }

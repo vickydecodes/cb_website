@@ -1,11 +1,18 @@
 .input_label_dropdown {
-    color: gold
+    color: #fecd00
 }
+
+
+h5 {
+    font-size: var(--font-size-medium) !important;
+}
+
 
 
 .input_input_dropdown {
     margin-top: 3px;
-    padding: 20px; 
+    padding: 20px;
+    font-size: var(--font-size-small) !important;
     border-radius: 6px;
     border: 1px solid #ccc;
     width: 100% !important;
@@ -13,7 +20,7 @@
 }
 
 
-.input_input_dropdown:focus{
+.input_input_dropdown:focus {
     outline: none;
-    border-color: #f7b600;
+    border-color: #fecd00;
 }

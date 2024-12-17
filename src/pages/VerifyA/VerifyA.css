@@ -1,15 +1,21 @@
-.full-page-container {
-    height: 100vh;
-    width: 100vw;
+.full-page-container_admin {
+    height: auto !important;
+    width: 100%;
     padding: 40px 60px;
     border-radius: 30px;
+    font-size: var();
 }
 
-.content {
-    height: 100%;
-    width: auto;
-    border: 2px solid gold;
+h1{
+    font-size: var(--font-size-xx-large) !important;
+}
+
+.content_admin {
+    height: auto;
+    width: 100%;
+    border: 2px solid #fecd00;
     border-radius: 30px;
+    padding-bottom: 30px;
 }
 
 .headerLogo {
@@ -22,13 +28,17 @@
 }
 
 
-.contextForActivation {
-    font-size: 20px;
+.context {
+    font-size: var(--font-size-x-large) !important;
+}
+
+h2{
+    font-size: var(--font-size-xx-large);
 }
 
 .buttonForVerifyEmail {
     padding: 15px 100px;
-    background-color: gold;
+    background-color: #fecd00;
     border: 0px;
     border-radius: 12px;
     color: white;
@@ -39,4 +49,19 @@
     border: 0px;
     color: grey !important;
     background-color: transparent;
+}
+
+
+.btns{
+    margin: 10px;
+    border: 1px solid #fecd00;
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: #fecd00;
+transition: background 1ms;
+}
+
+.btns:hover{
+    background: #fecd00;
+    color: white
 }

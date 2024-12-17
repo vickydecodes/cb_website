@@ -12,13 +12,18 @@
 .content_register {
     height: auto !important;
     width: 100% !important;
-    border: 2px solid gold;
+    border: 2px solid #fecd00;
     border-radius: 30px;
 }
 
 .headerForLogoAndGreet {
     text-align: center;
     padding: 15px;
+}
+
+h1{
+    font-size: var(--font-size-xxx-large);
+margin: 20px 0px 16px 0px;
 }
 
 .headerLogo {
@@ -35,17 +40,17 @@
 .submit_button {
     width: 100% !important;
     border-radius: 10px;
-    background-color: gold;
+    background-color: #fecd00;
     height: 50px;
     color: white;
     border: 0px;
-    font-size: 20px;
+    font-size: var(--font-size-large);
     margin-bottom: 20px;
 }
 
 .colorpart_register {
     height: auto !important;
-    background-color: gold;
+    background-color: #fecd00;
     width: 25%;
 }
 

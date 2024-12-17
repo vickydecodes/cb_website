@@ -1,15 +1,24 @@
-.full-page-container {
-    height: 100vh;
-    width: 100vw;
-    padding: 40px 60px;
+.full-page-container_email {
+    height: auto !important;
+    width: 100%;
+    padding: 40px;
     border-radius: 30px;
 }
 
-.content {
-    height: 100%;
-    width: auto;
-    border: 2px solid gold;
+h1 {
+    font-size: var(--font-size-xx-large) !important;
+
+}
+
+.content_email {
+    height: auto !important;
+    width: 100% !important;
+    border: 2px solid #fecd00;
     border-radius: 30px;
+    padding-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .headerLogo {
@@ -22,13 +31,13 @@
 }
 
 
-.contextForActivation {
-    font-size: 20px;
+.context {
+    font-size: var(--font-size-x-large) !important;
 }
 
 .buttonForVerifyEmail {
     padding: 15px 100px;
-    background-color: gold;
+    background-color: #fecd00;
     border: 0px;
     border-radius: 12px;
     color: white;

@@ -1,6 +1,6 @@
 .collegeprofilepage{
     height: 100vh;
-    padding: 40px;
+    padding: 0px 40px 0px 40px ;
 }
 
 h3{
@@ -40,5 +40,5 @@ h3{
 
 
 .admin_card{
-    border: 1px solid gold;
+    border: 1px solid #fecd00;
 }

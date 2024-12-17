@@ -1,20 +1,24 @@
 .full-page-container_login {
-    height: 100vh;
-    width: 100vw;
+    height: 100vh !important;
+    width: 100%;
     border-radius: 30px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-.content_login {
-    height: 80%;
-    width: auto;
-    padding: 30px;
-    border: 2px solid gold;
-    border-radius: 30px;
+body {
+    overflow-y: auto;
 }
 
+.content_login {
+    height: 762px !important;
+    width: 100%;
+    border: 2px solid #fecd00;
+    border-radius: 30px;
+    padding: 30px
+}
 
 .headerForLogoAndGreet {
     text-align: center;
@@ -30,11 +34,11 @@
 }
 
 .LoginButton {
-    width: 90%;
+    width: 100%;
     padding: 10px;
     border: 0px;
     border-radius: 10px;
-    background-color: gold;
+    background-color: #fecd00;
     color: white;
     font-size: 20px;
 }
@@ -42,6 +46,8 @@
 .ForgetPasswordBtn {
     margin-top: 10px;
     border: 0px;
-    color: gold;
+    color: #fecd00;
     background-color: transparent;
 }
+
+

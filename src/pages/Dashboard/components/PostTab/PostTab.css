@@ -1,7 +1,9 @@
 .postcard {
     border-radius: 14px;
+    width: 350px !important;
     height: 100%;
     cursor: pointer;
+    font-size: var(--font-size-small) !important;
 }
 
 .postcard-img {
@@ -18,21 +20,23 @@
     object-fit: contain;
 }
 
-.postdates {
-    font-size: 14px;
+.postdates, .eventcode {
+    font-size: var(--font-size-small) !important;
 }
 
 .departmenttab {
-    background-color: gold;
+    background-color: #fecd00;
     padding: 10px 10px;
     border-radius: 10px;
     color: white;
 }
 
 .card-title {
-    color: goldenrod;
-    font-weight: 600;
+    color: #fecd00;
+    font-size: var(--font-size-x-large) !important;
+    font-weight: var(--font-weight-medium);
 }
+
 
 .togglebutton {
     cursor: pointer;
@@ -40,6 +44,7 @@
     border: 0;
     background-color: transparent;
     appearance: none;
+    width: fit-content;
 }
 
 .editbtn, .deletebtn{
@@ -94,7 +99,7 @@ font-weight: 600;
   
   .eventInput:focus {
     outline: none;
-    border-color: #f7b600; 
+    border-color: #fecd00; 
   }
   
 

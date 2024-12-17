@@ -4,15 +4,19 @@ import TextArea from "../../../components/TextArea/TextArea.jsx";
 import ThreeInputs from "../../../components/ThreeInputs/ThreeInputs.jsx";
 import { IoArrowBack } from "react-icons/io5";
 import { toast } from "react-toastify";
+import { Helmet } from "react-helmet-async";
 import { useApi } from "../../../../context/ApiContext.jsx";
 import "./UpdateProfile.css";
+import Loading from "../../../components/Loading/Loading.jsx";
+import { useAppState } from "../../../../context/StateContext.jsx";
 
 export default function UpdateProfile({
   handleBackButton,
   handleDashboardPage,
   user,
 }) {
-  const { updateProfile, loading } = useApi();
+  const { loading } = useAppState();
+  const { updateProfile } = useApi();
 
   const [formData, setFormData] = useState({
     college_name: user.college_name || "",
@@ -69,7 +73,6 @@ export default function UpdateProfile({
     const { checked, errors } = checkTheForm(formData);
 
     if (checked) {
-      console.log("update Data Submitted", formData);
       handleDashboardPage("dashboard");
       updateProfile(formData);
     } else {
@@ -77,84 +80,97 @@ export default function UpdateProfile({
       for (let key in errors) {
         errs.push(key.toUpperCase());
       }
-      console.log({ errs: errs, errors: errors });
       toast.error(
         `${errs.join(", ")} ${errs.length > 1 ? "are" : "is"} missing.`
       );
-      console.log(formData);
     }
   };
 
-  return (
-    <div className="d-flex">
-      <div className="updateprofilepage d-flex">
-        <div className="content_updateprofile my-4">
-          <h3>
-            <span
-              className="me-3"
-              style={{ cursor: "pointer" }}
-              onClick={handleBackButton}
-            >
-              <IoArrowBack />
-            </span>
-            Edit College Profile
-          </h3>
+  if (loading || !user) {
+    return <Loading />;
+  }
 
-          <form onSubmit={handleSubmit}>
-            <div>
-              <Input
-                inputValue={"college_name"}
-                value={formData.college_name}
-                handleInputChange={handleInputChange}
-              />
-              <Input
-                inputValue={"college_website"}
-                value={formData.college_website}
-                handleInputChange={handleInputChange}
-              />
-              <Input
-                inputValue={"college_address"}
-                value={formData.college_address}
-                handleInputChange={handleInputChange}
-              />
-              <Input
-                inputValue={"contact_number"}
-                value={formData.contact_number}
-                handleInputChange={handleInputChange}
-              />
-              <TextArea
-                inputValue={"college_about"}
-                value={formData.college_about}
-                handleInputChange={handleInputChange}
-              />
-              <Input
-                inputValue={"linkedin"}
-                value={formData.linkedin}
-                handleInputChange={handleInputChange}
-              />
-              <ThreeInputs
-                handleInputChange={handleInputChange}
-                values={{
-                  instagram: formData.instagram,
-                  facebook: formData.facebook,
-                }}
-              />
-              <div className="submitButtons m-4">
-                
-                  <button className="cancelBtnForUpdateProfile" disabled={loading} type="reset">
+  return (
+    <>
+      <Helmet>
+        <title>ConnectBeez | Update Profile</title>
+      </Helmet>
+      <div className="d-flex">
+        <div className="updateprofilepage d-flex">
+          <div className="content_updateprofile my-4">
+            <h3>
+              <span
+                className="me-3"
+                style={{ cursor: "pointer" }}
+                onClick={handleBackButton}
+              >
+                <IoArrowBack />
+              </span>
+              Edit College Profile
+            </h3>
+
+            <form onSubmit={handleSubmit}>
+              <div>
+                <Input
+                  inputValue={"college_name"}
+                  value={formData.college_name}
+                  handleInputChange={handleInputChange}
+                />
+                <Input
+                  inputValue={"college_website"}
+                  value={formData.college_website}
+                  handleInputChange={handleInputChange}
+                />
+                <Input
+                  inputValue={"college_address"}
+                  value={formData.college_address}
+                  handleInputChange={handleInputChange}
+                />
+                <Input
+                  inputValue={"contact_number"}
+                  value={formData.contact_number}
+                  handleInputChange={handleInputChange}
+                />
+                <TextArea
+                  inputValue={"college_about"}
+                  value={formData.college_about}
+                  handleInputChange={handleInputChange}
+                />
+                <Input
+                  inputValue={"linkedin"}
+                  value={formData.linkedin}
+                  handleInputChange={handleInputChange}
+                />
+                <ThreeInputs
+                  handleInputChange={handleInputChange}
+                  values={{
+                    instagram: formData.instagram,
+                    facebook: formData.facebook,
+                  }}
+                />
+                <div className="submitButtons m-4">
+                  <button
+                    className="cancelBtnForUpdateProfile"
+                    disabled={loading}
+                    type="reset"
+                  >
                     Cancel
                   </button>
-                
-                  <button className="submitBtnForUpdateProfile" disabled={loading} type="submit">
+
+                  <button
+                    className="submitBtnForUpdateProfile"
+                    disabled={loading}
+                    type="submit"
+                  >
                     Update
                   </button>
-              
+                </div>
               </div>
-            </div>
-          </form>
+            </form>
+          </div>
+          <div className="emptyspace_updateprofile"></div>
         </div>
-        <div className="emptyspace_updateprofile"></div>
       </div>
-    </div>
+    </>
   );
 }

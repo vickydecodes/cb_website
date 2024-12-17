@@ -102,14 +102,14 @@ export default function InsightsTab({active, inActive}) {
             <div className="col-9 d-flex flex-column justify-content-center text-start">
               <b
                 style={{
-                  fontWeight: "700",
-                  fontSize: "25px",
+                  fontWeight: "500",
+                  fontSize: "24px",
                   color: tinycolor(data.circle).lighten(-10).toString(),
                 }}
               >
                 <CountUp end={data.number} duration={3} />
               </b>
-              <span className="" style={{ fontWeight: "700" }}>
+              <span className="" style={{ fontWeight: "600" }}>
                 {data.title}
               </span>
             </div>

@@ -1,11 +1,12 @@
 .input_label_textarea {
-    color: gold
+    color: #fecd00
 }
 
 
 .input_input_textarea {
     margin-top: 5px;
-    padding: 20px;
+    padding: 20px !important;
+    font-size: var(--font-size-small)  !important;
     border-radius: 6px;
     border: 1px solid #ccc; 
     width: 100% !important;
@@ -14,5 +15,9 @@
 
 .input_input_textarea:focus{
     outline: none;
-    border-color: #f7b600;
+    border-color: #fecd00;
+}
+
+h5{
+    font-size: var(--font-size-medium) !important;
 }

@@ -19,14 +19,14 @@
 .input_label_c {
   font-weight: bold;
   margin-bottom: 8px;
-  color: #f7b600; /* Label color */
+  color: #fecd00; /* Label color */
 }
 
 .input_input_file_c {
-  padding: 16px;
+  padding: 20px;
   border: 1px solid #ccc;
   border-radius: 4px;
-  font-size: 14px;
+  font-size: var(--font-size-small) !important;
   cursor: pointer;
 }
 
@@ -39,9 +39,13 @@
   cursor: pointer;
 }
 
+h5{
+  font-size: var(--font-size-medium) !important;
+}
+
 .input_input_file_c:focus {
   outline: none;
-  border-color: #f7b600;
+  border-color: #fecd00;
 }
 
 .preview-container {
@@ -81,8 +85,9 @@ input[type="file"]::-webkit-file-upload-button {
   color: #fff;
   background-color: #007bff;
   border: 0px;
-  padding: 4px 8px;
+  padding:  8px;
   margin-right: 10px;
   border-radius: 3px;
+  font-size: var(--font-size-xx-small) !important;
   cursor: pointer;
 }

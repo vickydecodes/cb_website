@@ -2,6 +2,11 @@ h5{
     margin-bottom: 10px;
     margin-right: 10px;
     color: #696969;
+    font-size: var(--font-size-large);
+}
+
+h6{
+    font-size: var(--font-size-medium);
 }
 
 

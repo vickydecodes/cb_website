@@ -25,7 +25,7 @@ export default function DetailsTab({
     return (
       <div className="detailstab">
         <h5 className="">{heading} </h5>
-        <h6>{content}</h6>
+        <h6 style={{whiteSpace: 'pre-wrap'}}>{content}</h6>
       </div>
     );
   }

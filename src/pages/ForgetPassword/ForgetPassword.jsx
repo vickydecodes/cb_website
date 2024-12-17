@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import Input from "../components/Input/Input";
 import "./ForgetPassword.css";
+import { Helmet } from "react-helmet-async";
 import { useApi } from "../../context/ApiContext";
 import { toast } from "react-toastify";
+import { useAppState } from "../../context/StateContext";
 
 export default function ForgetPassword() {
-  const { forgetPassword, loading } = useApi();
+  const { forgetPassword } = useApi();
+ 
+  const { loading} = useAppState();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -44,22 +48,23 @@ export default function ForgetPassword() {
     const { checked, errors } = checkTheForm(formData);
 
     if (checked) {
-      console.log("Registration Data Submitted", formData);
       forgetPassword(formData);
     } else {
       let errs = [];
       for (let key in errors) {
         errs.push(key.toUpperCase());
       }
-      console.log({ errs: errs, errors: errors });
       toast.error(
         `${errs.join(", ")} ${errs.length > 1 ? "are" : "is"} missing.`
       );
-      console.log(formData);
     }
   };
 
   return (
+    <>
+    <Helmet>
+        <title>ConnectBeez | Forgot Password</title>
+      </Helmet>
     <div className="full-page-container_login">
       <div className="content_login shadow-lg mx-3">
         <div className="headerForLogoAndGreet">
@@ -94,5 +99,6 @@ export default function ForgetPassword() {
         </form>
       </div>
     </div>
+    </>
   );
 }

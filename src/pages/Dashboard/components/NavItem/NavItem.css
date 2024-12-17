@@ -1,5 +1,5 @@
-.navitem.active{
-    background-color: gold;
+.navitem.active {
+    background-color: #fecd00;
     color: white;
     font-weight: 800;
     padding: 10px 20px;
@@ -11,7 +11,8 @@
 }
 
 
-.navitem{
+.navitem {
+    font-size: var(--font-size-small);
     padding: 10px 20px;
     margin-bottom: 30px;
     border-radius: 10px;
@@ -20,7 +21,8 @@
     transition: background-color 0.3s ease;
 }
 
-.logoutbutton{
+.logoutbutton {
+    font-size: var(--font-size-small);
     color: red;
     padding: 10px 20px;
     margin-bottom: 30px;
@@ -43,18 +45,19 @@
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
-.createbutton:hover{
-    color: gold;
-    border: 2px solid gold;
+.createbutton:hover {
+    color: #fecd00;
+    border: 2px solid #fecd00;
     background-color: white;
 }
 
-.createbutton{
+.createbutton {
+    font-size: var(--font-size-small);
     text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: gold;
+    background-color: #fecd00;
     color: white;
     font-weight: 800;
     padding: 20px 30px;
@@ -65,4 +68,19 @@
     transition: background-color 0.3s ease;
 }
 
+.btn {
+    width: 200px;
+}
 
+.logoutBtn {
+    background-color: red;
+    color: white;
+    border: 0;
+    transition: background-color 0.5ms ease;
+}
+
+.logoutBtn:hover {
+    background-color: white;
+    border: 1px solid red;
+    color: red
+}

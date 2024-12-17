@@ -7,11 +7,15 @@ import CheckBox from "../components/CheckBox/CheckBox";
 import PasswordInput from "../components/PasswordInput/PasswordInput";
 import { toast } from "react-toastify";
 import { useApi } from "../../context/ApiContext";
+import { Helmet } from "react-helmet-async";
+import { useAppState } from "../../context/StateContext";
 
 export default function Register() {
   const detailsInputTabs1 = ["college_name", "admin_name", "designation"];
 
-  const { register, loading } = useApi();
+  const { register } = useApi();
+
+  const { loading} = useAppState();
 
   const [formData, setFormData] = useState({
     college_name: "",
@@ -73,22 +77,21 @@ export default function Register() {
         errors[key] = `${key} cannot be empty`;
         checked = false;
       }
+    }
 
-      if (formData.password.length < 6) {
-        toast.error("Password length should be above 6 characters.");
-        checked = false;
-      }
+    if (formData.password.length < 6) {
+      toast.error("Password length should be above 6 characters.");
+      checked = false;
+    }
 
-      if (formData.admin_mobile.length != 10) {
-        toast.error("Mobile Number should contain 10 numbers.");
-        checked = false;
-      }
+    if (formData.admin_mobile.length != 10) {
+      toast.error("Mobile Number should contain 10 numbers.");
+      checked = false;
+    }
 
-      if (formData.password !== formData.confirm_password) {
-        toast.error("Passwords should not matched.");
-        checked = false;
-      }
-
+    if (formData.password !== formData.confirm_password) {
+      toast.error("Passwords should not matched.");
+      checked = false;
     }
     return { checked, errors };
 
@@ -99,28 +102,30 @@ export default function Register() {
     const { checked, errors } = checkTheForm(formData);
 
     if (checked) {
-      console.log("Registration Data Submitted", formData);
       register(formData);
     } else {
       let errs = [];
       for (let key in errors) {
         errs.push(key.toUpperCase());
-      }
-      console.log({ errs: errs, errors: errors });
+      }     
       toast.error(
         `${errs.join(", ")} ${errs.length > 1 ? "are" : "is"} missing.`
       );
-      console.log('Register form data: ',formData);
     }
+    
   };
 
   return (
+    <>
+    <Helmet>
+        <title>ConnectBeez | Register</title>
+      </Helmet>
     <div className="d-flex">
       <div className="full-page-container_register">
         <div className="content_register shadow-lg mb-3">
           <form onSubmit={handleSubmit}>
             <div className="row g-0 p-0" style={{ height: "100%" }}>
-              <div className="headerForLogoAndGreet">
+              <div className="headerForLogoAndGreet mb-3">
                 <img
                   src="/img/logo with name.png"
                   className="headerLogo img-fluid"
@@ -192,5 +197,6 @@ export default function Register() {
       </div>
       <div className="colorpart_register"></div>
     </div>
+    </>
   );
 }

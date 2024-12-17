@@ -13,7 +13,6 @@ export default function FileInput({
   const handleFileInputChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      console.log('File is red', file)
       setFile(file)
       const reader = new FileReader();
       reader.onload = () => {

@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import "./PostTab.css";
 import EditEvent from "../../../EditPost/EditPost";
 import { Modal } from "react-bootstrap";
+import { PiAddressBookTabs } from "react-icons/pi";
 
 export default function PostTab({ handleDashboardPage, data }) {
 
@@ -44,14 +45,15 @@ export default function PostTab({ handleDashboardPage, data }) {
     }
   };
 
+  console.log(data)
+
   return (
-    <div className="col-md-4 p-1 mb-2">
-      <div className="card postcard shadow p-3">
+    <div className="postcard p-1 m-1">
+      <div className="card  shadow p-3">
         <div className="card-body p-0">
           <h5 className="card-title d-flex align-items-center">
             {data.event_name}
             <span className="ms-auto ">
-              <div className="dropdown">
                 <button
                   className="btn togglebutton"
                   type="button"
@@ -69,6 +71,7 @@ export default function PostTab({ handleDashboardPage, data }) {
                     <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
                   </svg>
                 </button>
+                <div className="dropdown">
                 <ul className="dropdown-menu text-start p-0">
                   <button
                     className="editbtn"
@@ -145,7 +148,7 @@ export default function PostTab({ handleDashboardPage, data }) {
               </div>
             </span>
           </h5>
-          <h6 className="eventcode">Event code: #9991</h6>
+          <h6 className="eventcode">Event code: #{data.event_code}</h6>
           <p className="card-text departmenttab">{data.department}</p>
         </div>
         <p className="card-text postdates m-0 mt-3">
@@ -212,11 +215,7 @@ export default function PostTab({ handleDashboardPage, data }) {
                     </tr>
                     <tr>
                       <th scope="row">Event Code</th>
-                      <td>#9111</td>
-                    </tr>
-                    <tr>
-                      <th scope="row">isActive</th>
-                      <td>True</td>
+                      <td>{data.event_code}</td>
                     </tr>
                     <tr>
                       <th scope="row">Department</th>
@@ -228,15 +227,15 @@ export default function PostTab({ handleDashboardPage, data }) {
                     </tr>
                     <tr>
                       <th scope="row">Posted on</th>
-                      <td> 12-12-2024</td>
+                      <td> {data.created_at.split(" ")[0]}</td>
                     </tr>
                     <tr>
                       <th scope="row">Event Start</th>
-                      <td> 30-12-2024</td>
+                      <td> {data.ended_at.split(" ")[0]}</td>
                     </tr>
                     <tr>
                       <th scope="row">Event Description</th>
-                      <td>{data.description}</td>
+                      <td style={{whiteSpace: 'pre-wrap'}}>{data.description}</td>
                     </tr>
                     <tr>
                       <th scope="row">Coordinator</th>
@@ -271,7 +270,7 @@ export default function PostTab({ handleDashboardPage, data }) {
         </Modal.Header>
         <Modal.Body>
         <div className="p-3">
-              <EditEvent data={data} handleShow={handleShow}/>
+              <EditEvent data={data} handleShow={handleShow} handleClose={handleClose}/>
             </div>
         </Modal.Body>
         </Modal>

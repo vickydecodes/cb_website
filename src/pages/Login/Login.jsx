@@ -4,10 +4,13 @@ import "./Login.css";
 import PasswordInput from "../components/PasswordInput/PasswordInput";
 import { useApi } from "../../context/ApiContext";
 import { toast } from "react-toastify";
+import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
+import { useAppState } from "../../context/StateContext";
 
 export default function Login() {
-  const { login, loading } = useApi();
+  const { login } = useApi();
+  const { loading } = useAppState();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -17,8 +20,8 @@ export default function Login() {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate('/forget-password')
-  }
+    navigate("/forget-password");
+  };
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -51,64 +54,73 @@ export default function Login() {
     const { checked, errors } = checkTheForm(formData);
 
     if (checked) {
-      console.log("Registration Data Submitted", formData);
       login(formData);
     } else {
       let errs = [];
       for (let key in errors) {
         errs.push(key.toUpperCase());
       }
-      console.log({ errs: errs, errors: errors });
       toast.error(
         `${errs.join(", ")} ${errs.length > 1 ? "are" : "is"} missing.`
       );
-      console.log(formData);
     }
   };
 
   return (
-    <div className="full-page-container_login">
-      <div className="content_login shadow-lg mx-3">
-        <div className="headerForLogoAndGreet">
-          <img
-            src="/img/logo with border.png"
-            className="headerLogo img-fluid"
-            alt=""
-          />{" "}
-          <br />
-          <img
-            src="/img/app_name.png"
-            className="headerLogoText img-fluid mt-2"
-            alt=""
-          />
-          <div className="mt-5">
-            <h1>Welcome Back!</h1>
-            <span className="text-muted">
-              Glad to see you again! <br />
-              Login to your account
+    <>
+      <Helmet>
+        <title>ConnectBeez | Login</title>
+      </Helmet>
+      <div className="full-page-container_login">
+        <div className="content_login shadow-lg">
+          <div className="headerForLogoAndGreet">
+            <img
+              src="/img/logo with border.png"
+              className="headerLogo img-fluid"
+              alt="ConnectBeez Logo"
+            />
+            <br />
+            <img
+              src="/img/app_name.png"
+              className="headerLogoText img-fluid mt-2"
+              alt="ConnectBeez App Name"
+            />
+            <div className="mt-5">
+              <h1>Welcome Back!</h1>
+              <span className="text-muted">
+                Glad to see you again! <br />
+                Login to your account
+              </span>
+            </div>
+          </div>
+          <form onSubmit={handleSubmit}>
+            <div className="d-flex flex-column justify-content-center align-items-center mt-2 mx-3">
+              <Input
+                inputValue={"email"}
+                type="email"
+                handleInputChange={handleInputChange}
+              />
+              <PasswordInput
+                inputValue={"password"}
+                handleInputChange={handleInputChange}
+              />
+              <button className="LoginButton" disabled={loading}>
+                Login
+              </button>
+            </div>
+          </form>
+          <div className="d-flex justify-content-end text-end mb-3">
+            <span className="me-4">
+              <button
+                className="ForgetPasswordBtn"
+                onClick={handleClick}
+              >
+                Forget Password ?
+              </button>
             </span>
           </div>
         </div>
-        <form onSubmit={handleSubmit}>
-          <div className="d-flex flex-column justify-content-center align-items-center mt-2 mx-3">
-            <Input
-              inputValue={"email"}
-              type="email"
-              handleInputChange={handleInputChange}
-            />
-            <PasswordInput
-              inputValue={"password"}
-              handleInputChange={handleInputChange}
-            />
-            <button className="LoginButton" disabled={loading}>Login</button>
-          </div>
-        </form>
-        <div className="d-flex justify-content-end text-end mb-3">
-          <span className="me-4">
-            <button className="ForgetPasswordBtn" onClick={handleClick}>Forget Password ?</button>
-          </span>
-        </div>
       </div>
-    </div>
+    </>
   );
 }

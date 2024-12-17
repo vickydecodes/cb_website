@@ -6,6 +6,7 @@ import ThreeInputs from "../components/ThreeInputs/ThreeInputs";
 import TextArea from "../components/TextArea/TextArea";
 import DropDown from "../components/DropDown/DropDown";
 import { useApi } from "../../context/ApiContext";
+import { Helmet } from "react-helmet-async";
 
 export default function CreateProfile() {
   const { createUser } = useApi();
@@ -82,17 +83,23 @@ export default function CreateProfile() {
     const { checked, errors } = checkTheForm(formData);
 
     if (checked) {
-      console.log("Create user Data Submitted", formData);
       createUser(formData);
     } else {
+      let errs = [];
       for (let key in errors) {
-        console.log(errors[key]);
+        errs.push(key.toUpperCase());
       }
-      console.log(formData);
+      toast.error(
+        `${errs.join(", ")} ${errs.length > 1 ? "are" : "is"} missing.`
+      );
     }
   };
 
   return (
+    <>
+    <Helmet>
+        <title>ConnectBeez | Create Account</title>
+      </Helmet>
     <div className="d-flex">
       <div className="full-page-container_createprofile">
         <div className="content_createprofile shadow-lg">
@@ -170,5 +177,6 @@ export default function CreateProfile() {
       </div>
       <div className="colorpart_createprofile"></div>
     </div>
+    </>
   );
 }

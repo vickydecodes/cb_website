@@ -1,11 +1,15 @@
 import React, { useState } from "react";
 import TableInput from "../components/TableInput/TableInput";
 import "./EditPost.css";
+import { Helmet } from "react-helmet-async";
 import { useApi } from "../../context/ApiContext";
 import TableTextArea from "../components/TableTextArea/TableTextArea";
+import { useAppState } from "../../context/StateContext";
 
-export default function EditPost({ data, handleShow }) {
-  const { editPost, loading } = useApi();
+export default function EditPost({ data, handleShow, handleClose }) {
+  const { editPost } = useApi();
+
+  const {loading} = useAppState();
 
   const [formData, setFormData] = useState({
     poster_id: data.poster_id || "",
@@ -50,22 +54,23 @@ export default function EditPost({ data, handleShow }) {
     const { checked, errors } = checkTheForm(formData);
 
     if (checked) {
-      console.log("edit update Data Submitted", formData);
       editPost(formData);
     } else {
       let errs = [];
       for (let key in errors) {
         errs.push(key.toUpperCase());
       }
-      console.log({ errs: errs, errors: errors });
       toast.error(
         `${errs.join(", ")} ${errs.length > 1 ? "are" : "is"} missing.`
       );
-      console.log("Register form data: ", formData);
     }
   };
 
   return (
+   <>
+    <Helmet>
+        <title>ConnectBeez | Edit Poster</title>
+      </Helmet>
     <div className="modal-body p-3">
       {" "}
       <div className="d-flex justify-content-center">
@@ -97,23 +102,13 @@ export default function EditPost({ data, handleShow }) {
                 <td>
                   <TableInput
                     inputValue={"category"}
-                    value={"#9111"}
+                    value={data.event_code}
                     disabled={true}
                     handleInputChange={handleInputChange}
                   />
                 </td>
               </tr>
-              <tr>
-                <th scope="row">is Active</th>
-                <td>
-                  <TableInput
-                    inputValue={"active status"}
-                    value={data.isactive === 1 ? "True" : "False"}
-                    disabled={true}
-                    handleInputChange={handleInputChange}
-                  />
-                </td>
-              </tr>
+              
               <tr>
                 <th scope="row">Department</th>
                 <td>
@@ -201,8 +196,9 @@ export default function EditPost({ data, handleShow }) {
           <div className="submitButtons d-flex justify-content-center">
             <button
               className="cancelBtnForUpdateProfile"
+              type="button"
               disabled={loading}
-              type="reset"
+              onClick={handleClose}
             >
               Cancel
             </button>
@@ -215,7 +211,9 @@ export default function EditPost({ data, handleShow }) {
             </button>
           </div>
         </form>
+     
       </div>
     </div>
+   </>
   );
 }

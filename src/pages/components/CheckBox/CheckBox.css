@@ -3,8 +3,11 @@
     width: 20px; 
     margin-right: 15px;
 }
+.label_checkbox{
+    font-size: var(--font-size-medium);
+}
 
 a{
-    color: gold;
+    color: #fecd00;
     text-decoration: none !important;
 }

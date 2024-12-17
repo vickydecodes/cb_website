@@ -37,7 +37,7 @@ export default function PasswordInput({ inputValue, handleInputChange }) {
             onChange={handleInputChange}
           />
           <span>
-            <button onClick={handlePassword} className="passwordBtn">
+            <button type="button" onClick={handlePassword} className="passwordBtn">
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </button>
           </span>

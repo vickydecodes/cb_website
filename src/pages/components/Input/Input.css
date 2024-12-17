@@ -7,20 +7,24 @@
 
 .input_label_c {
   font-weight: bold;
-  color: #f7b600;
-  margin-bottom: 8px;
+  color: #fecd00;
+  margin-bottom: 5px !important;
   align-self: flex-start;
+}
+
+h5{
+  font-size: var(--font-size-medium) !important;
 }
 
 .input_input_c {
   width: 100%;
-  padding: 16px;
+  padding: 20px !important;
   border: 1px solid #ccc;
   border-radius: 4px;
-  font-size: 16px;
+  font-size: var(--font-size-small)  !important;
 }
 
 .input_input_c:focus {
   outline: none;
-  border-color: #f7b600;
+  border-color: #fecd00;
 }

@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import Input from "../../../components/Input/Input.jsx";
 import TextArea from "../../../components/TextArea/TextArea";
 import { toast } from "react-toastify";
+import { Helmet } from "react-helmet-async";
 import { useApi } from "../../../../context/ApiContext.jsx";
 import "./Support.css";
+import Loading from "../../../components/Loading/Loading.jsx";
 
-export default function Support({ handleDashboardPage, user }) {
-  const { sendSupport, loading } = useApi();
+export default function Support({ handleDashboardPage, user, loading }) {
+  const { sendSupport } = useApi();
 
   const [formData, setFormData] = useState({
     admin_name: user.admin_name,
@@ -51,20 +53,16 @@ export default function Support({ handleDashboardPage, user }) {
     const { checked, errors } = checkTheForm(formData);
 
     if (checked) {
-      console.log("Registration Data Submitted", formData);
       handleDashboardPage("dashboard");
-      console.log(formData)
       sendSupport(formData);
     } else {
       let errs = [];
       for (let key in errors) {
         errs.push(key.toUpperCase());
       }
-      console.log({ errs: errs, errors: errors });
       toast.error(
         `${errs.join(", ")} ${errs.length > 1 ? "are" : "is"} missing.`
       );
-      console.log(formData);
     }
   };
 
@@ -74,7 +72,7 @@ export default function Support({ handleDashboardPage, user }) {
         xmlns="http://www.w3.org/2000/svg"
         width="25"
         height="25"
-        fill="gold"
+        fill="#fecd00"
         className="bi bi-telephone"
         viewBox="0 0 16 16"
       >
@@ -86,7 +84,7 @@ export default function Support({ handleDashboardPage, user }) {
         xmlns="http://www.w3.org/2000/svg"
         width="25"
         height="25"
-        fill="gold"
+        fill="#fecd00"
         className="bi bi-at"
         viewBox="0 0 16 16"
       >
@@ -98,7 +96,7 @@ export default function Support({ handleDashboardPage, user }) {
         xmlns="http://www.w3.org/2000/svg"
         width="25"
         height="25"
-        fill="gold"
+        fill="#fecd00"
         className="bi bi-facebook me-2"
         viewBox="0 0 16 16"
       >
@@ -110,7 +108,7 @@ export default function Support({ handleDashboardPage, user }) {
         xmlns="http://www.w3.org/2000/svg"
         width="25"
         height="25"
-        fill="gold"
+        fill="#fecd00"
         className="bi bi-instagram mx-2"
         viewBox="0 0 16 16"
       >
@@ -122,7 +120,7 @@ export default function Support({ handleDashboardPage, user }) {
         xmlns="http://www.w3.org/2000/svg"
         width="25"
         height="25"
-        fill="gold"
+        fill="#fecd00"
         className="bi bi-linkedin mx-2"
         viewBox="0 0 16 16"
       >
@@ -131,10 +129,20 @@ export default function Support({ handleDashboardPage, user }) {
     ),
   };
 
+  
+    if(loading || !user){
+      return <Loading/>
+    }
+
   return (
+   <>
+    <Helmet>
+        <title>ConnectBeez | Support</title>
+      </Helmet>
+    
     <div className="d-flex">
       <div className="supportpage d-flex">
-        <div className="content_supportpage my-4">
+        <div className="content_supportpage">
           <div className="headersforsupportpage d-flex align-items-center">
             <h3>Get In Touch</h3>
             <div className="supportscontacts ms-auto">
@@ -155,7 +163,7 @@ export default function Support({ handleDashboardPage, user }) {
             </div>
           </div>
           <form onSubmit={handleSubmit}>
-            <div>
+            <div className="inputs">
               <Input
                 inputValue={"college_name"}
                 disabled={true}
@@ -185,5 +193,6 @@ export default function Support({ handleDashboardPage, user }) {
       </div>
       <div className="emptyspace_supportpage"></div>
     </div>
+   </>
   );
 }

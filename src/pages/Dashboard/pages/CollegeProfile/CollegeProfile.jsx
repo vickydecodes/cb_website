@@ -1,15 +1,27 @@
 import React from "react";
 import "./CollegeProfile.css";
 import { FaPencil } from "react-icons/fa6";
+import { Helmet } from "react-helmet-async";
 import DetailsTab from "../../components/DetailsTab/DetailsTab";
 import BannerBoard from "../../components/BannerBoard/BannerBoard";
+import Loading from "../../../components/Loading/Loading";
 
 export default function CollegeProfile({
   handleEditButtonForCollegeProfile,
   user,
+  loading
 }) {
-  console.log("user for collegeprofile", user);
+
+  
+    if(loading || !user){
+      return <Loading/>
+    }
+
   return (
+    <>
+    <Helmet>
+        <title>ConnectBeez | Profile</title>
+      </Helmet>
     <div className="collegeprofilepage">
       <BannerBoard college_logo={user.college_logo} college_banner={user.college_banner} college_name={user.college_name}/>
       <div className="details_collegeprofile row d-flex g-0 p-0 mt-5">
@@ -55,7 +67,7 @@ export default function CollegeProfile({
               <div className="card-title d-flex justify-content-center align-items-center">
                 Admin Profile
               </div>
-              <DetailsTab heading={"Admin Name"} content={user.admin_name} />
+              <DetailsTab heading={"Admin Name"} content={user.admin_name.toUpperCase()} />
               <DetailsTab heading={"Designation"} content={user.designation} />
               <DetailsTab
                 heading={"Admin Mail"}
@@ -72,6 +84,6 @@ export default function CollegeProfile({
           </button>
         </div>
       </div>
-    </div>
+    </div></>
   );
 }

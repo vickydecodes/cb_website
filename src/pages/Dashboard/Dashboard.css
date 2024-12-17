@@ -18,9 +18,11 @@
 
 .logospace_img{
     width: 100%;
-
 }
 
+.logospace_img_svg{
+ height: 50px;
+}
 .navlinks{
     height: 90%;
 }
