@@ -17,11 +17,13 @@ import Welcome from "../pages/components/Welcome/Welcome.jsx";
 import { StateProvider } from "../context/StateContext.jsx";
 
 export default function AppRoutes() {
+
   return (
     <AuthProvider>
       <StateProvider>
         <ApiProvider>
           <Routes>
+            
             {/* Public Routes */}
             <Route path="/register" element={<Register />} />
             <Route path="/verify-email" element={<VerifyE />} />

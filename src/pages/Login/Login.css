@@ -3,21 +3,19 @@
     width: 100%;
     border-radius: 30px;
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-
-body {
-    overflow-y: auto;
+    transition: all 2ms;
 }
 
 .content_login {
     height: 762px !important;
-    width: 100%;
+    width: 600px !important;
     border: 2px solid #fecd00;
+    margin: 60px 0px 60px 0px;
     border-radius: 30px;
-    padding: 30px
+    padding: 30px;
+    transition: all 2s !important;
 }
 
 .headerForLogoAndGreet {
@@ -30,7 +28,7 @@ body {
 }
 
 .headerLogoText {
-    height: 50px;
+    height: 80px;
 }
 
 .LoginButton {
@@ -50,4 +48,27 @@ body {
     background-color: transparent;
 }
 
+@media (max-height: 768px) {
 
+    .full-page-container_login {
+        height: auto !important;
+    }
+
+    .content_login {
+        height: auto !important;
+        margin: 60px 0px 60px 0px;
+    }
+
+    .headerLogo {
+        height: 70px !important;
+    }
+
+    .headerLogoText {
+        height: 50px !important;
+    }
+
+    .headerForLogoAndGreet {
+        text-align: center;
+        margin: 0 !important;
+    }
+}

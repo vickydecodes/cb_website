@@ -68,9 +68,9 @@ export default function InsightsTab({active, inActive}) {
   ];
 
   return (
-    <div className="col-10 d-md-flex">
+    <div className="col-lg-10 col-md-10 d-flex">
     {insightDatas.map((data, index) => (
-      <div className="col-md-3 m-3" key={index}>
+      <div className="col-lg-3 col-md-4 m-3" key={index}>
         <div
           className="card m-1"
           style={{
@@ -88,7 +88,7 @@ export default function InsightsTab({active, inActive}) {
               borderRadius: "10px",
             }}
           >
-            <div className="col-3 d-flex flex-column justify-content-center align-items-center">
+            <div className="col-lg-3 col-md-4 d-flex flex-column justify-content-center align-items-center">
               <div
                 className="p-2"
                 style={{
@@ -99,7 +99,7 @@ export default function InsightsTab({active, inActive}) {
                 {data.svg}
               </div>
             </div>
-            <div className="col-9 d-flex flex-column justify-content-center text-start">
+            <div className="col-lg-9 col-md-8 d-flex flex-column justify-content-center text-md-start text-sm-end ps-2">
               <b
                 style={{
                   fontWeight: "500",

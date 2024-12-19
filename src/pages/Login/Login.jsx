@@ -72,7 +72,7 @@ export default function Login() {
         <title>ConnectBeez | Login</title>
       </Helmet>
       <div className="full-page-container_login">
-        <div className="content_login shadow-lg">
+      <div className="content_login shadow-lg">
           <div className="headerForLogoAndGreet">
             <img
               src="/img/logo with border.png"

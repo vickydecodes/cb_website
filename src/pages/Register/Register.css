@@ -1,7 +1,10 @@
 .full-page-container_register {
-    height: auto !important;
+    height: 100vh !important;
     width: 100vw;
     padding: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border-radius: 30px;
 }
 
@@ -55,34 +58,3 @@ margin: 20px 0px 16px 0px;
 }
 
 
-@media (max-width: 978px) {
-    .full-page-container {
-        padding: 15px
-    }
-
-    .colorpart_register {
-        display: none;
-    }
-
-    .columns{
-        padding: 20px
-    }
-
-    .headerForLogoAndGreet {
-        text-align: center;
-        padding: 15px;
-        font-size: 13px;
-    }
-
-    .headerLogo{
-        height: 60px !important;
-    }
-
-    h5{
-        font-size: 18px;
-    }
-
-    h1{
-        font-size: 26px;
-    }
-}
