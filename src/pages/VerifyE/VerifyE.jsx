@@ -4,13 +4,23 @@ import Lottie from "lottie-react";
 import { useApi } from "../../context/ApiContext";
 import { Helmet } from "react-helmet-async";
 import email_animation from "../../assets/animations/email_animation.json";
+import { useNavigateOnce } from "../../utils/UseNavigateOnce";
 
 export default function VerifyE() {
-  const { verifyEmail, loading } = useApi();
+  const { verifyEmail, loading, userCredentials } = useApi();
+
+  const navigate = useNavigateOnce();
 
   const handleClick = () => {
     verifyEmail();
   };
+  
+  useEffect(() => {
+    if(!userCredentials){
+      return navigate('/login')
+    }
+  }, [navigate])
+
   return (
     <>
       <Helmet>

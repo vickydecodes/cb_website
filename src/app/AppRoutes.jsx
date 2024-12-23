@@ -17,24 +17,22 @@ import Welcome from "../pages/components/Welcome/Welcome.jsx";
 import { StateProvider } from "../context/StateContext.jsx";
 
 export default function AppRoutes() {
-
   return (
     <AuthProvider>
       <StateProvider>
         <ApiProvider>
           <Routes>
-            
             {/* Public Routes */}
             <Route path="/register" element={<Register />} />
-            <Route path="/verify-email" element={<VerifyE />} />
-            <Route path="/verify-admin" element={<VerifyA />} />
             <Route path="/login" element={<Login />} />
             <Route path="/forget-password" element={<ForgetPassword />} />
-            <Route path="/welcome" element={<Welcome />} />
-            <Route path="/create-user" element={<CreateProfile />} />
-
+            <Route path="/verify-email" element={<VerifyE />} />
+            <Route path="/verify-admin" element={<VerifyA />} />
             {/* Protected Routes */}
             <Route element={<PrivateRoute />}>
+              <Route path="/welcome" element={<Welcome />} />
+
+              <Route path="/create-user" element={<CreateProfile />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/create-post" element={<CreatePost />} />
               <Route path="/edit-post/:id" element={<EditPost />} />

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../components/Input/Input.jsx";
 import TextArea from "../components/TextArea/TextArea.jsx";
 import FileInput from "../components/FileInput/FileInput";
@@ -6,12 +6,22 @@ import { toast } from "react-toastify";
 import "./CreatePost.css";
 import { Helmet } from "react-helmet-async";
 import { useApi } from "../../context/ApiContext.jsx";
+import CategoryDropDown from "../components/CategoryDropDown/CategoryDropDown.jsx";
 
 export default function CreatePost() {
   const [imagePreviewForCreatePost, setImagePreviewForCreatePost] =
     useState(null);
 
-  const { createPost } = useApi();
+  const { createPost, getCategories, categories } = useApi();
+
+
+  useEffect(() => {
+getCategories();
+  }, [])
+
+
+  console.log(categories)
+
 
   const [formData, setFormData] = useState({
     event_name: "",
@@ -37,6 +47,13 @@ export default function CreatePost() {
     setFormData((prevData) => ({
       ...prevData,
       [value]: data,
+    }));
+  };
+
+  const handleDropdownChange = (e) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      category: e.target.value,
     }));
   };
 
@@ -111,10 +128,7 @@ export default function CreatePost() {
                   inputValue={"department"}
                   handleInputChange={handleInputChange}
                 />
-                <Input
-                  inputValue={"category"}
-                  handleInputChange={handleInputChange}
-                />
+                <CategoryDropDown handleDropdownChange={handleDropdownChange} options={categories}/>
                 <Input
                   inputValue={"registration_link"}
                   handleInputChange={handleInputChange}

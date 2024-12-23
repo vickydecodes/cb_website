@@ -45,7 +45,6 @@ export default function PostTab({ handleDashboardPage, data }) {
     }
   };
 
-  console.log(data)
 
   return (
     <div className="postcard p-1 m-1">

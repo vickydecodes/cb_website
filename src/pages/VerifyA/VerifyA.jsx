@@ -1,11 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./VerifyA.css";
 import Lottie from "lottie-react";
 import { Link } from "react-router-dom";
 import admin_animation from "../../assets/animations/admin_animation.json";
 import { Helmet } from "react-helmet-async";
+import { useApi } from "../../context/ApiContext";
+import { useNavigateOnce } from "../../utils/UseNavigateOnce";
 
 export default function VerifyA() {
+
+  const {userCredentials} = useApi();
+
+  const navigate = useNavigateOnce();
+
+  useEffect(() => {
+    if(!userCredentials){
+      return navigate('/login')
+    }
+  }, [navigate])
+
+
+
   return (
     <>
       <Helmet>

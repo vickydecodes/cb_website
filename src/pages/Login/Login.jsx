@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 import { useAppState } from "../../context/StateContext";
+import { useNavigateOnce } from "../../utils/UseNavigateOnce";
 
 export default function Login() {
   const { login } = useApi();
@@ -17,7 +18,7 @@ export default function Login() {
     password: "",
   });
 
-  const navigate = useNavigate();
+  const navigate = useNavigateOnce();
 
   const handleClick = () => {
     navigate("/forget-password");
@@ -49,12 +50,14 @@ export default function Login() {
     return { checked, errors };
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const { checked, errors } = checkTheForm(formData);
 
     if (checked) {
       login(formData);
+      console.log('from login')
+      navigate('/welcome')
     } else {
       let errs = [];
       for (let key in errors) {

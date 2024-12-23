@@ -84,3 +84,9 @@
     border: 1px solid red;
     color: red
 }
+
+.logoutBtn:focus{
+    background-color: white;
+    border: 1px solid red;
+    color: red
+}
