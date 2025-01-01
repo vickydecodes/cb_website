@@ -15,6 +15,8 @@ import { ApiProvider } from "../context/ApiContext.jsx";
 import { AuthProvider } from "../context/AuthContext.jsx";
 import Welcome from "../pages/components/Welcome/Welcome.jsx";
 import { StateProvider } from "../context/StateContext.jsx";
+import PrivacyPolicy from "../pages/PrivacyPolicy/PrivacyPolicy.jsx";
+import TermsAndConditions from "../pages/TermsAndConditions/TermsAndConditions.jsx";
 
 export default function AppRoutes() {
   return (
@@ -28,11 +30,13 @@ export default function AppRoutes() {
             <Route path="/forget-password" element={<ForgetPassword />} />
             <Route path="/verify-email" element={<VerifyE />} />
             <Route path="/verify-admin" element={<VerifyA />} />
+            <Route path="/create-user" element={<CreateProfile />} />
+<Route path='/privacy-policy' element={<PrivacyPolicy/>} />
+<Route path='/terms-and-conditions' element={<TermsAndConditions/>} />
+
             {/* Protected Routes */}
             <Route element={<PrivateRoute />}>
               <Route path="/welcome" element={<Welcome />} />
-
-              <Route path="/create-user" element={<CreateProfile />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/create-post" element={<CreatePost />} />
               <Route path="/edit-post/:id" element={<EditPost />} />

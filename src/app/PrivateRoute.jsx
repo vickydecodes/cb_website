@@ -29,7 +29,6 @@ export default function PrivateRoute() {
 
   // Verification Logic
   if (email_verified !== VERIFIED) {
-    toast.error("Your email is not verified. Please verify your email to continue.");
     return location.pathname !== "/verify-email" ? (
       <Navigate to="/verify-email" replace />
     ) : (
@@ -38,7 +37,6 @@ export default function PrivateRoute() {
   }
 
   if (proof_verified !== VERIFIED) {
-    toast.error("Your college proofs are not verified. Please try again later.");
     return location.pathname !== "/verify-admin" ? (
       <Navigate to="/verify-admin" replace />
     ) : (
@@ -47,7 +45,6 @@ export default function PrivateRoute() {
   }
 
   if (college_verified !== VERIFIED) {
-    toast.error("Your college verification is pending. Please try again later.");
     return location.pathname !== "/create-user" ? (
       <Navigate to="/create-user" replace />
     ) : (

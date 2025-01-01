@@ -52,13 +52,18 @@ export default function ForgetPassword() {
     } else {
       let errs = [];
       for (let key in errors) {
-        errs.push(key.toUpperCase());
+        errs.push(capitalize(key));
       }
       toast.error(
         `${errs.join(", ")} ${errs.length > 1 ? "are" : "is"} missing.`
       );
     }
   };
+
+  const capitalize = (s) => {
+    return s[0].toUpperCase() + s.slice(1).split('_').join(' ');
+  };
+
 
   return (
     <>

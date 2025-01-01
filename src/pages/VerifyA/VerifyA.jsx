@@ -14,11 +14,18 @@ export default function VerifyA() {
   const navigate = useNavigateOnce();
 
   useEffect(() => {
-    if(!userCredentials){
+    if(!userCredentials || userCredentials === null){
       return navigate('/login')
     }
-  }, [navigate])
 
+    if(!currentUser){
+      return navigate('/login')
+    }
+
+    if(isVerifiedUser){
+      return navigate('/dashboard')
+    }
+  }, [navigate])
 
 
   return (

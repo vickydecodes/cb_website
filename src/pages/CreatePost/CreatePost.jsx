@@ -20,7 +20,6 @@ getCategories();
   }, [])
 
 
-  console.log(categories)
 
 
   const [formData, setFormData] = useState({
@@ -77,6 +76,17 @@ getCategories();
       checked = false;
     }
 
+    if (formData.ended_at) {
+      const today = new Date();
+      const enteredDate = new Date(formData.ended_at);
+      today.setHours(0, 0, 0, 0);
+  
+      if (enteredDate <= today) {
+        errors.ended_at = "Event end date must be in the future";
+        checked = false;
+      }
+    }
+
     return { checked, errors };
   };
 
@@ -89,11 +99,16 @@ getCategories();
     } else {
       let errs = [];
       for (let key in errors) {
-        errs.push(key.toUpperCase());
+        errs.push(capitalize(key));
       }
       toast.error(`${errs.join(', ')} ${errs.length > 1 ? "are": "is"  } missing.`);
     }
   };
+
+  const capitalize = (s) => {
+    return s[0].toUpperCase() + s.slice(1).split('_').join(' ');
+  };
+
 
   return (
     <>
@@ -126,6 +141,7 @@ getCategories();
                 />
                 <Input
                   inputValue={"department"}
+                  optionalText={' Eg. B.Tech IT, Bsc CS'}
                   handleInputChange={handleInputChange}
                 />
                 <CategoryDropDown handleDropdownChange={handleDropdownChange} options={categories}/>

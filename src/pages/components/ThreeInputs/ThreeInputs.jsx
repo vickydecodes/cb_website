@@ -7,10 +7,10 @@ export default function ThreeInputs({handleInputChange, values }) {
     return (
       <div className="d-flex row mb-3">
         <div className="col-md-6">
-         <Input inputValue={'facebook'} value={values.facebook || ''} handleInputChange={handleInputChange}/>
+         <Input optional={true} inputValue={'facebook'} value={values.facebook || ''} handleInputChange={handleInputChange}/>
         </div>
         <div className="col-md-6">
-         <Input inputValue={'instagram'} value={values.instagram || ''} handleInputChange={handleInputChange}/>
+         <Input optional={true} inputValue={'instagram'} value={values.instagram || ''} handleInputChange={handleInputChange}/>
         </div>
       </div>
     );
@@ -18,10 +18,10 @@ export default function ThreeInputs({handleInputChange, values }) {
     return (
       <div className="d-flex row mb-3">
         <div className="col-md-6">
-         <Input inputValue={'facebook'} handleInputChange={handleInputChange}/>
+         <Input optional={true} inputValue={'facebook'} handleInputChange={handleInputChange}/>
         </div>
         <div className="col-md-6">
-         <Input inputValue={'instagram'} handleInputChange={handleInputChange}/>
+         <Input optional={true} inputValue={'instagram'} handleInputChange={handleInputChange}/>
         </div>
       </div>
     );

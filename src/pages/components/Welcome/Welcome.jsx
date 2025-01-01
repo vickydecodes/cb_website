@@ -23,7 +23,7 @@ export default function Welcome() {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate("/dashboard");
+      navigate("/dashboard",  "Login Successful.", 'success');
     }, 4000);
 
     return () => {

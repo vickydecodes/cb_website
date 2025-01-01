@@ -11,7 +11,7 @@ import { useAuth } from "./AuthContext";
 import Loading from "../pages/components/Loading/Loading";
 import { useNavigateOnce } from "../utils/UseNavigateOnce";
 import { getCookie, setCookie, removeCookie } from "../utils/CookieService";
-import urls from '../utils/ApiUrls';
+import urls from "../utils/ApiUrls";
 
 const {
   userRegistrationUrl,
@@ -26,7 +26,7 @@ const {
   editPostUrl,
   sendSupportUrl,
   getEventsUrl,
-  getEventCategoriesUrl
+  getEventCategoriesUrl,
 } = urls;
 const ApiContext = createContext();
 
@@ -44,39 +44,88 @@ export function ApiProvider({ children }) {
     forgetPasswordFirebase,
   } = useAuth();
 
+  const fetchUserData = async (uid, fetchForLogin = true) => {
+    try {
+      const res = await getRequest(userLoginUrl + uid);
+      const credentials = res.result[0];
+      setUserCredentials((prev) => {
+        const updatedCredentials = { ...prev, ...credentials };
+        if (fetchForLogin) handleNavigation(updatedCredentials);
+        return updatedCredentials;
+      });
+
+      const userDetails = await getRequest(
+        collegeProfileUrl + credentials.college_id
+      );
+      setApiUser(userDetails.result);
+
+      console.log(userDetails.result);
+
+      const userPosters = await getRequest(
+        getEventsUrl + credentials.college_id
+      );
+      setPosters(userPosters);
+      setCookie("userCredentials", credentials);
+    } catch (e) {
+      toast.error("Failed to Fetch user.");
+    }
+  };
+
   const [loading, setLoading] = useState(false);
-  const [profileUpdated, setProfileUpdated] = useState(false);
   const [apiUser, setApiUser] = useState(null);
   const [posters, setPosters] = useState([]);
   const [activePosters, setActivePosters] = useState([]);
   const [inActivePosters, setInActivePosters] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [isVerifiedUser, setIsVerifiedUser] = useState(() => {
+    const savedCredentials = getCookie("userCredentials");
+
+    if (!savedCredentials) {
+      return false;
+    }
+    try {
+      const verified =
+        savedCredentials.email_verified === "true" &&
+        savedCredentials.proof_verified === "true" &&
+        savedCredentials.college_verified === "true";
+
+      return verified;
+    } catch (error) {
+      console.error("Error parsing user credentials:", error);
+      return false;
+    }
+  });
+
   const [userCredentials, setUserCredentials] = useState(() => {
     const savedCredentials = getCookie("userCredentials");
+    console.log("saved credentials in cookies", savedCredentials);
+    if(savedCredentials){
+      fetchUserData(savedCredentials.uid);
+    }
     return savedCredentials ? savedCredentials : null;
   });
 
-  console.log('User Credentials: ',userCredentials)
-  console.log('Api User: ', apiUser)
+  console.log("User Credentials: ", userCredentials);
+  console.log("Api User: ", apiUser);
 
   const navigate = useNavigateOnce();
 
   const register = async (data) => {
-    setLoading(true);
     try {
+      setLoading(true);
       const user = await signup(data.admin_mail, data.password);
       if (user) {
         const formData = createFormData(data, { uid: user.user.uid }, [
           "password",
           "confirm_password",
         ]);
-        const res = await postRequest(userRegistrationUrl, formData);
-        toast.success("Registered Successfully.");
-        navigate("/verify-email");
+        await postRequest(userRegistrationUrl, formData);
+        await fetchUserData(user.user.uid, false);
       }
+      navigate("/verify-email", "Registered Successfully.", "success");
     } catch (e) {
-      console.log(e);
-      toast.error("Something Went Wrong.");
+      handleFirebaseError(e);
+      // toast.error(e.message || "Something Went Wrong.");
     } finally {
       setLoading(false);
     }
@@ -102,7 +151,7 @@ export function ApiProvider({ children }) {
           college_verified: "true",
         }));
       }
-      await fetchUserData(user_credentials.uid, (fetchForLogin = false));
+      await fetchUserData(user_credentials.uid, false);
       toast.success("Created Successfully.");
       navigate("/welcome");
     } catch (e) {
@@ -113,71 +162,44 @@ export function ApiProvider({ children }) {
     }
   };
 
-  const fetchUserData = async (uid, fetchForLogin = true) => {
-    try {
-      const res = await getRequest(userLoginUrl + uid);
-      const credentials = res.result[0];
-
-      setUserCredentials((prev) => {
-        const updatedCredentials = { ...prev, ...credentials };
-        if (fetchForLogin) handleNavigation(updatedCredentials);
-        return updatedCredentials;
-      });
-
-      const userDetails = await getRequest(
-        collegeProfileUrl + credentials.college_id
-      );
-      setApiUser(userDetails.result);
-
-      const userPosters = await getRequest(
-        getEventsUrl + credentials.college_id
-      );
-      setPosters(userPosters);
-      setCookie("userCredentials", credentials);
-    } catch (e) {
-      toast.error("Failed to Fetch user.");
-    }
-  };
-
   const handleNavigation = (credentials) => {
     const { email_verified, proof_verified, college_verified } = credentials;
 
     if (email_verified !== "true") {
-      toast.warn(
+      return navigate(
+        "/verify-email",
         "Your email is not verified, Please verify to continue the process."
       );
-      return navigate("/verify-email");
     }
 
     if (proof_verified !== "true") {
-      toast.warn("Please wait till admin verify the details.");
-      return navigate("/verify-admin");
+      return navigate(
+        "/verify-admin",
+        "Please wait till admin verify the details."
+      );
     }
 
     if (college_verified !== "true") {
-      return navigate("/create-user");
+      return navigate(
+        "/create-user",
+        "Please fill the details to get started."
+      );
     }
-// console.log('from fetchdata')
-//     navigate("/welcome");
+    // console.log('from fetchdata')
+    //     navigate("/welcome");
   };
-
 
   const login = async (data) => {
     setLoading(true);
     try {
       removeCookie("userCredentials");
       const user = await loginFirebase(data.email, data.password);
-      await fetchUserData(user.user.uid);
-      toast.success("Login Successful.");
+      fetchUserData(user.user.uid);
       // console.log('from login')
       // navigate("/welcome");
     } catch (e) {
       console.log(e);
-      if (e.message === "Firebase: Error (auth/invalid-credential).") {
-        toast.error("Password or Email is invalid.");
-      } else {
-        toast.error(e.message || "Something Went Wrong.");
-      }
+      handleFirebaseError(e);
     } finally {
       setLoading(false);
     }
@@ -205,12 +227,16 @@ export function ApiProvider({ children }) {
           { college_id: apiUser.id, email: apiUser.admin_mail },
           []
         );
-        const response = await postRequest(addEventUrl, formData);
-        const user = await getRequest(userLoginUrl + userCredentials.uid);
-        setUserCredentials(user.result[0]);
-        setCookie("userCredentials", user.result[0]);
-        toast.success("Posted Successfully.");
-        navigate("/dashboard");
+        const res = await postRequest(addEventUrl, formData);
+        // const user = await getRequest(userLoginUrl + userCredentials.uid);
+        // setUserCredentials(user.result[0]);
+        // setCookie("userCredentials", user.result[0]);
+        fetchUserData(userCredentials.uid);
+        navigate(
+          "/dashboard",
+          res.message || "Posted Successfully.",
+          "success"
+        );
       }
     } catch (e) {
       toast.error("Something Went Wrong.");
@@ -223,12 +249,13 @@ export function ApiProvider({ children }) {
     setLoading(true);
     try {
       const res = await deleteRequest(deleteEventUrl + data);
-      toast.success(res.message);
-      const user = await getRequest(userLoginUrl + userCredentials.uid);
-      setUserCredentials(user.result[0]);
-      setCookie("userCredentials", user.result[0]);
-      navigate("/dashboard");
+      // const user = await getRequest(userLoginUrl + userCredentials.uid);
+      // setUserCredentials(user.result[0]);
+      // setCookie("userCredentials", user.result[0]);
+      fetchUserData(userCredentials.uid);
+      navigate("/dashboard", res.message, "success");
     } catch (e) {
+      toast.error("Something Went Wrong.");
     } finally {
       setLoading(false);
     }
@@ -241,17 +268,18 @@ export function ApiProvider({ children }) {
         ...data,
         college_id: userCredentials.id,
       });
-      const user = await getRequest(userLoginUrl + userCredentials.uid);
-      setUserCredentials(user.result[0]);
-      setCookie("userCredentials", user.result[0]);
-      setProfileUpdated(true);
-      toast.success("Your profile has been updated successfully.");
+      fetchUserData(userCredentials.uid);
+      // const user = await getRequest(userLoginUrl + userCredentials.uid);
+      // setUserCredentials(user.result[0]);
+      // setCookie("userCredentials", user.result[0]);
+      toast.success(
+        res.message || "Your profile has been updated successfully."
+      );
       navigate("/dashboard");
     } catch (e) {
       toast.error("Something Went Wrong.");
       navigate("/dashboard");
     } finally {
-      setProfileUpdated(false);
       setLoading(false);
     }
   };
@@ -263,7 +291,7 @@ export function ApiProvider({ children }) {
         ...data,
         college_id: userCredentials.college_id,
       });
-      toast.success("Details have been sent successfully.");
+      toast.success(res.message || "Feedback have been sent successfully.");
       navigate("/dashboard");
     } catch (e) {
       toast.error("Something Went Wrong.");
@@ -299,7 +327,7 @@ export function ApiProvider({ children }) {
         }
       }, 2000);
     } catch (e) {
-      toast.error("Something went wrong.");
+      toast.error(e.message || "Something went wrong.");
     } finally {
       setLoading(false);
     }
@@ -312,7 +340,7 @@ export function ApiProvider({ children }) {
         toast.success("Admin verified successfully");
       }
     } catch (e) {
-      toast.error("Admin verification failed.");
+      toast.error(e.message || "Admin verification failed.");
     }
   };
 
@@ -320,9 +348,10 @@ export function ApiProvider({ children }) {
     setLoading(true);
     try {
       const res = await putRequest(editPostUrl + data.poster_id, data);
-      const user = await getRequest(userLoginUrl + userCredentials.uid);
-      setUserCredentials(user.result[0]);
-      setCookie("userCredentials", user.result[0]);
+      fetchUserData(userCredentials.uid);
+      // const user = await getRequest(userLoginUrl + userCredentials.uid);
+      // setUserCredentials(user.result[0]);
+      // setCookie("userCredentials", user.result[0]);
       toast.success(res.message);
     } catch (e) {
       toast.error("Something Went Wrong.");
@@ -343,15 +372,13 @@ export function ApiProvider({ children }) {
       toast.success("Logged out successfully.");
       navigate("/login");
     } catch (e) {
-      toast.error("Failed to logout.");
+      toast.error(e.message || "Failed to logout.");
     } finally {
       setLoading(false);
     }
   };
 
   ////USE EFFECT HOOKS
-
-  
 
   useEffect(() => {
     const activeEvents = posters.filter((event) => event.isactive === 1);
@@ -383,7 +410,9 @@ export function ApiProvider({ children }) {
       }
     };
 
-    fetchData();
+    if (!userCredentials) {
+      fetchData();
+    }
   }, [userCredentials]);
 
   ////UTILITY FUNCTIONS////
@@ -406,12 +435,75 @@ export function ApiProvider({ children }) {
     return formData;
   }
 
-
-
   ///END UTILS
 
-  ///ERROR HANDLING FOR LOADINGS AND ERRORS
+  /// ERROR HANDLING FOR FIREBASE ERRORS
 
+  const handleFirebaseError = (e) => {
+    const errorCode = e.code;
+    const errorMessage = e.message;
+
+    switch (errorCode) {
+      case "auth/invalid-email":
+        toast.error(
+          "The email address is invalid. Please enter a valid email."
+        );
+        break;
+      case "auth/user-not-found":
+        toast.error(
+          "No user found with this email. Please check your email or sign up."
+        );
+        navigate("/register");
+        break;
+      case "auth/wrong-password":
+        toast.error(
+          "Incorrect password. Please try again or reset your password."
+        );
+        break;
+      case "auth/email-already-in-use":
+        toast.error("This email is already in use.");
+        navigate("/login");
+        break;
+      case "auth/weak-password":
+        toast.error(
+          "The password is too weak. Please choose a stronger password."
+        );
+        break;
+      case "auth/invalid-credential":
+        toast.error(
+          "The email or password you entered is invalid. Please try again."
+        );
+        break;
+      case "auth/user-disabled":
+        toast.error(
+          "This account has been disabled. Please contact support for assistance."
+        );
+        break;
+      case "auth/too-many-requests":
+        toast.error("Too many attempts. Please try again later.");
+        break;
+      case "auth/operation-not-allowed":
+        toast.error("This operation is not allowed. Please contact support.");
+        break;
+      case "auth/expired-action-code":
+        toast.error("The action code has expired. Please try again.");
+        break;
+      case "auth/network-request-failed":
+        toast.error(
+          "Network error. Please check your internet connection and try again."
+        );
+        break;
+      case "auth/invalid-verification-code":
+        toast.error(
+          "Invalid verification code. Please check the code and try again."
+        );
+        break;
+      default:
+        toast.error(errorMessage || "Something went wrong. Please try again.");
+    }
+  };
+
+  ///ERROR HANDLING FOR LOADINGS AND ERRORS
 
   const value = {
     apiUser,
@@ -434,7 +526,10 @@ export function ApiProvider({ children }) {
     forgetPassword,
     getCategories,
     categories,
+    isVerifiedUser,
   };
+
+  console.log("Loading state: ", loading);
 
   return (
     <ApiContext.Provider value={value}>

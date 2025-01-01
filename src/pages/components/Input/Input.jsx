@@ -5,10 +5,13 @@ export default function Input({
   inputValue,
   isDateType = false,
   type='text',
+  optional = false,
+  optionalText,
   value,
   disabled=false,
   handleInputChange,
 }) {
+
   const id = (value) => {
     return value.replaceAll(" ", "")
   };
@@ -24,7 +27,7 @@ if(value){
       style={{ width: "100%" }}
     >     
       <label className="input_label_c" htmlFor={inputValue}>
-        <h5>{capitalize(inputValue)}</h5>
+        <h5>{capitalize(inputValue)} {optional ? '(Optional)': ''}<small>{optionalText ? optionalText : ''}</small></h5>
       </label>
       <input
         onChange={handleInputChange}
@@ -44,7 +47,7 @@ if(value){
       style={{ width: "100%" }}
     >     
       <label className="input_label_c" htmlFor={inputValue}>
-        <h5>{capitalize(inputValue)}</h5>
+        <h5>{capitalize(inputValue) } {optional ? '(Optional)': ''}<small>{optionalText ? optionalText : ''}</small></h5>
       </label>
       <input
         onChange={handleInputChange}

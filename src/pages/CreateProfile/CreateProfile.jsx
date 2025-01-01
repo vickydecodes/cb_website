@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./CreateProfile.css";
 import FileInput from "../components/FileInput/FileInput";
 import Input from "../components/Input/Input";
@@ -7,14 +7,18 @@ import TextArea from "../components/TextArea/TextArea";
 import DropDown from "../components/DropDown/DropDown";
 import { useApi } from "../../context/ApiContext";
 import { Helmet } from "react-helmet-async";
+import { useNavigateOnce } from "../../utils/UseNavigateOnce";
+
 
 export default function CreateProfile() {
-  const { createUser } = useApi();
+  const { createUser, userCredentials, apiUser } = useApi();
+
+  const navigate = useNavigateOnce();
 
   const [formData, setFormData] = useState({
     college_logo: null,
     college_banner: null,
-    college_name: "",
+    college_name: apiUser?.college_name,
     linkedin: "",
     facebook: "",
     instagram: "",
@@ -24,6 +28,20 @@ export default function CreateProfile() {
     college_about: "",
     college_category: "",
   });
+
+  useEffect(() => {
+    if(!userCredentials || userCredentials === null){
+      return navigate('/login')
+    }
+
+    if(!currentUser){
+      return navigate('/login')
+    }
+
+    if(isVerifiedUser){
+      return navigate('/dashboard')
+    }
+  }, [navigate])
 
   const handleDropdownChange = (e) => {
     setFormData((prevData) => ({
@@ -71,7 +89,12 @@ export default function CreateProfile() {
     }
 
     if (formData.password !== formData.confirmPassword) {
-      errors.confirmPassword = "Passwords do not match";
+      errors.confirm_password = "Passwords do not match";
+      checked = false;
+    }
+
+    if(formData.phone_number.length === 10 || 12){
+      errors.phone_number = 'Phone number should be 10 or 12 characters only.'
       checked = false;
     }
 
@@ -87,13 +110,18 @@ export default function CreateProfile() {
     } else {
       let errs = [];
       for (let key in errors) {
-        errs.push(key.toUpperCase());
+        errs.push(capitalize(key));
       }
       toast.error(
         `${errs.join(", ")} ${errs.length > 1 ? "are" : "is"} missing.`
       );
     }
   };
+
+  const capitalize = (s) => {
+    return s[0].toUpperCase() + s.slice(1).split('_').join(' ');
+  };
+
 
   return (
     <>
@@ -131,6 +159,8 @@ export default function CreateProfile() {
                   />
                   <Input
                     inputValue={"college_name"}
+                    value={apiUser ? apiUser.college_name : ''}
+                    disabled={true}
                     handleInputChange={handleInputChange}
                   />
                 </div>

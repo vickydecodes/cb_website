@@ -1,0 +1,114 @@
+
+.full-page-container_terms_conditions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #ffffff;
+    padding: 20px;
+}
+
+.content_terms_conditions{
+    background: #ffffff;
+    border-radius: 8px;
+    border: 2px solid #fecd00;
+    width: 90% !important;
+    max-width: 1000px;
+    padding: 30px 40px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.content_terms_conditions .headerForLogoAndGreet {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid #e9ecef;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.content_terms_conditions .headerLogo {
+    width: 200px;
+    height: auto;
+}
+
+.content_terms_conditions .headerForLogoAndGreet h1 {
+    font-size: 24px;
+    color: #495057;
+    margin: 0;
+}
+
+.terms-conditions {
+    color: #343a40;
+    line-height: 1.6;
+}
+
+.terms-conditions h1 {
+    font-size: 28px;
+    color: #212529;
+    margin-bottom: 20px;
+}
+
+.terms-conditions h2 {
+    font-size: 20px;
+    color: #495057;
+    margin-top: 20px;
+}
+
+.terms-conditions h3 {
+    font-size: 22px !important;
+    margin-left: 5px;
+    color: #6c757d;
+    margin-top: 15px;
+}
+
+.terms-conditions p {
+    margin: 10px 0;
+    margin-left: 20px;
+    margin-bottom: 20px;
+    text-align: justify;
+}
+
+.terms-conditions ul {
+    padding-left: 20px;
+    margin: 10px 0;
+        margin-bottom: 20px;
+}
+
+.terms-conditions ul li {
+    margin-bottom: 8px;
+    margin-left: 20px;
+    list-style-type: disc;
+}
+
+.terms-conditions a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.terms-conditions a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .content_register {
+        padding: 15px;
+    }
+
+    .headerLogo {
+        width: 100px;
+    }
+
+    .terms-conditions h1 {
+        font-size: 24px;
+    }
+
+    .terms-conditions h2 {
+        font-size: 18px;
+    }
+
+    .terms-conditions h3 {
+        font-size: 14px;
+    }
+}
+  

@@ -38,7 +38,6 @@ export default function PostTab({ handleDashboardPage, data }) {
     e.preventDefault();
     if (checked) {
       deletePost(data.poster_id);
-      handleDashboardPage("dashboard");
       setFormData({ event_name: "" });
     } else {
       toast.error("You mistyped the event name. Please try again!");
@@ -179,9 +178,9 @@ export default function PostTab({ handleDashboardPage, data }) {
       >
         <div className="modal-dialog modal-xl">
           <div className="modal-content">
-            <div className="modal-header">
+            <div className="modal-header px-4">
               <h1
-                className="modal-title card-title fs-5"
+                className="modal-title card-title fs-5 mt-2"
                 id="exampleModalLabel"
               >
                 {data.event_name}
@@ -257,15 +256,12 @@ export default function PostTab({ handleDashboardPage, data }) {
       </div>
       <Modal size="xl" show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title> <h1
-                className="modal-title card-title fs-5"
+          <Modal.Title className="px-4"> <h1
+                className="modal-title card-title fs-5 mt-2"
               >
                 {data.event_name}
               </h1></Modal.Title>
-              <button
-                type="button"
-                onClick={handleClose}
-              ></button>
+              
         </Modal.Header>
         <Modal.Body>
         <div className="p-3">
