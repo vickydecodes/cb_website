@@ -25,6 +25,10 @@ export default function VerifyE() {
       return navigate('/login')
     }
 
+    if(userCredentials.email_verified === 'true'){
+      return navigate('/verify-admin')
+    }
+
     if(!currentUser){
       return navigate('/login')
     }
@@ -70,7 +74,7 @@ export default function VerifyE() {
               disabled={loading}
               onClick={handleClick}
             >
-              Click to Confirm
+              Click to Send Verification Mail
             </button>
           </div>
           </div>

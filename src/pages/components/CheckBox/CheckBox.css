@@ -7,7 +7,7 @@
     font-size: var(--font-size-medium);
 }
 
-a{
+.link {
     color: #fecd00;
     text-decoration: none !important;
 }

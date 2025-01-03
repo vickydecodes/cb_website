@@ -60,6 +60,8 @@ getCategories();
     let checked = true;
     let errors = {};
 
+
+
     for (let key in formData) {
       if (
         formData[key] === "" ||

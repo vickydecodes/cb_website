@@ -116,6 +116,7 @@ export default function Register() {
     }
   };
 
+
   const capitalize = (s) => {
     return s[0].toUpperCase() + s.slice(1).split('_').join(' ');
   };

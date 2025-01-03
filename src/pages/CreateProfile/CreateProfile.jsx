@@ -8,10 +8,12 @@ import DropDown from "../components/DropDown/DropDown";
 import { useApi } from "../../context/ApiContext";
 import { Helmet } from "react-helmet-async";
 import { useNavigateOnce } from "../../utils/UseNavigateOnce";
+import { useAuth } from "../../context/AuthContext";
 
 
 export default function CreateProfile() {
   const { createUser, userCredentials, apiUser } = useApi();
+  const {currentUser} = useAuth();
 
   const navigate = useNavigateOnce();
 

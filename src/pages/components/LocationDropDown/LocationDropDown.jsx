@@ -34,8 +34,9 @@ export default function LocationDropDown({ handleDropdownChange }) {
     GetState(countryId)
       .then((states) => {
         setStateList(states);
-        if (states.length > 0) {
-          const defaultState = states[0];
+        const defaultState = states.find((s) => s.name === "Tamil Nadu");
+
+        if (defaultState) {
           setStateid(defaultState.id);
           setLocation((prev) => ({ ...prev, state: defaultState.name }));
           fetchCities(countryId, defaultState.id);
@@ -49,8 +50,9 @@ export default function LocationDropDown({ handleDropdownChange }) {
     GetCity(countryId, stateId)
       .then((cities) => {
         setCityList(cities);
-        if (cities.length > 0) {
-          const defaultCity = cities[0];
+        const defaultCity = cities.find((c) => c.name === "Salem");
+
+        if (defaultCity) {
           setCityid(defaultCity.id);
           setLocation((prev) => ({ ...prev, city: defaultCity.name }));
         }
@@ -66,7 +68,7 @@ export default function LocationDropDown({ handleDropdownChange }) {
     setLocation((prev) => ({ ...prev, country: selectedCountry.name, state: "", city: "" }));
     fetchStates(selectedCountry.id);
   };
-  
+
   const handleStateChange = (e) => {
     const selectedState = stateList.find((state) => state.id === parseInt(e.target.value));
     setStateid(selectedState.id);
@@ -74,17 +76,17 @@ export default function LocationDropDown({ handleDropdownChange }) {
     setLocation((prev) => ({ ...prev, state: selectedState.name, city: "" }));
     fetchCities(countryid, selectedState.id);
   };
-  
+
   const handleCityChange = (e) => {
     const selectedCity = cityList.find((city) => city.id === parseInt(e.target.value));
     setCityid(selectedCity.id);
     setLocation((prev) => ({ ...prev, city: selectedCity.name }));
   };
-  
+
   useEffect(() => {
     handleDropdownChange(location);
   }, [location]);
-  
+
   return (
     <div className="input_dropdowns row d-flex flex-row g-2 p-0 mb-4">
       {/* Country Dropdown */}

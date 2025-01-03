@@ -6,27 +6,32 @@ import admin_animation from "../../assets/animations/admin_animation.json";
 import { Helmet } from "react-helmet-async";
 import { useApi } from "../../context/ApiContext";
 import { useNavigateOnce } from "../../utils/UseNavigateOnce";
+import { useAuth } from "../../context/AuthContext";
 
 export default function VerifyA() {
+  const { userCredentials, isVerifiedUser } = useApi();
 
-  const {userCredentials} = useApi();
+  const { currentUser } = useAuth();
 
   const navigate = useNavigateOnce();
 
   useEffect(() => {
-    if(!userCredentials || userCredentials === null){
-      return navigate('/login')
+    if (!userCredentials || userCredentials === null) {
+      return navigate("/login");
     }
 
-    if(!currentUser){
-      return navigate('/login')
+    if(userCredentials.email_verified === 'true' && userCredentials.proof_verified === 'true'){
+      return navigate('/create-user')
     }
 
-    if(isVerifiedUser){
-      return navigate('/dashboard')
+    if (!currentUser) {
+      return navigate("/login");
     }
-  }, [navigate])
 
+    if (isVerifiedUser) {
+      return navigate("/dashboard");
+    }
+  }, [navigate]);
 
   return (
     <>

@@ -44,7 +44,7 @@ export function ApiProvider({ children }) {
     forgetPasswordFirebase,
   } = useAuth();
 
-  const fetchUserData = async (uid, fetchForLogin = true) => {
+  const fetchUserData = async (uid, fetchForLogin = false) => {
     try {
       const res = await getRequest(userLoginUrl + uid);
       const credentials = res.result[0];
@@ -99,7 +99,7 @@ export function ApiProvider({ children }) {
   const [userCredentials, setUserCredentials] = useState(() => {
     const savedCredentials = getCookie("userCredentials");
     console.log("saved credentials in cookies", savedCredentials);
-    if(savedCredentials){
+    if (savedCredentials) {
       fetchUserData(savedCredentials.uid);
     }
     return savedCredentials ? savedCredentials : null;
@@ -120,7 +120,7 @@ export function ApiProvider({ children }) {
           "confirm_password",
         ]);
         await postRequest(userRegistrationUrl, formData);
-        await fetchUserData(user.user.uid, false);
+        fetchUserData(user.user.uid, false);
       }
       navigate("/verify-email", "Registered Successfully.", "success");
     } catch (e) {
@@ -194,7 +194,7 @@ export function ApiProvider({ children }) {
     try {
       removeCookie("userCredentials");
       const user = await loginFirebase(data.email, data.password);
-      fetchUserData(user.user.uid);
+      fetchUserData(user.user.uid, true);
       // console.log('from login')
       // navigate("/welcome");
     } catch (e) {
@@ -232,11 +232,7 @@ export function ApiProvider({ children }) {
         // setUserCredentials(user.result[0]);
         // setCookie("userCredentials", user.result[0]);
         fetchUserData(userCredentials.uid);
-        navigate(
-          "/dashboard",
-          res.message || "Posted Successfully.",
-          "success"
-        );
+        navigate("/dashboard", res.message || "Posted Successfully.","success");
       }
     } catch (e) {
       toast.error("Something Went Wrong.");
@@ -453,7 +449,6 @@ export function ApiProvider({ children }) {
         toast.error(
           "No user found with this email. Please check your email or sign up."
         );
-        navigate("/register");
         break;
       case "auth/wrong-password":
         toast.error(
@@ -462,7 +457,6 @@ export function ApiProvider({ children }) {
         break;
       case "auth/email-already-in-use":
         toast.error("This email is already in use.");
-        navigate("/login");
         break;
       case "auth/weak-password":
         toast.error(
