@@ -120,9 +120,9 @@ export function ApiProvider({ children }) {
           "confirm_password",
         ]);
         await postRequest(userRegistrationUrl, formData);
-        fetchUserData(user.user.uid, false);
+        // navigate("/verify-email", res.message ||  "Registered Successfully.", "success");
       }
-      navigate("/verify-email", "Registered Successfully.", "success");
+      fetchUserData(user.user.uid, false);
     } catch (e) {
       handleFirebaseError(e);
       // toast.error(e.message || "Something Went Wrong.");

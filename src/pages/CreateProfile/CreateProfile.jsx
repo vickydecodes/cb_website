@@ -12,7 +12,7 @@ import { useAuth } from "../../context/AuthContext";
 
 
 export default function CreateProfile() {
-  const { createUser, userCredentials, apiUser } = useApi();
+  const { createUser, userCredentials, apiUser, isVerifiedUser } = useApi();
   const {currentUser} = useAuth();
 
   const navigate = useNavigateOnce();

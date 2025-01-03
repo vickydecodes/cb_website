@@ -104,7 +104,7 @@ export default function Register() {
 
     if (checked) {
       register(formData);
-      // navigate('/verify-email', 'Registered Successfully.', 'success')
+      navigate('/verify-email', 'Registered Successfully.', 'success')
     } else {
       let errs = [];
       for (let key in errors) {
