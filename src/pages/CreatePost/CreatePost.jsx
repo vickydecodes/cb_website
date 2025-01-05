@@ -3,6 +3,7 @@ import Input from "../components/Input/Input.jsx";
 import TextArea from "../components/TextArea/TextArea.jsx";
 import FileInput from "../components/FileInput/FileInput";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 import "./CreatePost.css";
 import { Helmet } from "react-helmet-async";
 import { useApi } from "../../context/ApiContext.jsx";
@@ -14,6 +15,7 @@ export default function CreatePost() {
 
   const { createPost, getCategories, categories } = useApi();
 
+  const navigate = useNavigate();
 
   useEffect(() => {
 getCategories();
@@ -27,7 +29,7 @@ getCategories();
     department: "",
     category: "",
     registration_link: "",
-    poster: null,
+    poster: "",
     coordinator_name: "",
     coordinator_number: "",
     description: "",
@@ -68,7 +70,7 @@ getCategories();
         formData[key] === null ||
         formData[key] === false
       ) {
-        errors[key] = `${key} cannot be empty`;
+        errors[key] = `${key} is missing.`;
         checked = false;
       }
     }
@@ -99,11 +101,8 @@ getCategories();
     if (checked) {
       createPost(formData);
     } else {
-      let errs = [];
-      for (let key in errors) {
-        errs.push(capitalize(key));
-      }
-      toast.error(`${errs.join(', ')} ${errs.length > 1 ? "are": "is"  } missing.`);
+          console.log({checked, errors, formData})
+          Object.values(errors).forEach((err) => toast.error(capitalize(err)));
     }
   };
 

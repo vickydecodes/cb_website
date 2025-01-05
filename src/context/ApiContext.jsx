@@ -59,8 +59,6 @@ export function ApiProvider({ children }) {
       );
       setApiUser(userDetails.result);
 
-      console.log(userDetails.result);
-
       const userPosters = await getRequest(
         getEventsUrl + credentials.college_id
       );
@@ -70,6 +68,8 @@ export function ApiProvider({ children }) {
       toast.error("Failed to Fetch user.");
     }
   };
+
+  const navigateTo = useNavigate();
 
   const [loading, setLoading] = useState(false);
   const [apiUser, setApiUser] = useState(null);
@@ -112,6 +112,7 @@ export function ApiProvider({ children }) {
 
   const register = async (data) => {
     try {
+      // removeCookie("userCredentials");
       setLoading(true);
       const user = await signup(data.admin_mail, data.password);
       if (user) {
@@ -120,12 +121,11 @@ export function ApiProvider({ children }) {
           "confirm_password",
         ]);
         await postRequest(userRegistrationUrl, formData);
-        // navigate("/verify-email", res.message ||  "Registered Successfully.", "success");
+        setCookie("college_name", data.college_name);
       }
-      fetchUserData(user.user.uid, false);
+      fetchUserData(user.user.uid, true);
     } catch (e) {
       handleFirebaseError(e);
-      // toast.error(e.message || "Something Went Wrong.");
     } finally {
       setLoading(false);
     }
@@ -159,6 +159,7 @@ export function ApiProvider({ children }) {
       toast.error("Something Went Wrong.");
     } finally {
       setLoading(false);
+      removeCookie("college_name");
     }
   };
 
@@ -166,27 +167,21 @@ export function ApiProvider({ children }) {
     const { email_verified, proof_verified, college_verified } = credentials;
 
     if (email_verified !== "true") {
-      return navigate(
-        "/verify-email",
+      toast.warn(
         "Your email is not verified, Please verify to continue the process."
       );
+      return navigateTo("/verify-email");
     }
 
     if (proof_verified !== "true") {
-      return navigate(
-        "/verify-admin",
-        "Please wait till admin verify the details."
-      );
+      toast.warn("Please wait till admin verify the details.");
+      return navigateTo("/verify-admin");
     }
 
     if (college_verified !== "true") {
-      return navigate(
-        "/create-user",
-        "Please fill the details to get started."
-      );
+      toast.warn("Please fill the details to get started.");
+      return navigateTo("/create-user");
     }
-    // console.log('from fetchdata')
-    //     navigate("/welcome");
   };
 
   const login = async (data) => {
@@ -195,8 +190,6 @@ export function ApiProvider({ children }) {
       removeCookie("userCredentials");
       const user = await loginFirebase(data.email, data.password);
       fetchUserData(user.user.uid, true);
-      // console.log('from login')
-      // navigate("/welcome");
     } catch (e) {
       console.log(e);
       handleFirebaseError(e);
@@ -221,20 +214,22 @@ export function ApiProvider({ children }) {
   const createPost = async (data) => {
     setLoading(true);
     try {
-      if (apiUser.admin_mail) {
-        const formData = createFormData(
-          data,
-          { college_id: apiUser.id, email: apiUser.admin_mail },
-          []
-        );
-        const res = await postRequest(addEventUrl, formData);
-        // const user = await getRequest(userLoginUrl + userCredentials.uid);
-        // setUserCredentials(user.result[0]);
-        // setCookie("userCredentials", user.result[0]);
-        fetchUserData(userCredentials.uid);
-        navigate("/dashboard", res.message || "Posted Successfully.","success");
+      if (!apiUser.admin_mail) {
+        toast.error("Something Went Wrong.");
+        return navigate("/login");
       }
+      const formData = createFormData(
+        data,
+        { college_id: apiUser.id, email: apiUser.admin_mail },
+        []
+      );
+      const res = await postRequest(addEventUrl, formData);
+      fetchUserData(userCredentials.uid);
+      console.log(res);
+      toast.success(res.message || "Posted Successfully.");
+      navigateTo("/dashboard");
     } catch (e) {
+      console.log(e);
       toast.error("Something Went Wrong.");
     } finally {
       setLoading(false);
@@ -245,9 +240,6 @@ export function ApiProvider({ children }) {
     setLoading(true);
     try {
       const res = await deleteRequest(deleteEventUrl + data);
-      // const user = await getRequest(userLoginUrl + userCredentials.uid);
-      // setUserCredentials(user.result[0]);
-      // setCookie("userCredentials", user.result[0]);
       fetchUserData(userCredentials.uid);
       navigate("/dashboard", res.message, "success");
     } catch (e) {
@@ -265,9 +257,6 @@ export function ApiProvider({ children }) {
         college_id: userCredentials.id,
       });
       fetchUserData(userCredentials.uid);
-      // const user = await getRequest(userLoginUrl + userCredentials.uid);
-      // setUserCredentials(user.result[0]);
-      // setCookie("userCredentials", user.result[0]);
       toast.success(
         res.message || "Your profile has been updated successfully."
       );
@@ -333,7 +322,7 @@ export function ApiProvider({ children }) {
     try {
       if (currentUser && currentUser.emailVerified) {
         await postRequest(emailStatusUpdateUrl + currentUser.uid);
-        toast.success("Admin verified successfully");
+        toast.success("Email verified successfully");
       }
     } catch (e) {
       toast.error(e.message || "Admin verification failed.");
@@ -345,9 +334,6 @@ export function ApiProvider({ children }) {
     try {
       const res = await putRequest(editPostUrl + data.poster_id, data);
       fetchUserData(userCredentials.uid);
-      // const user = await getRequest(userLoginUrl + userCredentials.uid);
-      // setUserCredentials(user.result[0]);
-      // setCookie("userCredentials", user.result[0]);
       toast.success(res.message);
     } catch (e) {
       toast.error("Something Went Wrong.");

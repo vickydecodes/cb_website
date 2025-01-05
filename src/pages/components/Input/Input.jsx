@@ -20,8 +20,8 @@ export default function Input({
     return s[0].toUpperCase() + s.slice(1).split('_').join(' ');
   };
 
-if(value){
-  return (
+  if(value){
+    return (
     <div
       className="input_c d-flex flex-column mb-4 justify-content-center align-items-center"
       style={{ width: "100%" }}

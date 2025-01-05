@@ -21,9 +21,9 @@ export default function VerifyE() {
   console.log(isVerifiedUser)
 
   useEffect(() => {
-    if(!userCredentials || userCredentials === null){
-      return navigate('/login')
-    }
+    // if(!userCredentials || userCredentials === null){
+    //   return navigate('/login')
+    // }
 
     if(userCredentials.email_verified === 'true'){
       return navigate('/verify-admin')

@@ -53,6 +53,7 @@ export default function Register() {
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
+
     setFormData((prevData) => ({
       ...prevData,
       [id]: value,
@@ -76,9 +77,14 @@ export default function Register() {
         formData[key] === null ||
         formData[key] === false
       ) {
-        errors[key] = `${key} cannot be empty`;
+        errors[key] = `${capitalize(key)} is missing.`;
         checked = false;
       }
+    }
+
+    if (isNaN(parseInt(formData.admin_mobile))) {
+      toast.error("Phone number must be a number.");
+      checked = false;
     }
 
     if (formData.password.length < 6) {
@@ -104,21 +110,15 @@ export default function Register() {
 
     if (checked) {
       register(formData);
-      navigate('/verify-email', 'Registered Successfully.', 'success')
+      navigate("/verify-email", "Registered Successfully.", "success");
     } else {
-      let errs = [];
-      for (let key in errors) {
-        errs.push(capitalize(key));
-      }
-      toast.error(
-        `${errs.join(", ")} ${errs.length > 1 ? "are" : "is"} missing.`
-      );
+      console.log(errors);
+      Object.values(errors).forEach((err) => toast.error(capitalize(err)));
     }
   };
 
-
   const capitalize = (s) => {
-    return s[0].toUpperCase() + s.slice(1).split('_').join(' ');
+    return s[0].toUpperCase() + s.slice(1).split("_").join(" ");
   };
 
   return (

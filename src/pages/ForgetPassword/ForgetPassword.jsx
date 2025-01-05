@@ -35,7 +35,7 @@ export default function ForgetPassword() {
         formData[key] === null ||
         formData[key] === false
       ) {
-        errors[key] = `${key} cannot be empty`;
+        errors[key] = `${key} is missing.`;
         checked = false;
       }
     }
@@ -50,13 +50,8 @@ export default function ForgetPassword() {
     if (checked) {
       forgetPassword(formData);
     } else {
-      let errs = [];
-      for (let key in errors) {
-        errs.push(capitalize(key));
-      }
-      toast.error(
-        `${errs.join(", ")} ${errs.length > 1 ? "are" : "is"} missing.`
-      );
+            console.log({checked, errors, formData})
+            Object.values(errors).forEach((err) => toast.error(capitalize(err)));
     }
   };
 
