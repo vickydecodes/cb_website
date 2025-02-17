@@ -5,7 +5,7 @@ import {
   putRequest,
   deleteRequest,
 } from "../utils/ApiService";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "./AuthContext";
 import Loading from "../pages/components/Loading/Loading";
@@ -70,6 +70,9 @@ export function ApiProvider({ children }) {
   };
 
   const navigateTo = useNavigate();
+  const location = useLocation();
+
+  console.log("current path ", location.pathname);
 
   const [loading, setLoading] = useState(false);
   const [apiUser, setApiUser] = useState(null);
@@ -105,14 +108,14 @@ export function ApiProvider({ children }) {
     return savedCredentials ? savedCredentials : null;
   });
 
-  console.log("User Credentials: ", userCredentials);
-  console.log("Api User: ", apiUser);
+  // console.log("User Credentials: ", userCredentials);
+  // console.log("Api User: ", apiUser);
 
   const navigate = useNavigateOnce();
 
   const register = async (data) => {
     try {
-      // removeCookie("userCredentials");
+      removeCookie("userCredentials");
       setLoading(true);
       const user = await signup(data.admin_mail, data.password);
       if (user) {
@@ -120,12 +123,14 @@ export function ApiProvider({ children }) {
           "password",
           "confirm_password",
         ]);
-        await postRequest(userRegistrationUrl, formData);
+        const res = await postRequest(userRegistrationUrl, formData);
+        fetchUserData(user.user.uid);
+        toast.success(res.message);
         setCookie("college_name", data.college_name);
       }
-      fetchUserData(user.user.uid, true);
     } catch (e) {
       handleFirebaseError(e);
+      navigateTo('/register')
     } finally {
       setLoading(false);
     }
@@ -508,8 +513,9 @@ export function ApiProvider({ children }) {
     categories,
     isVerifiedUser,
   };
-
-  console.log("Loading state: ", loading);
+  if (loading) {
+    console.log("Loading state: ", loading);
+  }
 
   return (
     <ApiContext.Provider value={value}>

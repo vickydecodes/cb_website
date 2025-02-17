@@ -13,3 +13,7 @@
     outline: none;
     border-color: #fecd00;
 }
+
+.character-limit-info span{
+    color: #fecd00
+}

@@ -50,12 +50,12 @@ export default function LocationDropDown({ handleDropdownChange }) {
     GetCity(countryId, stateId)
       .then((cities) => {
         setCityList(cities);
-        const defaultCity = cities.find((c) => c.name === "Salem");
+        // const defaultCity = cities.find((c) => c.name === "Salem");
 
-        if (defaultCity) {
-          setCityid(defaultCity.id);
-          setLocation((prev) => ({ ...prev, city: defaultCity.name }));
-        }
+        // if (defaultCity) {
+        //   setCityid(defaultCity.id);
+        //   setLocation((prev) => ({ ...prev, city: defaultCity.name }));
+        // }
       })
       .catch((error) => console.error("Error fetching cities:", error));
   };

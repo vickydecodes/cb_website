@@ -5,6 +5,8 @@ export default function FileInput({
   inputValue,
   isCreatePostPage = false,
   setImagePreviewForCreatePost,
+  optional = false,
+  optionalText,
   handleFileInput,
 }) {
   const [imagePreview, setImagePreview] = useState(null);
@@ -54,7 +56,7 @@ export default function FileInput({
     >
       <div className="input-wrapper d-flex flex-column">
         <label className="input_label_c" htmlFor={inputValue}>
-          <h5>{capitalize(inputValue)}</h5>
+          <h5>{capitalize(inputValue)} {optional ? '(Optional)': ''}<small>{optionalText ? optionalText : ''}</small></h5>
         </label>
         <input
           required

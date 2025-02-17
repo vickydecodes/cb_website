@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../components/Input/Input";
 import "./Login.css";
 import PasswordInput from "../components/PasswordInput/PasswordInput";
@@ -10,7 +10,7 @@ import { useAppState } from "../../context/StateContext";
 import { useNavigateOnce } from "../../utils/UseNavigateOnce";
 
 export default function Login() {
-  const { login } = useApi();
+  const { login, isVerifiedUser } = useApi();
   const { loading } = useAppState();
 
   const [formData, setFormData] = useState({
@@ -19,6 +19,12 @@ export default function Login() {
   });
 
   const navigate = useNavigateOnce();
+
+  useEffect(() => {
+    if(isVerifiedUser){
+      return navigate('/dashboard')
+    }
+  }, [])
 
   const handleClick = () => {
     navigate("/forget-password");

@@ -131,7 +131,7 @@ export default function PostTab({ handleDashboardPage, data }) {
                             </button>
                             <button
                               type="submit"
-                              className="btn btn-primary m-2"
+                              className="btn btn-outline-danger m-2"
                               data-bs-dismiss="modal"
                               disabled={loading}
                             >

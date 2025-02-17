@@ -9,12 +9,12 @@ import { toast } from "react-toastify";
 import { useApi } from "../../context/ApiContext";
 import { Helmet } from "react-helmet-async";
 import { useAppState } from "../../context/StateContext";
-import { useNavigateOnce } from "../../utils/UseNavigateOnce";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
-  const detailsInputTabs1 = ["college_name", "admin_name", "designation"];
+  const detailsInputTabs1 = ["college_name", "admin_name"];
 
-  const navigate = useNavigateOnce();
+  const navigate = useNavigate();
 
   const { register } = useApi();
 
@@ -92,8 +92,8 @@ export default function Register() {
       checked = false;
     }
 
-    if (formData.admin_mobile.length != 10) {
-      toast.error("Mobile Number should contain 10 numbers.");
+    if (formData.admin_mobile.length !== 10 || formData.admin_mobile.length !== 12) {
+      toast.error("Mobile Number should contain 10 / 12 numbers.");
       checked = false;
     }
 
@@ -110,7 +110,7 @@ export default function Register() {
 
     if (checked) {
       register(formData);
-      navigate("/verify-email", "Registered Successfully.", "success");
+      navigate("/verify-email");
     } else {
       console.log(errors);
       Object.values(errors).forEach((err) => toast.error(capitalize(err)));
@@ -160,6 +160,13 @@ export default function Register() {
                       );
                     })}
                     <Input
+                      inputValue={"designation"}
+                      optionalText={
+                        "Eg., Principal, Vice Principal, HOD, Management"
+                      }
+                      handleInputChange={handleInputChange}
+                    />
+                    <Input
                       inputValue={"admin_mail"}
                       type={"email"}
                       handleInputChange={handleInputChange}
@@ -178,9 +185,11 @@ export default function Register() {
                   <div className="d-flex flex-column columns justify-content-around">
                     <Input
                       inputValue={"admin_mobile"}
+                      max_length = {12}
                       handleInputChange={handleInputChange}
                     />
                     <FileInput
+                      optionalText={" (Admin ID card)" }
                       inputValue={"id_proof"}
                       handleFileInput={handleFileInput}
                     />

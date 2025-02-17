@@ -10,6 +10,7 @@ export default function Input({
   value,
   disabled=false,
   handleInputChange,
+  max_length 
 }) {
 
   const id = (value) => {
@@ -37,7 +38,7 @@ export default function Input({
         className="input_input_c "
         placeholder={"Enter " + capitalize(inputValue)}
         id={id(inputValue)}
-      />
+        />
     </div>
   );
 }else{
@@ -56,6 +57,7 @@ export default function Input({
         className="input_input_c "
         placeholder={"Enter " + capitalize(inputValue)}
         id={id(inputValue)}
+        maxLength={max_length ? max_length : ''}
       />
     </div>
   );
